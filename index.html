@@ -30,6 +30,10 @@ header{display:flex;justify-content:space-between;align-items:center;margin-bott
 .danger{margin-top:15px;width:100%;padding:13px;border:1px solid #3a3a40;background:transparent;color:#fff;border-radius:13px;font-weight:700}
 nav{position:fixed;left:50%;bottom:0;transform:translateX(-50%);width:min(430px,100%);background:rgba(23,23,26,.96);border-top:1px solid var(--line);padding:9px 8px calc(9px + env(safe-area-inset-bottom));display:grid;grid-template-columns:repeat(4,1fr);z-index:10}
 .nav-item{border:0;background:transparent;color:var(--muted);font-size:11px;padding:7px 2px;border-radius:12px}.nav-item.active{color:#fff;background:var(--card2)}.nav-icon{display:block;font-size:18px;margin-bottom:3px}
+
+.award{display:flex;align-items:center;gap:13px;padding:14px 0;border-bottom:1px solid var(--line)}
+.award:last-child{border-bottom:0}.award-icon{width:42px;height:42px;border-radius:13px;background:var(--card2);display:grid;place-items:center;font-size:20px;flex:none}
+.award.locked{opacity:.42}.award-title{font-weight:750;font-size:14px}.award-desc{font-size:12px;color:var(--muted);margin-top:3px}.award-check{margin-left:auto;color:#fff;font-weight:800;font-size:13px}
 .tip{text-align:center;color:var(--muted);font-size:12px;line-height:1.5;margin-top:17px}
 </style>
 </head>
@@ -44,7 +48,7 @@ nav{position:fixed;left:50%;bottom:0;transform:translateX(-50%);width:min(430px,
     <div class="progress"><i id="progress"></i></div><div class="note" id="weekNote">Még 5 edzés kell a heti célhoz</div>
   </div>
   <button class="train" id="trainButton" type="button">EDZETTEM MA</button>
-  <div class="stats"><div class="stat"><div class="num" id="homeMonth">0</div><div class="label">Edzés ebben a hónapban</div></div><div class="stat"><div class="num" id="homeTotal">0</div><div class="label">Összes edzés</div></div></div>
+  <div class="stats"><div class="stat"><div class="num" id="homeMonth">0</div><div class="label">Edzés ebben a hónapban</div></div><div class="stat"><div class="num" id="homeTotal">0</div><div class="label">Összes edzés</div></div><div class="stat"><div class="num" id="homeStreak">0</div><div class="label">Hetes streak</div></div><div class="stat"><div class="num" id="homeGoalWeeks">0</div><div class="label">Teljesített hét</div></div></div>
 </section>
 
 <section class="page" id="calendar">
@@ -66,7 +70,11 @@ nav{position:fixed;left:50%;bottom:0;transform:translateX(-50%);width:min(430px,
     <div class="stat-row"><span>Idén</span><b id="sYear">0</b></div>
     <div class="stat-row"><span>Összesen</span><b id="sTotal">0</b></div>
   </div>
-  <div class="card"><div class="eyebrow">Aktuális heti haladás</div><div class="bar-row"><div class="bar-label"><span id="sPercent">0%</span><span>5 edzés</span></div><div class="bar"><i id="sBar" style="width:0%"></i></div></div></div>
+  <div class="card"><div class="eyebrow">Aktuális heti haladás</div><div class="bar-row"><div class="bar-label"><span id="sPercent">0%</span><span id="sGoalLabel">5 edzés</span></div><div class="bar"><i id="sBar" style="width:0%"></i></div></div></div>
+<div class="card">
+  <div class="eyebrow">Díjak</div>
+  <div id="awards"></div>
+</div>
 </section>
 
 <section class="page" id="settings">
@@ -94,11 +102,66 @@ const pad=n=>String(n).padStart(2,"0"),key=d=>`${d.getFullYear()}-${pad(d.getMon
 function weekStart(d){const x=new Date(d.getFullYear(),d.getMonth(),d.getDate()),day=x.getDay();x.setDate(x.getDate()+(day===0?-6:1-day));return x}
 function countWeek(offset=0){const s=weekStart(new Date());s.setDate(s.getDate()+offset*7);const keys=[];for(let i=0;i<7;i++){const d=new Date(s);d.setDate(s.getDate()+i);keys.push(key(d))}return keys.filter(k=>trained.includes(k)).length}
 function save(){localStorage.setItem("trainedDays",JSON.stringify(trained))}
-function stats(){const now=new Date(),wc=countWeek(),lw=countWeek(-1),mc=trained.filter(k=>{const p=k.split("-");return +p[0]===now.getFullYear()&&+p[1]===now.getMonth()+1}).length,y=trained.filter(k=>+k.split("-")[0]===now.getFullYear()).length,pct=Math.min(wc,goal)/goal*100;
-document.getElementById("weekCount").textContent=`${wc} / ${goal}`;document.getElementById("homeMonth").textContent=mc;document.getElementById("homeTotal").textContent=trained.length;
-document.getElementById("progress").style.width=pct+"%";document.getElementById("ring").style.setProperty("--p",pct+"%");document.getElementById("ringText").textContent=Math.round(pct)+"%";
-document.getElementById("weekNote").textContent=wc>=goal?"Heti cél teljesítve":`Még ${goal-wc} edzés kell a heti célhoz`;
-document.getElementById("sWeek").textContent=`${wc} / ${goal}`;document.getElementById("sLastWeek").textContent=`${lw} / ${goal}`;document.getElementById("sMonth").textContent=mc;document.getElementById("sYear").textContent=y;document.getElementById("sTotal").textContent=trained.length;document.getElementById("sPercent").textContent=Math.round(pct)+"%";document.getElementById("sBar").style.width=pct+"%";document.getElementById("goalInput").value=goal}
+function completedWeekCountFrom(startDate){
+  let count=0,cursor=new Date(startDate.getFullYear(),startDate.getMonth(),startDate.getDate());
+  for(let n=0;n<520;n++){
+    let c=0;
+    for(let i=0;i<7;i++){const d=new Date(cursor);d.setDate(cursor.getDate()+i);if(trained.includes(key(d)))c++}
+    if(c<goal)break;
+    count++;cursor.setDate(cursor.getDate()-7);
+  }
+  return count;
+}
+function getStreak(){
+  const thisWeek=countWeek();
+  if(thisWeek>=goal){
+    return completedWeekCountFrom(weekStart(new Date()));
+  }
+  const prev=new Date(weekStart(new Date()));
+  prev.setDate(prev.getDate()-7);
+  return completedWeekCountFrom(prev);
+}
+function getAwards(){
+  const total=trained.length, streak=getStreak();
+  return [
+    {icon:"10",title:"Első 10",desc:"10 edzés elérése",ok:total>=10},
+    {icon:"25",title:"25 edzés",desc:"25 edzés elérése",ok:total>=25},
+    {icon:"50",title:"50 edzés",desc:"50 edzés elérése",ok:total>=50},
+    {icon:"100",title:"100 edzés",desc:"100 edzés elérése",ok:total>=100},
+    {icon:"🔥",title:"2 hetes streak",desc:"2 egymást követő hét teljesítése",ok:streak>=2},
+    {icon:"🔥",title:"4 hetes streak",desc:"4 egymást követő hét teljesítése",ok:streak>=4},
+    {icon:"🔥",title:"8 hetes streak",desc:"8 egymást követő hét teljesítése",ok:streak>=8},
+    {icon:"🔥",title:"12 hetes streak",desc:"12 egymást követő hét teljesítése",ok:streak>=12}
+  ];
+}
+function renderAwards(){
+  const box=document.getElementById("awards");
+  if(!box)return;
+  box.innerHTML=getAwards().map(a=>`<div class="award ${a.ok?"":"locked"}"><div class="award-icon">${a.icon}</div><div><div class="award-title">${a.title}</div><div class="award-desc">${a.desc}</div></div><div class="award-check">${a.ok?"✓":"—"}</div></div>`).join("");
+}
+function stats(){
+  const now=new Date(),wc=countWeek(),lw=countWeek(-1),mc=trained.filter(k=>{const p=k.split("-");return +p[0]===now.getFullYear()&&+p[1]===now.getMonth()+1}).length,y=trained.filter(k=>+k.split("-")[0]===now.getFullYear()).length,pct=Math.min(wc,goal)/goal*100,streak=getStreak();
+  document.getElementById("weekCount").textContent=`${wc} / ${goal}`;
+  document.getElementById("homeMonth").textContent=mc;
+  document.getElementById("homeTotal").textContent=trained.length;
+  document.getElementById("homeStreak").textContent=streak;
+  document.getElementById("homeGoalWeeks").textContent=completedWeekCountFrom(weekStart(new Date()));
+  document.getElementById("progress").style.width=pct+"%";
+  document.getElementById("ring").style.setProperty("--p",pct+"%");
+  document.getElementById("ringText").textContent=Math.round(pct)+"%";
+  document.getElementById("weekNote").textContent=wc>=goal?"Heti cél teljesítve":`Még ${goal-wc} edzés kell a heti célhoz`;
+  document.getElementById("sWeek").textContent=`${wc} / ${goal}`;
+  document.getElementById("sLastWeek").textContent=`${lw} / ${goal}`;
+  document.getElementById("sMonth").textContent=mc;
+  document.getElementById("sYear").textContent=y;
+  document.getElementById("sTotal").textContent=trained.length;
+  document.getElementById("sStreak").textContent=`${streak} hét`;
+  document.getElementById("sPercent").textContent=Math.round(pct)+"%";
+  document.getElementById("sGoalLabel").textContent=`${goal} edzés`;
+  document.getElementById("sBar").style.width=pct+"%";
+  document.getElementById("goalInput").value=goal;
+  renderAwards();
+}
 function renderCalendar(){const y=view.getFullYear(),m=view.getMonth();document.getElementById("monthName").textContent=`${months[m]} ${y}`;const box=document.getElementById("days");box.innerHTML="";let first=new Date(y,m,1).getDay();first=first===0?6:first-1;const total=new Date(y,m+1,0).getDate(),now=new Date();
 for(let i=0;i<first;i++){const e=document.createElement("div");e.className="day empty";box.appendChild(e)}
 for(let d=1;d<=total;d++){const el=document.createElement("div"),dt=new Date(y,m,d),k=key(dt);el.className="day";el.textContent=d;if(trained.includes(k)){el.classList.add("trained");el.textContent="✓"}if(d===now.getDate()&&m===now.getMonth()&&y===now.getFullYear())el.classList.add("today");el.addEventListener("click",()=>{trained=trained.includes(k)?trained.filter(x=>x!==k):[...trained,k];save();renderAll()});box.appendChild(el)}}
