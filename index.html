@@ -3,199 +3,137 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#111111">
+<meta name="theme-color" content="#0b0b0d">
 <title>Edzésnapló</title>
 <style>
+:root{--bg:#0b0b0d;--card:#17171a;--card2:#202024;--text:#fff;--muted:#9b9ba3;--line:#2b2b31;--accent:#fff}
 *{box-sizing:border-box}
-body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:#f2f2f7;color:#111}
-.app{max-width:430px;min-height:100vh;margin:auto;padding:25px 18px 40px}
-h1{text-align:center;font-size:28px;margin:0 0 8px}
-.subtitle{text-align:center;color:#777;margin-bottom:22px}
-.button{width:100%;border:0;border-radius:18px;padding:18px;font-size:18px;font-weight:700;background:#111;color:#fff;cursor:pointer;margin-bottom:18px}
-.button:active{transform:scale(.98)}
-.stats{background:#fff;border-radius:18px;padding:18px;text-align:center;margin-bottom:14px;box-shadow:0 3px 15px rgba(0,0,0,.06)}
-.stats-number{font-size:34px;font-weight:800}
-.stats-text{color:#777;margin-top:3px}
-.week-card{background:#fff;border-radius:18px;padding:17px 18px;margin-bottom:20px;box-shadow:0 3px 15px rgba(0,0,0,.06)}
-.week-top{display:flex;justify-content:space-between;align-items:center;gap:12px}
-.week-title{font-size:18px;font-weight:750}
-.week-count{font-size:22px;font-weight:800}
-.progress{height:10px;background:#e8e8ed;border-radius:99px;overflow:hidden;margin:12px 0 8px}
-.progress-fill{height:100%;width:0;background:#111;border-radius:99px;transition:width .25s ease}
-.week-note{text-align:center;color:#777;font-size:13px}
-.calendar{background:#fff;border-radius:20px;padding:18px;box-shadow:0 3px 15px rgba(0,0,0,.06)}
-.calendar-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px}
-.month{font-size:20px;font-weight:700}
-.nav{border:0;background:#f2f2f7;width:38px;height:38px;border-radius:12px;font-size:20px;cursor:pointer}
+body{margin:0;background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+.app{max-width:430px;margin:auto;padding:28px 18px 42px}
+.top{display:flex;justify-content:space-between;align-items:center;margin-bottom:24px}
+.brand{font-size:25px;font-weight:800;letter-spacing:-.5px}.brand span{font-size:25px}
+.date{font-size:13px;color:var(--muted)}
+.hero{background:linear-gradient(145deg,#242428,#151519);border:1px solid var(--line);border-radius:26px;padding:22px;margin-bottom:14px}
+.eyebrow{text-transform:uppercase;font-size:11px;letter-spacing:1.5px;color:var(--muted);font-weight:700}
+.hero-row{display:flex;justify-content:space-between;align-items:center;gap:15px;margin-top:10px}
+.big{font-size:44px;font-weight:850;letter-spacing:-2px}.goal{color:var(--muted);font-size:14px;margin-top:2px}
+.ring{width:82px;height:82px;border-radius:50%;display:grid;place-items:center;background:conic-gradient(#fff var(--p),#36363c 0);position:relative}
+.ring:after{content:"";position:absolute;inset:8px;background:#18181c;border-radius:50%}
+.ring b{position:relative;z-index:1;font-size:18px}
+.progress{height:8px;background:#36363c;border-radius:99px;overflow:hidden;margin-top:18px}
+.progress i{display:block;height:100%;width:var(--w);background:#fff;border-radius:99px}
+.note{text-align:center;color:var(--muted);font-size:13px;margin-top:10px}
+.train{width:100%;border:0;border-radius:18px;background:#fff;color:#0b0b0d;padding:17px;font-size:17px;font-weight:850;cursor:pointer;margin-bottom:14px}
+.train:active{transform:scale(.985)}
+.stats{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px}
+.stat{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:17px}
+.stat .num{font-size:27px;font-weight:800}.stat .label{font-size:12px;color:var(--muted);margin-top:4px}
+.calendar{background:var(--card);border:1px solid var(--line);border-radius:24px;padding:18px}
+.cal-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px}
+.month{font-size:19px;font-weight:800}.nav{width:40px;height:40px;border:0;border-radius:13px;background:var(--card2);color:#fff;font-size:23px;cursor:pointer}
 .weekdays,.days{display:grid;grid-template-columns:repeat(7,1fr);gap:6px}
-.weekday{text-align:center;color:#999;font-size:12px;font-weight:600;padding-bottom:7px}
-.day{aspect-ratio:1;display:flex;align-items:center;justify-content:center;border-radius:12px;font-size:14px;cursor:pointer}
-.day:hover{background:#f2f2f7}
-.today{border:2px solid #111;font-weight:700}
-.trained{background:#111;color:#fff;font-weight:700}
-.trained:hover{background:#333}
-.empty{cursor:default}
-.info{text-align:center;color:#888;font-size:13px;margin-top:20px;line-height:1.5}
+.weekday{text-align:center;color:var(--muted);font-size:10px;font-weight:700;padding-bottom:5px}
+.day{aspect-ratio:1;display:flex;align-items:center;justify-content:center;border-radius:12px;color:#ddd;font-size:13px;cursor:pointer}
+.day:hover{background:var(--card2)}.empty{cursor:default}
+.today{outline:2px solid #fff;outline-offset:-2px;font-weight:800}
+.trained{background:#fff;color:#0b0b0d;font-weight:850}
+.section{font-size:12px;text-transform:uppercase;letter-spacing:1.4px;color:var(--muted);font-weight:750;margin:22px 2px 9px}
+.tip{text-align:center;color:var(--muted);font-size:12px;line-height:1.5;margin-top:17px}
 </style>
 </head>
 <body>
 <div class="app">
-<h1>🏋️ Edzésnapló</h1>
-<div class="subtitle">Kövesd, hogy mikor edzettél</div>
-
-<button class="button" id="trainButton">🏋️ EDZETTEM MA</button>
-
-<div class="stats">
-  <div class="stats-number" id="monthCount">0</div>
-  <div class="stats-text">edzés ebben a hónapban</div>
-</div>
-
-<div class="week-card">
-  <div class="week-top">
-    <div class="week-title">Heti cél</div>
-    <div class="week-count" id="weekCount">0 / 5</div>
+  <div class="top">
+    <div class="brand">🏋️ Edzésnapló</div>
+    <div class="date" id="todayText"></div>
   </div>
-  <div class="progress"><div class="progress-fill" id="progressFill"></div></div>
-  <div class="week-note" id="weekNote">Még 5 edzés kell a heti célhoz</div>
-</div>
 
-<div class="calendar">
-  <div class="calendar-header">
-    <button class="nav" id="prevButton" type="button">‹</button>
-    <div class="month" id="monthName"></div>
-    <button class="nav" id="nextButton" type="button">›</button>
+  <div class="hero" id="hero">
+    <div class="eyebrow">Heti cél</div>
+    <div class="hero-row">
+      <div><div class="big" id="weekCount">0 / 5</div><div class="goal" id="goalText">edzés ezen a héten</div></div>
+      <div class="ring" id="ring"><b id="ringText">0%</b></div>
+    </div>
+    <div class="progress"><i id="progress"></i></div>
+    <div class="note" id="weekNote">Még 5 edzés kell a heti célhoz</div>
   </div>
-  <div class="weekdays">
-    <div class="weekday">H</div><div class="weekday">K</div><div class="weekday">Sze</div>
-    <div class="weekday">Cs</div><div class="weekday">P</div><div class="weekday">Szo</div><div class="weekday">V</div>
-  </div>
-  <div class="days" id="calendarDays"></div>
-</div>
 
-<div class="info">A napokra kattintva be- vagy kikapcsolhatod az edzést.<br>Az adatok ezen az eszközön kerülnek mentésre.</div>
+  <button class="train" id="trainButton" type="button">🏋️ EDZETTEM MA</button>
+
+  <div class="stats">
+    <div class="stat"><div class="num" id="monthCount">0</div><div class="label">Edzés ebben a hónapban</div></div>
+    <div class="stat"><div class="num" id="totalCount">0</div><div class="label">Összes edzés</div></div>
+  </div>
+
+  <div class="section">Naptár</div>
+  <div class="calendar">
+    <div class="cal-head">
+      <button class="nav" id="prev" type="button">‹</button>
+      <div class="month" id="monthName"></div>
+      <button class="nav" id="next" type="button">›</button>
+    </div>
+    <div class="weekdays"><div class="weekday">H</div><div class="weekday">K</div><div class="weekday">Sze</div><div class="weekday">Cs</div><div class="weekday">P</div><div class="weekday">Szo</div><div class="weekday">V</div></div>
+    <div class="days" id="days"></div>
+  </div>
+
+  <div class="tip">Koppints bármelyik napra az edzés hozzáadásához vagy törléséhez.</div>
 </div>
 
 <script>
-let currentDate = new Date();
-let trainedDays = JSON.parse(localStorage.getItem("trainedDays") || "[]");
+let view=new Date();
+let trained=JSON.parse(localStorage.getItem("trainedDays")||"[]");
+const months=["Január","Február","Március","Április","Május","Június","Július","Augusztus","Szeptember","Október","November","December"];
+const pad=n=>String(n).padStart(2,"0");
+const key=d=>`${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}`;
 
-const months = ["Január","Február","Március","Április","Május","Június","Július","Augusztus","Szeptember","Október","November","December"];
-
-function dateKey(year, month, day){ return `${year}-${month+1}-${day}`; }
-
-function localKey(date){
-  return dateKey(date.getFullYear(), date.getMonth(), date.getDate());
+function weekStart(d){
+  const x=new Date(d.getFullYear(),d.getMonth(),d.getDate());
+  const day=x.getDay(); x.setDate(x.getDate()+(day===0?-6:1-day)); return x;
 }
-
-function startOfWeek(date){
-  const d = new Date(date.getFullYear(), date.getMonth(), date.getDate());
-  const day = d.getDay();
-  const mondayOffset = day === 0 ? -6 : 1 - day;
-  d.setDate(d.getDate() + mondayOffset);
-  return d;
+function weekKeys(){
+  const s=weekStart(new Date());
+  return Array.from({length:7},(_,i)=>{const d=new Date(s);d.setDate(s.getDate()+i);return key(d)});
 }
-
-function getWeekKeys(date){
-  const start = startOfWeek(date);
-  return Array.from({length:7}, (_,i) => {
-    const d = new Date(start);
-    d.setDate(start.getDate()+i);
-    return localKey(d);
-  });
+function save(){localStorage.setItem("trainedDays",JSON.stringify(trained))}
+function updateStats(){
+  const now=new Date(), wk=weekKeys();
+  const wc=wk.filter(k=>trained.includes(k)).length;
+  const mc=trained.filter(k=>{const p=k.split("-");return +p[0]===now.getFullYear()&&+p[1]===now.getMonth()+1}).length;
+  document.getElementById("weekCount").textContent=`${wc} / 5`;
+  document.getElementById("monthCount").textContent=mc;
+  document.getElementById("totalCount").textContent=trained.length;
+  document.getElementById("progress").style.setProperty("--w",`${Math.min(wc,5)*20}%`);
+  document.getElementById("ring").style.setProperty("--p",`${Math.min(wc,5)*20}%`);
+  document.getElementById("ringText").textContent=`${Math.min(wc,5)*20}%`;
+  document.getElementById("weekNote").textContent=wc>=5?"🎉 Megvan az 5/5 erre a hétre!":`Még ${5-wc} edzés kell a heti célhoz`;
 }
-
-function updateWeekStats(){
-  const count = getWeekKeys(new Date()).filter(k => trainedDays.includes(k)).length;
-  document.getElementById("weekCount").textContent = `${count} / 5`;
-  document.getElementById("progressFill").style.width = `${Math.min(count,5)/5*100}%`;
-  const note = document.getElementById("weekNote");
-  if(count >= 5) note.textContent = "🎉 Megvan az 5 edzés ezen a héten!";
-  else {
-    const left = 5-count;
-    note.textContent = `Még ${left} edzés kell a heti célhoz`;
+function render(){
+  const y=view.getFullYear(),m=view.getMonth();
+  document.getElementById("monthName").textContent=`${months[m]} ${y}`;
+  const box=document.getElementById("days");box.innerHTML="";
+  let first=new Date(y,m,1).getDay(); first=first===0?6:first-1;
+  const total=new Date(y,m+1,0).getDate(), now=new Date();
+  for(let i=0;i<first;i++){const e=document.createElement("div");e.className="day empty";box.appendChild(e)}
+  for(let d=1;d<=total;d++){
+    const el=document.createElement("div"), dt=new Date(y,m,d), k=key(dt);
+    el.className="day"; el.textContent=d;
+    if(trained.includes(k)){el.classList.add("trained");el.textContent="✓"}
+    if(d===now.getDate()&&m===now.getMonth()&&y===now.getFullYear())el.classList.add("today");
+    el.addEventListener("click",()=>{trained=trained.includes(k)?trained.filter(x=>x!==k):[...trained,k];save();render()});
+    box.appendChild(el);
   }
+  updateStats();
 }
-
-function updateMonthCount(){
-  const year = currentDate.getFullYear(), month = currentDate.getMonth();
-  const count = trainedDays.filter(key => {
-    const parts = key.split("-");
-    return Number(parts[0]) === year && Number(parts[1]) === month+1;
-  }).length;
-  document.getElementById("monthCount").textContent = count;
-}
-
-function renderCalendar(){
-  const year = currentDate.getFullYear(), month = currentDate.getMonth();
-  document.getElementById("monthName").textContent = `${months[month]} ${year}`;
-  const container = document.getElementById("calendarDays");
-  container.innerHTML = "";
-
-  let firstDay = new Date(year,month,1).getDay();
-  firstDay = firstDay === 0 ? 6 : firstDay-1;
-  const daysInMonth = new Date(year,month+1,0).getDate();
-  const today = new Date();
-
-  for(let i=0;i<firstDay;i++){
-    const empty = document.createElement("div");
-    empty.className = "day empty";
-    container.appendChild(empty);
-  }
-
-  for(let day=1;day<=daysInMonth;day++){
-    const div = document.createElement("div");
-    const key = dateKey(year,month,day);
-    div.className = "day";
-    div.textContent = day;
-
-    if(trainedDays.includes(key)){
-      div.classList.add("trained");
-      div.textContent = "✓";
-    }
-    if(day===today.getDate() && month===today.getMonth() && year===today.getFullYear()){
-      div.classList.add("today");
-    }
-
-    div.addEventListener("click", () => toggleDay(key));
-    container.appendChild(div);
-  }
-  updateMonthCount();
-  updateWeekStats();
-}
-
-function save(){
-  localStorage.setItem("trainedDays", JSON.stringify(trainedDays));
-}
-
-function toggleDay(key){
-  if(trainedDays.includes(key)) trainedDays = trainedDays.filter(day => day !== key);
-  else trainedDays.push(key);
-  save();
-  renderCalendar();
-}
-
 function trainToday(){
-  const today = new Date();
-  const key = localKey(today);
-  if(!trainedDays.includes(key)){
-    trainedDays.push(key);
-    save();
-  }
-  currentDate = new Date();
-  renderCalendar();
+  const k=key(new Date());
+  if(!trained.includes(k)){trained.push(k);save()}
+  view=new Date();render();
 }
-
-document.getElementById("trainButton").addEventListener("click", trainToday);
-document.getElementById("prevButton").addEventListener("click", () => {
-  currentDate.setMonth(currentDate.getMonth()-1);
-  renderCalendar();
-});
-document.getElementById("nextButton").addEventListener("click", () => {
-  currentDate.setMonth(currentDate.getMonth()+1);
-  renderCalendar();
-});
-
-renderCalendar();
+document.getElementById("trainButton").addEventListener("click",trainToday);
+document.getElementById("prev").addEventListener("click",()=>{view.setMonth(view.getMonth()-1);render()});
+document.getElementById("next").addEventListener("click",()=>{view.setMonth(view.getMonth()+1);render()});
+const now=new Date();document.getElementById("todayText").textContent=`${now.getFullYear()}. ${pad(now.getMonth()+1)}. ${pad(now.getDate())}.`;
+render();
 </script>
 </body>
 </html>
