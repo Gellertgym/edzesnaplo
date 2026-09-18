@@ -2,7 +2,7 @@
 <html lang="hu">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#0b0b0d">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -11,75 +11,106 @@
 <link rel="manifest" href="manifest.json">
 <title>Edzésnapló</title>
 <style>
-:root{--bg:#0b0b0d;--card:#17171a;--card2:#202024;--text:#fff;--muted:#96969e;--line:#2a2a30}
-*{box-sizing:border-box}
-html{background:var(--bg)}
-body{margin:0;background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
-.app{max-width:430px;margin:auto;padding:28px 18px 44px}
-.top{display:flex;justify-content:space-between;align-items:center;margin-bottom:24px}
-.brand{font-size:24px;font-weight:800;letter-spacing:-.6px}.date{font-size:12px;color:var(--muted)}
+:root{--bg:#0b0b0d;--card:#17171a;--card2:#202024;--text:#fff;--muted:#92929a;--line:#2a2a30}
+*{box-sizing:border-box}html,body{margin:0;background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+body{min-height:100vh}.app{max-width:430px;margin:auto;padding:28px 18px 100px}
+header{display:flex;justify-content:space-between;align-items:center;margin-bottom:25px}.brand{font-size:24px;font-weight:800;letter-spacing:-.6px}.today-small{font-size:12px;color:var(--muted)}
+.page{display:none}.page.active{display:block}
 .hero{background:linear-gradient(145deg,#242428,#151519);border:1px solid var(--line);border-radius:26px;padding:22px;margin-bottom:14px}
-.eyebrow{text-transform:uppercase;font-size:11px;letter-spacing:1.5px;color:var(--muted);font-weight:750}
-.hero-row{display:flex;justify-content:space-between;align-items:center;gap:15px;margin-top:9px}
-.big{font-size:44px;font-weight:850;letter-spacing:-2px}.goal{color:var(--muted);font-size:14px;margin-top:2px}
-.ring{width:82px;height:82px;border-radius:50%;display:grid;place-items:center;background:conic-gradient(#fff var(--p),#36363c 0);position:relative}
-.ring:after{content:"";position:absolute;inset:8px;background:#18181c;border-radius:50%}.ring b{position:relative;z-index:1;font-size:18px}
-.progress{height:8px;background:#36363c;border-radius:99px;overflow:hidden;margin-top:18px}.progress i{display:block;height:100%;width:var(--w);background:#fff;border-radius:99px;transition:width .25s ease}
-.note{text-align:center;color:var(--muted);font-size:13px;margin-top:10px}
-.train{width:100%;border:0;border-radius:18px;background:#fff;color:#0b0b0d;padding:17px;font-size:17px;font-weight:850;cursor:pointer;margin-bottom:14px}
-.train:active{transform:scale(.985)}
-.stats{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px}.stat{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:17px}.stat .num{font-size:27px;font-weight:800}.stat .label{font-size:12px;color:var(--muted);margin-top:4px}
-.section{font-size:11px;text-transform:uppercase;letter-spacing:1.4px;color:var(--muted);font-weight:750;margin:22px 2px 9px}
-.calendar{background:var(--card);border:1px solid var(--line);border-radius:24px;padding:18px}.cal-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px}.month{font-size:19px;font-weight:800}.nav{width:40px;height:40px;border:0;border-radius:13px;background:var(--card2);color:#fff;font-size:23px;cursor:pointer}
-.weekdays,.days{display:grid;grid-template-columns:repeat(7,1fr);gap:6px}.weekday{text-align:center;color:var(--muted);font-size:10px;font-weight:700;padding-bottom:5px}
-.day{aspect-ratio:1;display:flex;align-items:center;justify-content:center;border-radius:12px;color:#ddd;font-size:13px;cursor:pointer}.day:hover{background:var(--card2)}.empty{cursor:default}.today{outline:2px solid #fff;outline-offset:-2px;font-weight:800}.trained{background:#fff;color:#0b0b0d;font-weight:850}
+.eyebrow{text-transform:uppercase;font-size:11px;letter-spacing:1.5px;color:var(--muted);font-weight:750}.hero-row{display:flex;justify-content:space-between;align-items:center;gap:15px;margin-top:9px}
+.big{font-size:44px;font-weight:850;letter-spacing:-2px}.goal{color:var(--muted);font-size:14px}.ring{width:82px;height:82px;border-radius:50%;display:grid;place-items:center;background:conic-gradient(#fff var(--p),#36363c 0);position:relative}.ring:after{content:"";position:absolute;inset:8px;background:#18181c;border-radius:50%}.ring b{position:relative;z-index:1;font-size:18px}
+.progress{height:8px;background:#36363c;border-radius:99px;overflow:hidden;margin-top:18px}.progress i{display:block;height:100%;width:var(--w);background:#fff;border-radius:99px}.note{text-align:center;color:var(--muted);font-size:13px;margin-top:10px}
+.train{width:100%;border:0;border-radius:18px;background:#fff;color:#0b0b0d;padding:17px;font-size:17px;font-weight:850;cursor:pointer;margin-bottom:14px}.train:active{transform:scale(.985)}
+.stats{display:grid;grid-template-columns:1fr 1fr;gap:12px}.stat{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:17px}.num{font-size:28px;font-weight:800}.label{font-size:12px;color:var(--muted);margin-top:4px}
+.section-title{font-size:27px;font-weight:850;margin:0 0 18px}.card{background:var(--card);border:1px solid var(--line);border-radius:22px;padding:18px;margin-bottom:12px}
+.calendar-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px}.month{font-size:19px;font-weight:800}.nav{width:40px;height:40px;border:0;border-radius:13px;background:var(--card2);color:#fff;font-size:23px}.weekdays,.days{display:grid;grid-template-columns:repeat(7,1fr);gap:6px}.weekday{text-align:center;color:var(--muted);font-size:10px;font-weight:700;padding-bottom:5px}.day{aspect-ratio:1;display:flex;align-items:center;justify-content:center;border-radius:12px;color:#ddd;font-size:13px;cursor:pointer}.trained{background:#fff;color:#0b0b0d;font-weight:850}.today{outline:2px solid #fff;outline-offset:-2px}.empty{cursor:default}
+.stat-row{display:flex;justify-content:space-between;align-items:center;padding:14px 0;border-bottom:1px solid var(--line)}.stat-row:last-child{border-bottom:0}.stat-row span{color:var(--muted);font-size:14px}.stat-row b{font-size:18px}
+.bar-row{margin:14px 0}.bar-label{display:flex;justify-content:space-between;font-size:13px;margin-bottom:7px}.bar-label span{color:var(--muted)}.bar{height:8px;background:#34343a;border-radius:99px;overflow:hidden}.bar i{display:block;height:100%;background:#fff;border-radius:99px}
+.settings-row{display:flex;justify-content:space-between;align-items:center;padding:15px 0;border-bottom:1px solid var(--line)}.settings-row:last-child{border:0}.settings-row label{font-size:15px}.goal-input{width:70px;background:var(--card2);color:#fff;border:1px solid var(--line);border-radius:12px;padding:9px 10px;font-size:16px;text-align:center}
+.danger{margin-top:15px;width:100%;padding:13px;border:1px solid #3a3a40;background:transparent;color:#fff;border-radius:13px;font-weight:700}
+nav{position:fixed;left:50%;bottom:0;transform:translateX(-50%);width:min(430px,100%);background:rgba(23,23,26,.96);border-top:1px solid var(--line);padding:9px 8px calc(9px + env(safe-area-inset-bottom));display:grid;grid-template-columns:repeat(4,1fr);z-index:10}
+.nav-item{border:0;background:transparent;color:var(--muted);font-size:11px;padding:7px 2px;border-radius:12px}.nav-item.active{color:#fff;background:var(--card2)}.nav-icon{display:block;font-size:18px;margin-bottom:3px}
 .tip{text-align:center;color:var(--muted);font-size:12px;line-height:1.5;margin-top:17px}
 </style>
 </head>
 <body>
 <div class="app">
-  <div class="top"><div class="brand">Edzésnapló</div><div class="date" id="todayText"></div></div>
+<header><div class="brand">Edzésnapló</div><div class="today-small" id="todayText"></div></header>
+
+<section class="page active" id="home">
   <div class="hero">
     <div class="eyebrow">Heti cél</div>
-    <div class="hero-row">
-      <div><div class="big" id="weekCount">0 / 5</div><div class="goal">edzés ezen a héten</div></div>
-      <div class="ring" id="ring"><b id="ringText">0%</b></div>
-    </div>
-    <div class="progress"><i id="progress"></i></div>
-    <div class="note" id="weekNote">Még 5 edzés kell a heti célhoz</div>
+    <div class="hero-row"><div><div class="big" id="weekCount">0 / 5</div><div class="goal">edzés ezen a héten</div></div><div class="ring" id="ring"><b id="ringText">0%</b></div></div>
+    <div class="progress"><i id="progress"></i></div><div class="note" id="weekNote">Még 5 edzés kell a heti célhoz</div>
   </div>
   <button class="train" id="trainButton" type="button">EDZETTEM MA</button>
-  <div class="stats">
-    <div class="stat"><div class="num" id="monthCount">0</div><div class="label">Edzés ebben a hónapban</div></div>
-    <div class="stat"><div class="num" id="totalCount">0</div><div class="label">Összes edzés</div></div>
-  </div>
-  <div class="section">Naptár</div>
-  <div class="calendar">
-    <div class="cal-head"><button class="nav" id="prev" type="button">‹</button><div class="month" id="monthName"></div><button class="nav" id="next" type="button">›</button></div>
+  <div class="stats"><div class="stat"><div class="num" id="homeMonth">0</div><div class="label">Edzés ebben a hónapban</div></div><div class="stat"><div class="num" id="homeTotal">0</div><div class="label">Összes edzés</div></div></div>
+</section>
+
+<section class="page" id="calendar">
+  <h2 class="section-title">Naptár</h2>
+  <div class="card">
+    <div class="calendar-head"><button class="nav" id="prev" type="button">‹</button><div class="month" id="monthName"></div><button class="nav" id="next" type="button">›</button></div>
     <div class="weekdays"><div class="weekday">H</div><div class="weekday">K</div><div class="weekday">Sze</div><div class="weekday">Cs</div><div class="weekday">P</div><div class="weekday">Szo</div><div class="weekday">V</div></div>
     <div class="days" id="days"></div>
   </div>
-  <div class="tip">Koppints bármelyik napra az edzés hozzáadásához vagy törléséhez.</div>
+  <div class="tip">Koppints egy napra az edzés hozzáadásához vagy törléséhez.</div>
+</section>
+
+<section class="page" id="stats">
+  <h2 class="section-title">Statisztika</h2>
+  <div class="card">
+    <div class="stat-row"><span>Ezen a héten</span><b id="sWeek">0 / 5</b></div>
+    <div class="stat-row"><span>Múlt héten</span><b id="sLastWeek">0 / 5</b></div>
+    <div class="stat-row"><span>Ebben a hónapban</span><b id="sMonth">0</b></div>
+    <div class="stat-row"><span>Idén</span><b id="sYear">0</b></div>
+    <div class="stat-row"><span>Összesen</span><b id="sTotal">0</b></div>
+  </div>
+  <div class="card"><div class="eyebrow">Aktuális heti haladás</div><div class="bar-row"><div class="bar-label"><span id="sPercent">0%</span><span>5 edzés</span></div><div class="bar"><i id="sBar" style="width:0%"></i></div></div></div>
+</section>
+
+<section class="page" id="settings">
+  <h2 class="section-title">Beállítások</h2>
+  <div class="card">
+    <div class="settings-row"><label>Heti edzéscél</label><input class="goal-input" id="goalInput" type="number" min="1" max="14" value="5"></div>
+    <div class="settings-row"><label>Adatok</label><span style="color:#92929a;font-size:13px">ezen az eszközön</span></div>
+    <button class="danger" id="reset" type="button">Összes edzés törlése</button>
+  </div>
+</section>
 </div>
+
+<nav>
+<button class="nav-item active" data-page="home"><span class="nav-icon">⌂</span>Főoldal</button>
+<button class="nav-item" data-page="calendar"><span class="nav-icon">▦</span>Naptár</button>
+<button class="nav-item" data-page="stats"><span class="nav-icon">↗</span>Statisztika</button>
+<button class="nav-item" data-page="settings"><span class="nav-icon">☰</span>Beállítások</button>
+</nav>
+
 <script>
 let view=new Date(),trained=JSON.parse(localStorage.getItem("trainedDays")||"[]");
+let goal=Number(localStorage.getItem("weeklyGoal")||5); if(!Number.isFinite(goal)||goal<1)goal=5;
 const months=["Január","Február","Március","Április","Május","Június","Július","Augusztus","Szeptember","Október","November","December"];
 const pad=n=>String(n).padStart(2,"0"),key=d=>`${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}`;
 function weekStart(d){const x=new Date(d.getFullYear(),d.getMonth(),d.getDate()),day=x.getDay();x.setDate(x.getDate()+(day===0?-6:1-day));return x}
-function weekKeys(){const s=weekStart(new Date());return Array.from({length:7},(_,i)=>{const d=new Date(s);d.setDate(s.getDate()+i);return key(d)})}
+function countWeek(offset=0){const s=weekStart(new Date());s.setDate(s.getDate()+offset*7);const keys=[];for(let i=0;i<7;i++){const d=new Date(s);d.setDate(s.getDate()+i);keys.push(key(d))}return keys.filter(k=>trained.includes(k)).length}
 function save(){localStorage.setItem("trainedDays",JSON.stringify(trained))}
-function updateStats(){const now=new Date(),wc=weekKeys().filter(k=>trained.includes(k)).length,mc=trained.filter(k=>{const p=k.split("-");return +p[0]===now.getFullYear()&&+p[1]===now.getMonth()+1}).length;
-document.getElementById("weekCount").textContent=`${wc} / 5`;document.getElementById("monthCount").textContent=mc;document.getElementById("totalCount").textContent=trained.length;
-document.getElementById("progress").style.setProperty("--w",`${Math.min(wc,5)*20}%`);document.getElementById("ring").style.setProperty("--p",`${Math.min(wc,5)*20}%`);document.getElementById("ringText").textContent=`${Math.min(wc,5)*20}%`;
-document.getElementById("weekNote").textContent=wc>=5?"Megvan az 5/5 erre a hétre!":`Még ${5-wc} edzés kell a heti célhoz`}
-function render(){const y=view.getFullYear(),m=view.getMonth();document.getElementById("monthName").textContent=`${months[m]} ${y}`;const box=document.getElementById("days");box.innerHTML="";let first=new Date(y,m,1).getDay();first=first===0?6:first-1;const total=new Date(y,m+1,0).getDate(),now=new Date();
+function stats(){const now=new Date(),wc=countWeek(),lw=countWeek(-1),mc=trained.filter(k=>{const p=k.split("-");return +p[0]===now.getFullYear()&&+p[1]===now.getMonth()+1}).length,y=trained.filter(k=>+k.split("-")[0]===now.getFullYear()).length,pct=Math.min(wc,goal)/goal*100;
+document.getElementById("weekCount").textContent=`${wc} / ${goal}`;document.getElementById("homeMonth").textContent=mc;document.getElementById("homeTotal").textContent=trained.length;
+document.getElementById("progress").style.width=pct+"%";document.getElementById("ring").style.setProperty("--p",pct+"%");document.getElementById("ringText").textContent=Math.round(pct)+"%";
+document.getElementById("weekNote").textContent=wc>=goal?"Heti cél teljesítve":`Még ${goal-wc} edzés kell a heti célhoz`;
+document.getElementById("sWeek").textContent=`${wc} / ${goal}`;document.getElementById("sLastWeek").textContent=`${lw} / ${goal}`;document.getElementById("sMonth").textContent=mc;document.getElementById("sYear").textContent=y;document.getElementById("sTotal").textContent=trained.length;document.getElementById("sPercent").textContent=Math.round(pct)+"%";document.getElementById("sBar").style.width=pct+"%";document.getElementById("goalInput").value=goal}
+function renderCalendar(){const y=view.getFullYear(),m=view.getMonth();document.getElementById("monthName").textContent=`${months[m]} ${y}`;const box=document.getElementById("days");box.innerHTML="";let first=new Date(y,m,1).getDay();first=first===0?6:first-1;const total=new Date(y,m+1,0).getDate(),now=new Date();
 for(let i=0;i<first;i++){const e=document.createElement("div");e.className="day empty";box.appendChild(e)}
-for(let d=1;d<=total;d++){const el=document.createElement("div"),dt=new Date(y,m,d),k=key(dt);el.className="day";el.textContent=d;
-if(trained.includes(k)){el.classList.add("trained");el.textContent="✓"}if(d===now.getDate()&&m===now.getMonth()&&y===now.getFullYear())el.classList.add("today");
-el.addEventListener("click",()=>{trained=trained.includes(k)?trained.filter(x=>x!==k):[...trained,k];save();render()});box.appendChild(el)}updateStats()}
-function trainToday(){const k=key(new Date());if(!trained.includes(k)){trained.push(k);save()}view=new Date();render()}
-document.getElementById("trainButton").addEventListener("click",trainToday);document.getElementById("prev").addEventListener("click",()=>{view.setMonth(view.getMonth()-1);render()});document.getElementById("next").addEventListener("click",()=>{view.setMonth(view.getMonth()+1);render()});
-const now=new Date();document.getElementById("todayText").textContent=`${now.getFullYear()}. ${pad(now.getMonth()+1)}. ${pad(now.getDate())}.`;render();
+for(let d=1;d<=total;d++){const el=document.createElement("div"),dt=new Date(y,m,d),k=key(dt);el.className="day";el.textContent=d;if(trained.includes(k)){el.classList.add("trained");el.textContent="✓"}if(d===now.getDate()&&m===now.getMonth()&&y===now.getFullYear())el.classList.add("today");el.addEventListener("click",()=>{trained=trained.includes(k)?trained.filter(x=>x!==k):[...trained,k];save();renderAll()});box.appendChild(el)}}
+function renderAll(){stats();renderCalendar()}
+function trainToday(){const k=key(new Date());if(!trained.includes(k)){trained.push(k);save()}view=new Date();renderAll()}
+document.getElementById("trainButton").addEventListener("click",trainToday);
+document.getElementById("prev").addEventListener("click",()=>{view.setMonth(view.getMonth()-1);renderCalendar()});
+document.getElementById("next").addEventListener("click",()=>{view.setMonth(view.getMonth()+1);renderCalendar()});
+document.querySelectorAll(".nav-item").forEach(btn=>btn.addEventListener("click",()=>{document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));document.getElementById(btn.dataset.page).classList.add("active");document.querySelectorAll(".nav-item").forEach(b=>b.classList.remove("active"));btn.classList.add("active");if(btn.dataset.page==="calendar")renderCalendar()}));
+document.getElementById("goalInput").addEventListener("change",e=>{let v=Math.max(1,Math.min(14,Number(e.target.value)||5));goal=v;localStorage.setItem("weeklyGoal",goal);stats()});
+document.getElementById("reset").addEventListener("click",()=>{if(confirm("Biztosan törlöd az összes edzésnapot?")){trained=[];save();renderAll()}});
+const now=new Date();document.getElementById("todayText").textContent=`${now.getFullYear()}. ${pad(now.getMonth()+1)}. ${pad(now.getDate())}.`;renderAll();
 </script>
 </body>
 </html>
