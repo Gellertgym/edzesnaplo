@@ -123,6 +123,9 @@ nav{position:fixed;z-index:10000;left:12px;right:12px;bottom:11px;height:72px;pa
 .toast{position:fixed;left:50%;top:18px;transform:translateX(-50%) translateY(-20px);opacity:0;background:#f8f9ff;color:#090a0e;padding:11px 16px;border-radius:999px;font-size:13px;font-weight:750;z-index:30000;box-shadow:0 10px 30px rgba(0,0,0,.3);transition:.25s}
 .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
 @media(min-width:700px){nav{left:50%;right:auto;transform:translateX(-50%);width:520px}.app{padding-top:38px}}
+
+.profile-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}.profile-field{background:rgba(255,255,255,.045);border:1px solid rgba(255,255,255,.07);border-radius:16px;padding:12px}.profile-field label{display:block;font-size:10px;color:#858996;text-transform:uppercase;letter-spacing:.8px;margin-bottom:6px}.profile-field input,.workout-form select,.workout-form textarea,.duration-input{width:100%;border:1px solid rgba(255,255,255,.08);background:#11121a;color:#fff;border-radius:12px;padding:10px 11px;font:inherit;outline:none}.profile-field input:focus,.workout-form select:focus,.workout-form textarea:focus{border-color:rgba(168,85,247,.6)}.profile-save,.primary-btn{width:100%;border:0;border-radius:14px;padding:12px 14px;margin-top:10px;background:linear-gradient(135deg,#8b5cf6,#c044ef);color:#fff;font-weight:800;cursor:pointer}.profile-value{font-size:20px;font-weight:800}.profile-hint{font-size:11px;color:#777b88;margin-top:8px}.week-summary{padding:14px 0;border-bottom:1px solid rgba(255,255,255,.07)}.week-summary:last-child{border-bottom:0}.week-summary-head{display:flex;justify-content:space-between;gap:12px;align-items:center}.week-summary-title{font-weight:800}.week-summary-total{font-size:12px;color:#a98afc}.week-entry{display:flex;justify-content:space-between;gap:12px;padding:8px 0;font-size:12px;color:#aeb1bb}.week-entry strong{color:#f5f5fa;font-weight:700}.week-empty{color:#777b88;font-size:13px}.modal-backdrop{position:fixed;inset:0;background:rgba(0,0,0,.64);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);z-index:40000;display:none;align-items:flex-end;justify-content:center;padding:14px}.modal-backdrop.show{display:flex}.modal{width:min(580px,100%);max-height:88vh;overflow:auto;background:linear-gradient(160deg,#181922,#0d0e14);border:1px solid rgba(255,255,255,.1);border-radius:28px;padding:20px;box-shadow:0 30px 80px rgba(0,0,0,.55)}.modal-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px}.modal-title{font-size:21px;font-weight:850;letter-spacing:-.5px}.close-btn{width:36px;height:36px;border:0;border-radius:12px;background:rgba(255,255,255,.06);color:#fff;font-size:22px;cursor:pointer}.workout-form{display:grid;gap:11px}.form-label{font-size:11px;color:#858996;text-transform:uppercase;letter-spacing:.8px;font-weight:750}.workout-form textarea{min-height:84px;resize:vertical}.timer-box{display:flex;align-items:center;justify-content:space-between;gap:12px;background:rgba(168,85,247,.09);border:1px solid rgba(168,85,247,.18);border-radius:16px;padding:13px}.timer-number{font-size:25px;font-weight:850;font-variant-numeric:tabular-nums}.timer-status{font-size:11px;color:#a98afc;margin-top:2px}.timer-btn{border:0;border-radius:12px;padding:10px 13px;background:#8b5cf6;color:#fff;font-weight:800;cursor:pointer}.timer-btn.stop{background:#d946ef}.secondary-btn{width:100%;border:1px solid rgba(255,255,255,.09);border-radius:14px;padding:11px;background:rgba(255,255,255,.045);color:#fff;font-weight:750;cursor:pointer}.two-btn{display:grid;grid-template-columns:1fr 1fr;gap:9px}.day-type{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.type-option{border:1px solid rgba(255,255,255,.08);background:rgba(255,255,255,.04);color:#b8bac4;border-radius:12px;padding:10px 6px;font-size:12px;font-weight:750;cursor:pointer}.type-option.selected{background:rgba(168,85,247,.2);border-color:rgba(168,85,247,.55);color:#fff}.small-note{font-size:11px;color:#777b88;line-height:1.45}.week-log{margin-top:12px}
+@media(max-width:390px){.day-type{grid-template-columns:repeat(2,1fr)}}
 </style>
 </head>
 <body>
@@ -153,6 +156,15 @@ nav{position:fixed;z-index:10000;left:12px;right:12px;bottom:11px;height:72px;pa
   </div>
   <div class="card streak">
     <div class="flame">🔥</div><div><div class="sub">Current streak</div><div class="goal-number" style="font-size:25px"><span id="streak">0</span> weeks</div></div>
+  </div>
+  <div class="card">
+    <h2>My profile</h2>
+    <div class="profile-grid">
+      <div class="profile-field"><label>Height</label><input id="heightInput" type="number" min="100" max="250" inputmode="decimal" placeholder="cm"></div>
+      <div class="profile-field"><label>Weight</label><input id="weightInput" type="number" min="20" max="300" step="0.1" inputmode="decimal" placeholder="kg"></div>
+    </div>
+    <button class="profile-save" id="saveProfile" type="button">Save profile</button>
+    <div class="profile-hint">Your weight can be updated whenever you want.</div>
   </div>
   <h2>Overview</h2>
   <div class="overview-grid">
@@ -193,6 +205,11 @@ nav{position:fixed;z-index:10000;left:12px;right:12px;bottom:11px;height:72px;pa
     <div style="font-size:28px;font-weight:800;margin-top:5px" id="consistency">0%</div>
     <div class="sub" style="margin-top:5px">Workout days in the last 8 weeks</div>
   </div>
+  <div class="card">
+    <h2>Weekly log</h2>
+    <div class="small-note">Completed weeks are kept for one month.</div>
+    <div id="weeklySummaries" class="week-log"></div>
+  </div>
 </section>
 </main>
 
@@ -204,19 +221,150 @@ nav{position:fixed;z-index:10000;left:12px;right:12px;bottom:11px;height:72px;pa
 </nav>
 <div id="fireworks" class="fireworks"></div>
 
+
+<div id="workoutModal" class="modal-backdrop" aria-hidden="true">
+  <div class="modal">
+    <div class="modal-head"><div class="modal-title" id="modalTitle">Workout</div><button class="close-btn" id="closeModal" type="button">×</button></div>
+    <div class="workout-form">
+      <div class="form-label">Workout type</div>
+      <div class="day-type" id="typeOptions">
+        <button class="type-option" data-type="Legs + Abs" type="button">Legs + Abs</button>
+        <button class="type-option" data-type="Pull" type="button">Pull</button>
+        <button class="type-option" data-type="Push" type="button">Push</button>
+        <button class="type-option" data-type="Arms" type="button">Arms</button>
+        <button class="type-option" data-type="Full Body" type="button">Full Body</button>
+      </div>
+      <div class="form-label">Weight that day (kg)</div>
+      <input class="duration-input" id="workoutWeight" type="number" min="20" max="300" step="0.1" inputmode="decimal" placeholder="Optional">
+      <div class="timer-box">
+        <div><div class="timer-number" id="timerDisplay">00:00</div><div class="timer-status" id="timerStatus">Not started</div></div>
+        <button class="timer-btn" id="timerButton" type="button">Start workout</button>
+      </div>
+      <div class="form-label">Duration (minutes)</div>
+      <input class="duration-input" id="manualDuration" type="number" min="1" max="600" inputmode="numeric" placeholder="Optional if you did not use the timer">
+      <div class="form-label">Notes</div>
+      <textarea id="workoutNotes" placeholder="What did you do? How did it go?"></textarea>
+      <div class="small-note">Starting the timer is optional. If you use it, the duration is saved automatically when you finish.</div>
+      <div class="two-btn"><button class="secondary-btn" id="cancelWorkout" type="button">Cancel</button><button class="primary-btn" id="saveWorkout" type="button" style="margin-top:0">Save workout</button></div>
+    </div>
+  </div>
+</div>
+
 <script>
 (function(){
   "use strict";
 
   var trained = JSON.parse(localStorage.getItem("trainedDays") || "[]");
   var trainedSet = new Set(trained);
+  var workoutData = JSON.parse(localStorage.getItem("workoutData") || "{}");
+  var weeklySummaries = JSON.parse(localStorage.getItem("weeklySummaries") || "[]");
+  var profile = JSON.parse(localStorage.getItem("workoutProfile") || "{}");
+  var modalDate = "";
+  var selectedType = "";
+  var timerInterval = null;
+  var timerStart = null;
   var currentMonth = new Date();
   currentMonth.setDate(1);
 
   function key(d){
     return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0");
   }
+  modalDate = key(new Date());
   function save(){ localStorage.setItem("trainedDays", JSON.stringify(Array.from(trainedSet).sort())); }
+  function saveWorkoutData(){ localStorage.setItem("workoutData", JSON.stringify(workoutData)); }
+  function saveSummaries(){ localStorage.setItem("weeklySummaries", JSON.stringify(weeklySummaries)); }
+  function saveProfile(){ localStorage.setItem("workoutProfile", JSON.stringify(profile)); }
+  function dateFromKey(k){ return new Date(k+"T00:00:00"); }
+  function formatDuration(min){
+    min=Math.max(0,Math.round(Number(min)||0));
+    if(min<60) return min+" min";
+    var h=Math.floor(min/60), m=min%60;
+    return h+"h"+(m?" "+m+"m":"");
+  }
+  function mondayKeyFor(d){
+    var x=new Date(d); x.setHours(0,0,0,0); x.setDate(x.getDate()-mondayIndex(x)); return key(x);
+  }
+  function cleanupAndCreateSummaries(){
+    var now=new Date();
+    var cutoff=new Date(now.getFullYear(),now.getMonth(),now.getDate()-31);
+    weeklySummaries=weeklySummaries.filter(function(s){ return dateFromKey(s.weekStart)>=cutoff; });
+    var thisMonday=dateFromKey(mondayKeyFor(now));
+    var cursor=new Date(thisMonday); cursor.setDate(cursor.getDate()-7);
+    for(var n=0;n<5;n++){
+      var start=new Date(cursor); var end=new Date(start); end.setDate(end.getDate()+6);
+      if(end>=cutoff && end<now){
+        var wk=key(start);
+        if(!weeklySummaries.some(function(s){return s.weekStart===wk;})){
+          var entries=[];
+          for(var i=0;i<7;i++){
+            var d=new Date(start); d.setDate(start.getDate()+i); var k=key(d), w=workoutData[k];
+            if(w){ entries.push({date:k,type:w.type||"Workout",duration:Number(w.duration)||0}); }
+            else if(trainedSet.has(k)){ entries.push({date:k,type:"Workout",duration:0}); }
+          }
+          if(entries.length) weeklySummaries.push({weekStart:wk,weekEnd:key(end),entries:entries,createdAt:now.toISOString()});
+        }
+      }
+      cursor.setDate(cursor.getDate()-7);
+    }
+    weeklySummaries.sort(function(a,b){return a.weekStart<b.weekStart?1:-1;});
+    saveSummaries();
+  }
+  function renderWeeklySummaries(){
+    var box=document.getElementById("weeklySummaries"); if(!box)return;
+    if(!weeklySummaries.length){ box.innerHTML='<div class="week-empty">No completed week saved yet.</div>'; return; }
+    box.innerHTML=weeklySummaries.slice(0,5).map(function(s){
+      var total=s.entries.reduce(function(a,e){return a+(Number(e.duration)||0)},0);
+      var head=dateFromKey(s.weekStart).toLocaleDateString("en-US",{month:"short",day:"numeric"})+" – "+dateFromKey(s.weekEnd).toLocaleDateString("en-US",{month:"short",day:"numeric"});
+      return '<div class="week-summary"><div class="week-summary-head"><div class="week-summary-title">'+head+'</div><div class="week-summary-total">'+s.entries.length+' workouts · '+formatDuration(total)+'</div></div>'+s.entries.map(function(e){return '<div class="week-entry"><span>'+dateFromKey(e.date).toLocaleDateString("en-US",{weekday:"short",month:"short",day:"numeric"})+' · <strong>'+e.type+'</strong></span><span>'+((Number(e.duration)||0)>0?formatDuration(e.duration):"—")+'</span></div>';}).join('')+'</div>';
+    }).join('');
+  }
+  function loadProfile(){
+    document.getElementById("heightInput").value=profile.height||"";
+    document.getElementById("weightInput").value=profile.weight||"";
+  }
+  function workoutForDate(k){ return workoutData[k]||null; }
+  function resetTimerUI(){ document.getElementById("timerDisplay").textContent="00:00"; document.getElementById("timerStatus").textContent="Not started"; document.getElementById("timerButton").textContent="Start workout"; document.getElementById("timerButton").classList.remove("stop"); }
+  function updateTimer(){
+    if(!timerStart)return;
+    var sec=Math.floor((Date.now()-timerStart)/1000), mm=Math.floor(sec/60), ss=sec%60;
+    document.getElementById("timerDisplay").textContent=String(mm).padStart(2,"0")+":"+String(ss).padStart(2,"0");
+  }
+  function stopTimer(){ if(timerInterval){clearInterval(timerInterval);timerInterval=null;} }
+  function openWorkoutModal(dateKey){
+    stopTimer(); timerStart=null; modalDate=dateKey||key(new Date());
+    var d=dateFromKey(modalDate), existing=workoutForDate(modalDate);
+    document.getElementById("modalTitle").textContent=d.toLocaleDateString("en-US",{month:"long",day:"numeric",year:"numeric"});
+    selectedType=existing&&existing.type?existing.type:"";
+    document.querySelectorAll(".type-option").forEach(function(b){b.classList.toggle("selected",b.dataset.type===selectedType);});
+    document.getElementById("workoutWeight").value=existing&&existing.weight!=null?existing.weight:(profile.weight||"");
+    document.getElementById("manualDuration").value=existing&&existing.duration?existing.duration:"";
+    document.getElementById("workoutNotes").value=existing&&existing.notes?existing.notes:"";
+    resetTimerUI();
+    if(existing&&existing.startedAt&&existing.endedAt){
+      document.getElementById("timerDisplay").textContent=formatTimerMinutes(existing.duration);
+      document.getElementById("timerStatus").textContent="Completed";
+    }
+    document.getElementById("workoutModal").classList.add("show"); document.getElementById("workoutModal").setAttribute("aria-hidden","false");
+  }
+  function formatTimerMinutes(min){ var sec=Math.max(0,Math.round((Number(min)||0)*60)),mm=Math.floor(sec/60),ss=sec%60; return String(mm).padStart(2,"0")+":"+String(ss).padStart(2,"0"); }
+  function closeWorkoutModal(){ stopTimer(); timerStart=null; document.getElementById("workoutModal").classList.remove("show"); document.getElementById("workoutModal").setAttribute("aria-hidden","true"); }
+  function saveWorkout(){
+    var type=selectedType||"Workout", weight=document.getElementById("workoutWeight").value, notes=document.getElementById("workoutNotes").value.trim(), manual=Number(document.getElementById("manualDuration").value)||0;
+    var existing=workoutData[modalDate]||{}, duration=manual;
+    if(existing._liveDuration) duration=existing._liveDuration;
+    if(existing.startedAt&&existing.endedAt) duration=Number(existing.duration)||duration;
+    if(timerStart){ duration=Math.round((Date.now()-timerStart)/60000); if(duration<1)duration=1; }
+    workoutData[modalDate]={type:type,weight:weight?Number(weight):null,notes:notes,duration:duration,startedAt:existing.startedAt||null,endedAt:existing.endedAt||null};
+    if(timerStart){ workoutData[modalDate].startedAt=new Date(timerStart).toISOString(); workoutData[modalDate].endedAt=new Date().toISOString(); }
+    if(!trainedSet.has(modalDate)) trainedSet.add(modalDate);
+    saveWorkoutData(); save(); cleanupAndCreateSummaries(); updateHome(); renderCalendar(); renderAwards(); renderStats(); renderWeeklySummaries(); fireworks(); closeWorkoutModal(); showToast("Workout saved");
+  }
+  function startOrFinishTimer(){
+    var btn=document.getElementById("timerButton");
+    if(!timerStart){ timerStart=Date.now(); workoutData[modalDate]=workoutData[modalDate]||{}; workoutData[modalDate].startedAt=new Date(timerStart).toISOString(); btn.textContent="Finish workout"; btn.classList.add("stop"); document.getElementById("timerStatus").textContent="Workout in progress"; timerInterval=setInterval(updateTimer,1000); updateTimer(); }
+    else { var duration=Math.max(1,Math.round((Date.now()-timerStart)/60000)); document.getElementById("manualDuration").value=duration; workoutData[modalDate]=workoutData[modalDate]||{}; workoutData[modalDate].duration=duration; workoutData[modalDate].endedAt=new Date().toISOString(); stopTimer(); document.getElementById("timerStatus").textContent="Finished · ready to save"; btn.textContent="Restart"; btn.classList.remove("stop"); timerStart=null; }
+  }
+
   function mondayIndex(d){ return (d.getDay()+6)%7; }
 
   function showPage(id){
@@ -305,32 +453,15 @@ nav{position:fixed;z-index:10000;left:12px;right:12px;bottom:11px;height:72px;pa
     setTimeout(function(){box.innerHTML=""},1400);
   }
 
-  function logToday(){
-    var today=key(new Date());
-    if(!trainedSet.has(today)){
-      trainedSet.add(today); save(); updateHome(); renderCalendar(); renderAwards(); renderStats(); fireworks();
-    }else{
-      showToast("Today's workout is already logged");
-    }
-  }
+  function logToday(){ openWorkoutModal(key(new Date())); }
   document.getElementById("workoutButton").addEventListener("click",logToday);
   document.getElementById("workoutButton").addEventListener("keydown",function(e){if(e.key==="Enter"||e.key===" "){e.preventDefault();logToday();}});
 
   function toggleCalendarDay(date){
     var today = new Date(); today.setHours(0,0,0,0);
     var picked = new Date(date); picked.setHours(0,0,0,0);
-    if(picked > today){
-      showToast("Future days cannot be logged");
-      return;
-    }
-    var k = key(date);
-    if(trainedSet.has(k)) trainedSet.delete(k);
-    else trainedSet.add(k);
-    save();
-    updateHome();
-    renderCalendar();
-    renderAwards();
-    renderStats();
+    if(picked > today){ showToast("Future days cannot be logged"); return; }
+    openWorkoutModal(key(date));
   }
 
   function renderCalendar(){
@@ -401,7 +532,21 @@ nav{position:fixed;z-index:10000;left:12px;right:12px;bottom:11px;height:72px;pa
     setTimeout(function(){t.classList.remove("show")},1600);
   }
 
-  updateHome(); renderCalendar(); renderAwards(); renderStats();
+
+  document.querySelectorAll(".type-option").forEach(function(btn){ btn.addEventListener("click",function(){ selectedType=btn.dataset.type; document.querySelectorAll(".type-option").forEach(function(b){b.classList.toggle("selected",b===btn);}); }); });
+  document.getElementById("timerButton").addEventListener("click",startOrFinishTimer);
+  document.getElementById("saveWorkout").addEventListener("click",saveWorkout);
+  document.getElementById("closeModal").addEventListener("click",closeWorkoutModal);
+  document.getElementById("cancelWorkout").addEventListener("click",closeWorkoutModal);
+  document.getElementById("workoutModal").addEventListener("click",function(e){if(e.target.id==="workoutModal")closeWorkoutModal();});
+  document.getElementById("saveProfile").addEventListener("click",function(){
+    var h=document.getElementById("heightInput").value, w=document.getElementById("weightInput").value;
+    profile={height:h?Number(h):null,weight:w?Number(w):null}; saveProfile(); showToast("Profile saved");
+  });
+
+  cleanupAndCreateSummaries();
+  loadProfile();
+  updateHome(); renderCalendar(); renderAwards(); renderStats(); renderWeeklySummaries();
 })();
 </script>
 </body>
