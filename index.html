@@ -19,7 +19,7 @@ button{font:inherit}
 .page{display:none;animation:pageIn .24s cubic-bezier(.2,.8,.2,1)}
 .page.active{display:block}
 @keyframes pageIn{from{opacity:0;transform:translateY(8px) scale(.99)}to{opacity:1;transform:none}}
-h1{font-size:38px;line-height:1;letter-spacing:-1.8px;margin:8px 0 26px;font-weight:850}
+.brand{display:flex;align-items:center;gap:11px;margin:4px 0 26px}.brand-mark{width:42px;height:42px;filter:drop-shadow(0 7px 18px rgba(168,85,247,.3))}.brand-mark svg{display:block;width:100%;height:100%}.brand-name{font-size:34px;line-height:1;font-weight:850;letter-spacing:-1.8px} h1{font-size:38px;line-height:1;letter-spacing:-1.8px;margin:8px 0 26px;font-weight:850}
 h2{font-size:21px;margin:0 0 15px;letter-spacing:-.5px}
 .card{position:relative;background:linear-gradient(145deg,rgba(20,21,29,.92),rgba(10,11,16,.94));border:1px solid rgba(255,255,255,.075);border-radius:26px;padding:20px;margin-bottom:14px;box-shadow:0 18px 45px rgba(0,0,0,.24);overflow:hidden}
 .card:after{content:"";position:absolute;inset:0;pointer-events:none;border-radius:inherit;background:linear-gradient(135deg,rgba(255,255,255,.035),transparent 35%);opacity:.8}
@@ -113,18 +113,8 @@ backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)
 .empty{color:#777783;font-size:14px}
 nav{position:fixed;z-index:10000;left:12px;right:12px;bottom:11px;height:72px;padding-bottom:env(safe-area-inset-bottom);background:rgba(14,15,21,.91);backdrop-filter:blur(24px) saturate(150%);-webkit-backdrop-filter:blur(24px) saturate(150%);border:1px solid rgba(255,255,255,.09);border-radius:24px;display:grid;grid-template-columns:repeat(4,1fr);box-shadow:0 18px 50px rgba(0,0,0,.52),inset 0 1px rgba(255,255,255,.045)}
 .navitem{appearance:none;border:0;background:transparent;color:#696e7b;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;cursor:pointer;touch-action:manipulation;position:relative}
-.navitem.active{color:#fff}
-.navitem.active:before{
-content:"";
-position:absolute;
-top:auto;
-bottom:5px;
-width:28px;
-height:3px;
-border-radius:5px;
-background:#a855f7;
-box-shadow:0 0 12px rgba(168,85,247,.65)
-}
+.navitem.active{color:#fff;background:linear-gradient(180deg,rgba(168,85,247,.18),rgba(168,85,247,.07));border-radius:17px;margin:5px;box-shadow:inset 0 0 0 1px rgba(168,85,247,.12)}
+
 .navicon{font-size:18px;line-height:1}.navlabel{font-size:10px;font-weight:700;letter-spacing:.1px}
 .fireworks{position:fixed;inset:0;pointer-events:none;z-index:20000;overflow:hidden}
 .spark{position:absolute;width:5px;height:5px;border-radius:50%;background:#fff;animation:boom 1.15s ease-out forwards;box-shadow:0 0 8px currentColor}
@@ -139,7 +129,16 @@ box-shadow:0 0 12px rgba(168,85,247,.65)
 <main class="app">
 
 <section id="home" class="page active">
-  <h1>Workout</h1>
+  <div class="brand">
+      <div class="brand-mark" aria-hidden="true">
+        <svg viewBox="0 0 48 48" role="img">
+          <defs><linearGradient id="lg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#b66cff"/><stop offset="1" stop-color="#e044ff"/></linearGradient></defs>
+          <rect x="2" y="2" width="44" height="44" rx="14" fill="url(#lg)"/>
+          <path d="M14 20v8M18 16v16M30 16v16M34 20v8M18 24h12" fill="none" stroke="#fff" stroke-width="3.2" stroke-linecap="round"/>
+        </svg>
+      </div>
+      <div class="brand-name">Workout</div>
+    </div>
   <div id="workoutButton" class="card workout-card" role="button" tabindex="0">
     <div class="workout-title">TODAY <span style="opacity:.5">/</span> WORKOUT</div>
     <div>
