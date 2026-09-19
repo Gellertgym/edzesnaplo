@@ -96,8 +96,8 @@ backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)
 .month-buttons button{width:38px;height:34px;border:1px solid #292d38;background:#151720;color:#fff;border-radius:11px;font-size:22px;line-height:1}
 .weekdays,.days{display:grid;grid-template-columns:repeat(7,1fr);gap:5px}
 .weekdays div{text-align:center;color:#656a78;font-size:10px;font-weight:750;padding-bottom:5px;letter-spacing:.5px}
-.day{height:48px;border-radius:13px;background:rgba(255,255,255,.025);border:1px solid rgba(255,255,255,.045);display:flex;align-items:center;justify-content:center;position:relative;color:#d9dbe3;font-size:14px}
-.day.muted{color:#3e424c;background:transparent;border-color:transparent}
+.day{height:48px;border-radius:13px;cursor:pointer;touch-action:manipulation;background:rgba(255,255,255,.025);border:1px solid rgba(255,255,255,.045);display:flex;align-items:center;justify-content:center;position:relative;color:#d9dbe3;font-size:14px}
+.day.muted{color:#3e424c;background:transparent;border-color:transparent;cursor:default}.day.future{opacity:.42;cursor:not-allowed}.day:not(.muted):not(.future):active{transform:scale(.94)}
 .day.today{border-color:#697180;box-shadow:inset 0 0 0 1px rgba(255,255,255,.05)}
 .day.worked:after{content:"";position:absolute;bottom:5px;width:6px;height:6px;border-radius:2px;background:#a855f7;box-shadow:0 0 9px rgba(168,85,247,.8)}
 .year-btn{width:100%;margin-top:16px;background:#151720;border:1px solid rgba(255,255,255,.07);color:#fff;padding:14px;border-radius:15px;font-weight:700}
@@ -162,7 +162,7 @@ nav{position:fixed;z-index:10000;left:12px;right:12px;bottom:11px;height:72px;pa
     </div>
     <div class="weekdays"><div>MON</div><div>TUE</div><div>WED</div><div>THU</div><div>FRI</div><div>SAT</div><div>SUN</div></div>
     <div id="days" class="days"></div>
-    <button type="button" class="year-btn" id="yearSummary">Annual summary</button>
+    <div class="sub" style="text-align:center;margin-top:12px">Tap any past day to add or remove a workout</div><button type="button" class="year-btn" id="yearSummary">Annual summary</button>
   </div>
 </section>
 
@@ -306,6 +306,23 @@ nav{position:fixed;z-index:10000;left:12px;right:12px;bottom:11px;height:72px;pa
   document.getElementById("workoutButton").addEventListener("click",logToday);
   document.getElementById("workoutButton").addEventListener("keydown",function(e){if(e.key==="Enter"||e.key===" "){e.preventDefault();logToday();}});
 
+  function toggleCalendarDay(date){
+    var today = new Date(); today.setHours(0,0,0,0);
+    var picked = new Date(date); picked.setHours(0,0,0,0);
+    if(picked > today){
+      showToast("Future days cannot be logged");
+      return;
+    }
+    var k = key(date);
+    if(trainedSet.has(k)) trainedSet.delete(k);
+    else trainedSet.add(k);
+    save();
+    updateHome();
+    renderCalendar();
+    renderAwards();
+    renderStats();
+  }
+
   function renderCalendar(){
     var y=currentMonth.getFullYear(), m=currentMonth.getMonth();
     document.getElementById("monthTitle").textContent=currentMonth.toLocaleString("en-US",{month:"long",year:"numeric"});
@@ -316,10 +333,16 @@ nav{position:fixed;z-index:10000;left:12px;right:12px;bottom:11px;height:72px;pa
       if(num<1){d=new Date(y,m-1,prev+num);muted=true}
       else if(num>days){d=new Date(y,m+1,num-days);muted=true}
       else d=new Date(y,m,num);
-      var el=document.createElement("div"); el.className="day"+(muted?" muted":"");
+      var el=document.createElement("button"); el.type="button"; el.className="day"+(muted?" muted":"");
       if(key(d)===key(new Date())) el.classList.add("today");
       if(trainedSet.has(key(d))) el.classList.add("worked");
-      el.textContent=d.getDate(); grid.appendChild(el);
+      var nowDate=new Date(); nowDate.setHours(0,0,0,0);
+      if(d>nowDate && !muted) el.classList.add("future");
+      el.textContent=d.getDate();
+      el.setAttribute("aria-label", d.toLocaleDateString("en-US",{weekday:"long",month:"long",day:"numeric",year:"numeric"}) + (trainedSet.has(key(d)) ? " — workout logged" : " — no workout logged"));
+      if(!muted) el.addEventListener("click",function(){toggleCalendarDay(d);});
+      else el.disabled=true;
+      grid.appendChild(el);
     }
   }
   document.getElementById("prevMonth").addEventListener("click",function(){currentMonth.setMonth(currentMonth.getMonth()-1);renderCalendar();});
