@@ -44,53 +44,67 @@ nav{position:fixed;left:50%;bottom:0;transform:translateX(-50%);width:min(430px,
 .celebrate{animation:pop .42s ease-out}
 @keyframes pop{0%{transform:scale(1)}45%{transform:scale(1.08)}100%{transform:scale(1)}}
 
-/* FULL_6_0_UPGRADE */
-.home-workout-card{position:relative;overflow:hidden;padding:22px;border-radius:22px;margin:12px 0 16px}
-.home-workout-card .eyebrow{font-size:11px;letter-spacing:.14em;opacity:.55;font-weight:700}
-.home-workout-card .today-title{font-size:30px;font-weight:800;letter-spacing:-.04em;margin:6px 0 4px}
-.home-workout-card .today-sub{font-size:13px;opacity:.58}
-.goal-wrap{margin-top:18px}
-.goal-top{display:flex;justify-content:space-between;align-items:end;margin-bottom:8px}
-.goal-number{font-size:28px;font-weight:800}
-.goal-track{height:10px;border-radius:99px;background:rgba(255,255,255,.09);overflow:hidden}
-.goal-fill{height:100%;width:0;border-radius:99px;background:#2f80ff;transition:width .7s cubic-bezier(.2,.8,.2,1)}
-.goal-pulse{animation:goalPulse .55s ease-out}
-@keyframes goalPulse{0%{transform:scaleX(.9)}60%{transform:scaleX(1.03)}100%{transform:scaleX(1)}}
-.streak-hero{display:flex;align-items:center;gap:14px;padding:16px 18px;border-radius:20px;background:linear-gradient(135deg,rgba(47,128,255,.18),rgba(47,128,255,.05));border:1px solid rgba(47,128,255,.28);margin-bottom:14px}
-.streak-number{font-size:34px;font-weight:850;line-height:1}
-.streak-label{font-size:12px;opacity:.58;text-transform:uppercase;letter-spacing:.1em}
-.streak-fire{width:48px;height:48px;border-radius:16px;display:grid;place-items:center;background:#2f80ff;color:white;font-size:22px;box-shadow:0 8px 28px rgba(47,128,255,.3)}
-.stats-grid-6{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.stat-card-6{padding:16px;border-radius:18px;background:rgba(255,255,255,.045);border:1px solid rgba(255,255,255,.07)}
-.stat-card-6 .v{font-size:25px;font-weight:800}
-.stat-card-6 .l{font-size:11px;opacity:.5;margin-top:4px;text-transform:uppercase;letter-spacing:.08em}
-.award-6{display:flex;align-items:center;gap:12px;padding:13px;border-radius:17px;margin-top:9px;background:rgba(255,255,255,.045);border:1px solid rgba(255,255,255,.06);transition:transform .2s,opacity .2s}
-.award-6.locked{opacity:.32}
-.award-6.unlocked{border-color:rgba(47,128,255,.35);box-shadow:0 8px 28px rgba(47,128,255,.08)}
-.award-icon-6{width:40px;height:40px;border-radius:13px;background:rgba(47,128,255,.14);display:grid;place-items:center;font-size:18px}
-.award-name-6{font-weight:750}.award-desc-6{font-size:12px;opacity:.52;margin-top:2px}
-#celebration{position:fixed;inset:0;pointer-events:none;z-index:99999;overflow:hidden}
-.confetti-piece{position:absolute;top:48%;left:50%;width:7px;height:13px;border-radius:2px;opacity:0;animation:confettiBurst 1.35s cubic-bezier(.16,.84,.32,1) forwards}
-@keyframes confettiBurst{0%{transform:translate(-50%,-50%) scale(.2) rotate(0);opacity:1}100%{transform:translate(calc(-50% + var(--x)),calc(-50% + var(--y))) rotate(var(--r));opacity:0}}
-.workout-celebrate{animation:workoutCelebrate .42s ease-out}
-@keyframes workoutCelebrate{0%{transform:scale(1)}45%{transform:scale(1.06)}100%{transform:scale(1)}}
+
+
+/* ===== 6.1 CLEAN CALENDAR + CELEBRATION ===== */
+.month-calendar-61{margin-top:10px}
+.month-head-61{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
+.month-title-61{font-size:25px;font-weight:800;letter-spacing:-.03em}
+.month-sub-61{font-size:12px;opacity:.5;margin-top:3px}
+.month-grid-61{display:grid;grid-template-columns:repeat(7,1fr);gap:7px}
+.month-dow-61{font-size:10px;opacity:.42;text-align:center;padding-bottom:3px}
+.day-61{height:35px;border-radius:8px;background:rgba(255,255,255,.045);display:flex;align-items:center;justify-content:center;font-size:12px;color:rgba(255,255,255,.55);position:relative}
+.day-61.empty{background:transparent}
+.day-61.today{outline:1px solid rgba(255,255,255,.55);outline-offset:1px}
+.day-61.worked{background:#2f80ff;color:transparent;box-shadow:0 5px 14px rgba(47,128,255,.18)}
+.day-61.worked::after{content:"";width:12px;height:12px;border-radius:4px;background:#2f80ff}
+.calendar-summary-61{display:flex;justify-content:space-between;align-items:center;margin-top:16px;padding:14px 16px;border-radius:17px;background:rgba(255,255,255,.045);border:1px solid rgba(255,255,255,.06)}
+.summary-big-61{font-size:24px;font-weight:800}
+.summary-label-61{font-size:11px;opacity:.48;text-transform:uppercase;letter-spacing:.08em}
+.year-button-61{width:100%;margin-top:10px;padding:13px 15px;border:0;border-radius:16px;background:rgba(255,255,255,.07);color:inherit;font:inherit;font-weight:700;display:flex;align-items:center;justify-content:space-between}
+.year-panel-61{display:none;margin-top:12px;padding:16px;border-radius:18px;background:rgba(255,255,255,.045);border:1px solid rgba(255,255,255,.06)}
+.year-panel-61.open{display:block;animation:fadeIn61 .25s ease-out}
+@keyframes fadeIn61{from{opacity:0;transform:translateY(-5px)}to{opacity:1;transform:none}}
+.year-row-61{display:flex;align-items:center;gap:10px;margin:10px 0}
+.year-row-61 .name{width:34px;font-size:11px;opacity:.5}
+.year-track-61{flex:1;height:7px;border-radius:99px;background:rgba(255,255,255,.08);overflow:hidden}
+.year-fill-61{height:100%;border-radius:99px;background:#2f80ff;transition:width .5s}
+.year-count-61{width:28px;text-align:right;font-size:11px;opacity:.55}
+.clean-home-61{padding:20px 0 4px}
+.clean-title-61{font-size:32px;font-weight:850;letter-spacing:-.045em;margin:0}
+.clean-sub-61{font-size:13px;opacity:.48;margin-top:4px}
+.today-card-61{margin-top:18px;padding:20px;border-radius:22px;background:linear-gradient(145deg,rgba(47,128,255,.16),rgba(255,255,255,.035));border:1px solid rgba(47,128,255,.18)}
+.today-row-61{display:flex;justify-content:space-between;align-items:center}
+.today-label-61{font-size:11px;letter-spacing:.12em;opacity:.52;font-weight:750}
+.today-state-61{font-size:21px;font-weight:800;margin-top:5px}
+.progress-track-61{height:8px;background:rgba(255,255,255,.08);border-radius:99px;overflow:hidden;margin-top:15px}
+.progress-fill-61{height:100%;background:#2f80ff;border-radius:99px;transition:width .65s cubic-bezier(.2,.8,.2,1)}
+.streak-card-61{margin-top:10px;padding:15px 17px;border-radius:18px;background:rgba(255,255,255,.045);display:flex;align-items:center;gap:13px}
+.streak-dot-61{width:40px;height:40px;border-radius:13px;background:#2f80ff;display:grid;place-items:center;font-weight:850}
+.streak-big-61{font-size:24px;font-weight:850}
+.streak-small-61{font-size:11px;opacity:.5}
+.celebration-61{position:fixed;inset:0;pointer-events:none;z-index:999999;overflow:hidden}
+.confetti-61{position:absolute;left:50%;top:52%;width:6px;height:12px;border-radius:2px;opacity:0;animation:burst61 1.65s cubic-bezier(.12,.75,.22,1) forwards}
+@keyframes burst61{0%{transform:translate(-50%,-50%) scale(.2) rotate(0);opacity:1}35%{opacity:1}100%{transform:translate(calc(-50% + var(--x)),calc(-50% + var(--y))) rotate(var(--r));opacity:0}}
 
 </style>
 </head>
 <body>
-<!-- FULL_6_0_UPGRADE -->
-<section class="home-workout-card card" id="full6WorkoutCard">
-  <div class="eyebrow">MAI EDZÉS</div>
-  <div class="today-title" id="full6TodayTitle">Készen állsz?</div>
-  <div class="today-sub" id="full6TodaySub">Egy edzés ma is számít.</div>
-  <div class="goal-wrap">
-    <div class="goal-top">
-      <div class="goal-number"><span id="full6GoalDone">0</span> / <span id="full6GoalTarget">5</span></div>
-      <div class="today-sub">heti cél</div>
+<div class="clean-home-61" id="cleanHome61">
+  <h1 class="clean-title-61">Edzésnapló</h1>
+  <div class="clean-sub-61" id="cleanDate61"></div>
+  <div class="today-card-61">
+    <div class="today-row-61">
+      <div><div class="today-label-61">MAI EDZÉS</div><div class="today-state-61" id="todayState61">Készen állsz?</div></div>
+      <div class="summary-big-61"><span id="goalDone61">0</span>/<span id="goalTarget61">5</span></div>
     </div>
-    <div class="goal-track"><div class="goal-fill" id="full6GoalFill"></div></div>
+    <div class="progress-track-61"><div class="progress-fill-61" id="goalFill61"></div></div>
   </div>
-</section>
+  <div class="streak-card-61">
+    <div class="streak-dot-61">S</div>
+    <div><div class="streak-big-61"><span id="streak61">0</span> hét</div><div class="streak-small-61">aktuális streak</div></div>
+  </div>
+</div>
 
 
 <div class="app">
@@ -107,6 +121,32 @@ nav{position:fixed;left:50%;bottom:0;transform:translateX(-50%);width:min(430px,
 </section>
 
 <section class="page" id="calendar">
+<div class="month-calendar-61" id="monthCalendar61">
+  <div class="month-head-61">
+    <div>
+      <div class="month-title-61" id="monthTitle61"></div>
+      <div class="month-sub-61" id="monthSub61"></div>
+    </div>
+    <div style="display:flex;gap:6px">
+      <button id="prevMonth61" class="icon-btn" type="button">‹</button>
+      <button id="nextMonth61" class="icon-btn" type="button">›</button>
+    </div>
+  </div>
+  <div class="month-grid-61" id="monthDow61"></div>
+  <div class="month-grid-61" id="monthDays61"></div>
+  <div class="calendar-summary-61">
+    <div><div class="summary-big-61" id="monthCount61">0</div><div class="summary-label-61">edzés ebben a hónapban</div></div>
+    <div class="summary-label-61" id="monthPercent61">0%</div>
+  </div>
+  <button class="year-button-61" id="yearToggle61" type="button">
+    <span>Éves összesítő</span><span id="yearArrow61">＋</span>
+  </button>
+  <div class="year-panel-61" id="yearPanel61">
+    <div class="summary-label-61" style="margin-bottom:10px">EDZÉSEK HÓNAPONKÉNT</div>
+    <div id="yearRows61"></div>
+  </div>
+</div>
+
   <h2 class="section-title">Naptár</h2>
   <div class="card">
     <div class="calendar-head"><button class="nav" id="prev" type="button">‹</button><div class="month" id="monthName"></div><button class="nav" id="next" type="button">›</button></div>
@@ -233,79 +273,101 @@ const now=new Date();document.getElementById("todayText").textContent=`${now.get
 function celebrateWorkout(){const layer=document.getElementById("celebration");if(!layer)return;layer.innerHTML="";const colors=["#2f80ff","#67a4ff","#9bc7ff","#fff"];for(let i=0;i<60;i++){const p=document.createElement("span");p.className="confetti-piece";const a=Math.random()*Math.PI*2,d=100+Math.random()*230;p.style.setProperty("--x",`${Math.cos(a)*d}px`);p.style.setProperty("--y",`${Math.sin(a)*d+70}px`);p.style.setProperty("--r",`${Math.round(Math.random()*900-450)}deg`);p.style.background=colors[i%colors.length];p.style.animationDelay=`${Math.random()*.08}s`;layer.appendChild(p)}setTimeout(()=>layer.innerHTML="",1500)}
 const originalTrainToday=trainToday;trainToday=function(){const before=trained.length;originalTrainToday();if(trained.length>before){celebrateWorkout();const b=document.getElementById("trainButton");b.classList.remove("celebrate");void b.offsetWidth;b.classList.add("celebrate");setTimeout(()=>b.classList.remove("celebrate"),500)}};
 
-/* FULL_6_0_UPGRADE JS */
-(function(){
-  const getDays = () => {
-    try { return JSON.parse(localStorage.getItem("trainedDays") || "[]"); } catch(e) { return []; }
-  };
-  const getGoal = () => Number(localStorage.getItem("weeklyGoal") || 5);
-
-  function iso(d){ return d.toISOString().slice(0,10); }
-  function weekStart(d){ const x=new Date(d); const day=(x.getDay()+6)%7; x.setDate(x.getDate()-day); x.setHours(0,0,0,0); return x; }
-  function countWeek(days, d){ const s=weekStart(d), e=new Date(s); e.setDate(e.getDate()+7); return days.filter(x=>{const q=new Date(x);return q>=s&&q<e}).length; }
-
-  function celebrateWorkout(button){
-    const layer=document.getElementById("celebration"); if(!layer)return;
-    layer.innerHTML="";
-    const colors=["#2f80ff","#67a4ff","#9bc7ff","#ffffff"];
-    for(let i=0;i<58;i++){
-      const p=document.createElement("span"); p.className="confetti-piece";
-      const a=Math.random()*Math.PI*2, dist=100+Math.random()*230;
-      p.style.setProperty("--x",`${Math.cos(a)*dist}px`);
-      p.style.setProperty("--y",`${Math.sin(a)*dist+65}px`);
-      p.style.setProperty("--r",`${Math.round(Math.random()*900-450)}deg`);
-      p.style.background=colors[i%colors.length];
-      p.style.animationDelay=`${Math.random()*.10}s`;
-      layer.appendChild(p);
-    }
-    if(button){button.classList.remove("workout-celebrate");void button.offsetWidth;button.classList.add("workout-celebrate");}
-    setTimeout(()=>layer.innerHTML="",1550);
-  }
-
-  function refreshFull6(){
-    const days=getDays(), goal=getGoal(), now=new Date();
-    const done=countWeek(days,now), pct=Math.min(100,Math.round(done/Math.max(1,goal)*100));
-    const d=document.getElementById("full6GoalDone"), t=document.getElementById("full6GoalTarget"), f=document.getElementById("full6GoalFill");
-    if(d)d.textContent=done;if(t)t.textContent=goal;if(f)f.style.width=pct+"%";
-    const title=document.getElementById("full6TodayTitle"), sub=document.getElementById("full6TodaySub");
-    const today=iso(now), trained=days.includes(today);
-    if(title) title.textContent=trained ? "Edzés teljesítve" : "Készen állsz?";
-    if(sub) sub.textContent=trained ? "Ma már megvan. Holnap folytatjuk." : "Egy edzés ma is számít.";
-  }
-
-  // Capture the existing workout button without replacing its original save logic.
-  document.addEventListener("click", e=>{
-    const b=e.target.closest("button"); if(!b)return;
-    const txt=(b.textContent||"").trim().toLowerCase();
-    if(txt.includes("edzettem ma")){
-      setTimeout(refreshFull6,40);
-      celebrateWorkout(b);
-    }
-  });
-
-  refreshFull6();
-})();
 
 </script>
-<div id="celebration"></div><div id="celebration"></div>
+<div id="celebration"></div>
 
-<section class="card" id="full6StatsEnhancement" style="display:none">
-  <div class="section-label">TELJESÍTMÉNY</div>
-  <div class="streak-hero">
-    <div class="streak-fire">S</div>
-    <div><div class="streak-number" id="full6Streak">0</div><div class="streak-label">hetes streak</div></div>
-  </div>
-  <div class="stats-grid-6">
-    <div class="stat-card-6"><div class="v" id="full6Total">0</div><div class="l">összes edzés</div></div>
-    <div class="stat-card-6"><div class="v" id="full6Month">0</div><div class="l">ebben a hónapban</div></div>
-    <div class="stat-card-6"><div class="v" id="full6Year">0</div><div class="l">idén</div></div>
-    <div class="stat-card-6"><div class="v" id="full6Weeks">0</div><div class="l">teljesített hét</div></div>
-  </div>
-  <div style="margin-top:18px">
-    <div class="section-label">ACHIEVEMENTEK</div>
-    <div id="full6Awards"></div>
-  </div>
-</section>
+<script>
+/* ===== 6.1 calendar/home ===== */
+(function(){
+  const monthNames=["Január","Február","Március","Április","Május","Június","Július","Augusztus","Szeptember","Október","November","December"];
+  const dow=["H","K","Sze","Cs","P","Szo","V"];
+  let view=new Date(); view.setDate(1);
+
+  function days(){
+    try{return JSON.parse(localStorage.getItem("trainedDays")||"[]")}catch(e){return[]}
+  }
+  function goal(){return Number(localStorage.getItem("weeklyGoal")||5)}
+  function iso(d){return d.toISOString().slice(0,10)}
+  function weekStart(d){let x=new Date(d),n=(x.getDay()+6)%7;x.setDate(x.getDate()-n);x.setHours(0,0,0,0);return x}
+  function weekCount(list,d){let s=weekStart(d),e=new Date(s);e.setDate(e.getDate()+7);return list.filter(v=>{let q=new Date(v);return q>=s&&q<e}).length}
+  function streak(list){
+    let d=new Date(), s=0;
+    if(weekCount(list,d)>=goal()){s=1; d.setDate(d.getDate()-7)} else {d.setDate(d.getDate()-7)}
+    while(weekCount(list,d)>=goal()){s++;d.setDate(d.getDate()-7)}
+    return s;
+  }
+  function renderCalendar(){
+    const list=days(), y=view.getFullYear(), m=view.getMonth();
+    const title=document.getElementById("monthTitle61"), sub=document.getElementById("monthSub61");
+    if(title)title.textContent=monthNames[m];
+    if(sub)sub.textContent=String(y);
+    const dw=document.getElementById("monthDow61"), grid=document.getElementById("monthDays61");
+    if(dw)dw.innerHTML=dow.map(x=>`<div class="month-dow-61">${x}</div>`).join("");
+    if(!grid)return;
+    const first=new Date(y,m,1), offset=(first.getDay()+6)%7, total=new Date(y,m+1,0).getDate();
+    let out="";
+    for(let i=0;i<offset;i++)out+='<div class="day-61 empty"></div>';
+    const today=iso(new Date());
+    let count=0;
+    for(let n=1;n<=total;n++){
+      const d=new Date(y,m,n), key=iso(d), worked=list.includes(key);
+      if(worked)count++;
+      out+=`<div class="day-61 ${worked?"worked ":""}${key===today?"today":""}" title="${n}.">${n}</div>`;
+    }
+    grid.innerHTML=out;
+    const mc=document.getElementById("monthCount61"), mp=document.getElementById("monthPercent61");
+    if(mc)mc.textContent=count;
+    if(mp)mp.textContent=Math.round(count/total*100)+"%";
+    renderYear(list,y);
+  }
+  function renderYear(list,y){
+    const root=document.getElementById("yearRows61"); if(!root)return;
+    root.innerHTML=monthNames.map((name,i)=>{
+      const total=new Date(y,i+1,0).getDate();
+      const c=list.filter(k=>{let d=new Date(k);return d.getFullYear()===y&&d.getMonth()===i}).length;
+      const pct=Math.round(c/total*100);
+      return `<div class="year-row-61"><div class="name">${name.slice(0,3)}</div><div class="year-track-61"><div class="year-fill-61" style="width:${pct}%"></div></div><div class="year-count-61">${c}</div></div>`;
+    }).join("");
+  }
+  function renderHome(){
+    const list=days(), d=new Date(), c=weekCount(list,d), g=goal(), pct=Math.min(100,Math.round(c/g*100));
+    const today=iso(d), trained=list.includes(today);
+    const cd=document.getElementById("cleanDate61"); if(cd)cd.textContent=d.toLocaleDateString("hu-HU",{year:"numeric",month:"long",day:"numeric"});
+    const st=document.getElementById("todayState61"); if(st)st.textContent=trained?"Edzés teljesítve":"Készen állsz?";
+    const gd=document.getElementById("goalDone61");if(gd)gd.textContent=c;
+    const gt=document.getElementById("goalTarget61");if(gt)gt.textContent=g;
+    const gf=document.getElementById("goalFill61");if(gf)gf.style.width=pct+"%";
+    const sr=document.getElementById("streak61");if(sr)sr.textContent=streak(list);
+  }
+  function celebrate(){
+    const layer=document.createElement("div");layer.className="celebration-61";document.body.appendChild(layer);
+    const cols=["#2f80ff","#67a4ff","#9bc7ff","#ffffff"];
+    for(let i=0;i<70;i++){
+      const p=document.createElement("span");p.className="confetti-61";
+      const a=Math.random()*Math.PI*2,dist=100+Math.random()*250;
+      p.style.setProperty("--x",`${Math.cos(a)*dist}px`);
+      p.style.setProperty("--y",`${Math.sin(a)*dist+70}px`);
+      p.style.setProperty("--r",`${Math.random()*1000-500}deg`);
+      p.style.background=cols[i%cols.length];
+      p.style.animationDelay=(Math.random()*.12)+"s";layer.appendChild(p);
+    }
+    setTimeout(()=>layer.remove(),1800);
+  }
+  document.addEventListener("click",e=>{
+    const b=e.target.closest("button");if(!b)return;
+    const t=(b.textContent||"").toLowerCase();
+    if(t.includes("edzettem ma"))setTimeout(()=>{celebrate();renderHome();renderCalendar()},70);
+  });
+  document.getElementById("prevMonth61")?.addEventListener("click",()=>{view.setMonth(view.getMonth()-1);renderCalendar()});
+  document.getElementById("nextMonth61")?.addEventListener("click",()=>{view.setMonth(view.getMonth()+1);renderCalendar()});
+  document.getElementById("yearToggle61")?.addEventListener("click",()=>{
+    const p=document.getElementById("yearPanel61"),a=document.getElementById("yearArrow61");
+    p.classList.toggle("open"); if(a)a.textContent=p.classList.contains("open")?"−":"＋";
+  });
+  renderHome();renderCalendar();
+})();
+</script>
 
 </body>
 </html>
