@@ -45,6 +45,10 @@ h1{font-size:35px;line-height:1;margin:0;font-weight:800;letter-spacing:-.045em}
 
 .goal-setting{border:0;border-radius:12px;background:#15171b;color:#777;padding:11px 0;font-weight:800}
 .goal-setting.active{background:#167cff;color:#fff;box-shadow:0 5px 14px rgba(22,124,255,.22)}
+
+/* 6.7 swipe navigation */
+.page{animation:pageIn .22s ease both}
+@keyframes pageIn{from{opacity:.35;transform:translateX(14px)}to{opacity:1;transform:none}}
 </style>
 </head>
 <body>
@@ -67,6 +71,15 @@ h1{font-size:35px;line-height:1;margin:0;font-weight:800;letter-spacing:-.045em}
   </div>
 
 
+
+  <div class="card">
+    <div class="card-head"><div class="card-title">Overview</div></div>
+    <div class="stats">
+      <div class="stat"><div class="sv" id="homeYearPct">0%</div><div class="sl">year completed</div></div>
+      <div class="stat"><div class="sv" id="homeTotal">0</div><div class="sl">workout days</div></div>
+      <div class="stat"><div class="sv" id="homeAwards">0</div><div class="sl">awards earned</div></div>
+    </div>
+  </div>
 </section>
 
 <section id="calendar" class="page">
@@ -80,24 +93,6 @@ h1{font-size:35px;line-height:1;margin:0;font-weight:800;letter-spacing:-.045em}
 </section>
 
 
-<section id="settings" class="page">
-  <div class="top"><div><h1>Settings</h1><div class="date">Customize your workout tracker</div></div></div>
-  <div class="card">
-    <div class="card-head"><div class="card-title">Weekly goal</div></div>
-    <div style="color:#777;font-size:12px;margin-bottom:12px">How many workouts do you want to complete each week?</div>
-    <div style="display:grid;grid-template-columns:repeat(7,1fr);gap:6px">
-      <button class="goal-setting" data-goal="1">1</button><button class="goal-setting" data-goal="2">2</button>
-      <button class="goal-setting" data-goal="3">3</button><button class="goal-setting" data-goal="4">4</button>
-      <button class="goal-setting" data-goal="5">5</button><button class="goal-setting" data-goal="6">6</button>
-      <button class="goal-setting" data-goal="7">7</button>
-    </div>
-  </div>
-  <div class="card">
-    <div class="card-head"><div class="card-title">Data</div></div>
-    <button id="exportData" class="year-btn" type="button"><span>Export backup</span><span>›</span></button>
-  </div>
-</section>
-
 <section id="stats" class="page">
   <div class="top"><div><h1>Statistics</h1><div class="date">Your performance</div></div></div>
   <div class="card"><div class="stats"><div class="stat"><div class="sv" id="stTotal">0</div><div class="sl">total workouts</div></div><div class="stat"><div class="sv" id="stYear">0</div><div class="sl">this year</div></div><div class="stat"><div class="sv" id="stMonth">0</div><div class="sl">this month</div></div><div class="stat"><div class="sv" id="stStreak">0</div><div class="sl">week streak</div></div></div></div>
@@ -110,7 +105,6 @@ h1{font-size:35px;line-height:1;margin:0;font-weight:800;letter-spacing:-.045em}
 <button class="navitem" data-page="calendar"><span class="ico">□</span>Calendar</button>
 <button class="navitem" data-page="awards"><span class="ico">♜</span>Awards</button>
 <button class="navitem" data-page="stats"><span class="ico">▥</span>Stats</button>
-<button class="navitem" data-page="settings"><span class="ico">⚙</span>Settings</button>
 </nav>
 
 <script>
@@ -133,6 +127,7 @@ function render(){
  renderMonth();
  renderStats();
  renderAwards();
+ renderHomeOverview();
 }
 function renderMonth(){
  const a=getDays(),y=view.getFullYear(),m=view.getMonth(),first=new Date(y,m,1),off=(first.getDay()+6)%7,totalDays=new Date(y,m+1,0).getDate(),today=iso(new Date());
@@ -142,6 +137,15 @@ function renderMonth(){
  document.getElementById("grid").innerHTML=out;document.getElementById("monthTotal").textContent=c;
  document.getElementById("yearRows").innerHTML=MONTHS.map((name,i)=>{let td=new Date(y,i+1,0).getDate(),n=a.filter(k=>{let d=new Date(k);return d.getFullYear()===y&&d.getMonth()===i}).length;return `<div class="yr"><div class="yn">${name.slice(0,3)}</div><div class="yt"><div class="yf" style="width:${Math.min(100,n/td*100)}%"></div></div><div class="yc">${n}</div></div>`}).join("");
  document.getElementById("calendarCopy").innerHTML='<div class="card">'+document.getElementById("home").querySelectorAll(".card")[1].innerHTML+'</div>';
+}
+function renderHomeOverview(){
+ const a=getDays(), now=new Date(), y=now.getFullYear();
+ const yd=a.filter(k=>new Date(k).getFullYear()===y).length;
+ const totalDays=((new Date(y+1,0,0)-new Date(y,0,0))/86400000);
+ const awards=document.querySelectorAll("#awardsList .award:not(.lock)").length;
+ document.getElementById("homeYearPct").textContent=Math.round(yd/totalDays*100)+"%";
+ document.getElementById("homeTotal").textContent=a.length;
+ document.getElementById("homeAwards").textContent=awards;
 }
 function renderStats(){
  const a=getDays(), y=new Date().getFullYear(),m=new Date().getMonth();
@@ -175,26 +179,38 @@ document.getElementById("workout").addEventListener("click",()=>{
 document.getElementById("prev").onclick=()=>{view.setMonth(view.getMonth()-1);renderMonth()};
 document.getElementById("next").onclick=()=>{view.setMonth(view.getMonth()+1);renderMonth()};
 document.getElementById("yearBtn").onclick=()=>{document.getElementById("yearPanel").classList.toggle("open");document.getElementById("plus").textContent=document.getElementById("yearPanel").classList.contains("open")?"−":"＋"};
-document.querySelectorAll(".navitem").forEach(b=>b.onclick=()=>{document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));document.getElementById(b.dataset.page).classList.add("active");document.querySelectorAll(".navitem").forEach(x=>x.classList.remove("active"));b.classList.add("active");});
+let currentPage="home";
+function showPage(name, direction=1){
+  const pages=document.querySelectorAll(".page");
+  pages.forEach(p=>p.classList.remove("active"));
+  const target=document.getElementById(name);
+  if(!target)return;
+  target.style.animationName=direction>=0?"pageIn":"pageIn";
+  target.classList.add("active");
+  document.querySelectorAll(".navitem").forEach(x=>x.classList.toggle("active",x.dataset.page===name));
+  currentPage=name;
+  window.scrollTo({top:0,behavior:"smooth"});
+}
+document.querySelectorAll(".navitem").forEach(b=>b.onclick=()=>showPage(b.dataset.page,1));
+
+const pageOrder=["home","calendar","awards","stats"];
+let touchX=0,touchY=0;
+document.addEventListener("touchstart",e=>{
+  if(e.touches.length===1){touchX=e.touches[0].clientX;touchY=e.touches[0].clientY;}
+},{passive:true});
+document.addEventListener("touchend",e=>{
+  if(e.changedTouches.length!==1)return;
+  const dx=e.changedTouches[0].clientX-touchX,dy=e.changedTouches[0].clientY-touchY;
+  if(Math.abs(dx)<70 || Math.abs(dx)<Math.abs(dy)*1.2)return;
+  const i=pageOrder.indexOf(currentPage);
+  if(i<0)return;
+  if(dx<0 && i<pageOrder.length-1) showPage(pageOrder[i+1],1);
+  if(dx>0 && i>0) showPage(pageOrder[i-1],-1);
+},{passive:true});
 const streakEl=document.getElementById("streak"),date=document.getElementById("date"),doneEl=document.getElementById("done"),goalEl=document.getElementById("goal");
 render();
 
-document.querySelectorAll(".goal-setting").forEach(btn=>{
-  btn.addEventListener("click",()=>{
-    localStorage.setItem("weeklyGoal",btn.dataset.goal);
-    document.querySelectorAll(".goal-setting").forEach(x=>x.classList.toggle("active",x.dataset.goal===btn.dataset.goal));
-    render();
-  });
-});
-function syncGoalButtons(){
- const g=String(getGoal());
- document.querySelectorAll(".goal-setting").forEach(x=>x.classList.toggle("active",x.dataset.goal===g));
-}
-syncGoalButtons();
-document.getElementById("exportData")?.addEventListener("click",()=>{
- const backup={trainedDays:getDays(),weeklyGoal:getGoal(),createdAt:new Date().toISOString()};
- const blob=new Blob([JSON.stringify(backup,null,2)],{type:"application/json"});
- const a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download="workout-backup.json";a.click();URL.revokeObjectURL(a.href);
+const a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download="workout-backup.json";a.click();URL.revokeObjectURL(a.href);
 });
 </script>
 </body>
