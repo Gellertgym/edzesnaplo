@@ -42,6 +42,9 @@ h1{font-size:35px;line-height:1;margin:0;font-weight:800;letter-spacing:-.045em}
 .flash{position:fixed;left:50%;top:58%;width:20px;height:20px;border-radius:50%;background:#fff;box-shadow:0 0 35px 12px #1680ff;z-index:100000;pointer-events:none;animation:flash .5s ease-out forwards}
 @keyframes flash{to{transform:translate(-50%,-50%) scale(7);opacity:0}}
 @media(max-width:360px){h1{font-size:30px}.workout{height:116px}.card{padding:14px}}
+
+.goal-setting{border:0;border-radius:12px;background:#15171b;color:#777;padding:11px 0;font-weight:800}
+.goal-setting.active{background:#167cff;color:#fff;box-shadow:0 5px 14px rgba(22,124,255,.22)}
 </style>
 </head>
 <body>
@@ -49,60 +52,70 @@ h1{font-size:35px;line-height:1;margin:0;font-weight:800;letter-spacing:-.045em}
 
 <section id="home" class="page active">
   <div class="top">
-    <div><h1>Mai edzés</h1><div class="date" id="date"></div></div>
-    <div class="streak"><div class="flame">🔥</div><div><strong id="streak">0</strong><small>hetes streak</small></div></div>
+    <div><h1>Today's workout</h1><div class="date" id="date"></div></div>
+    <div class="streak"><div class="flame">🔥</div><div><strong id="streak">0</strong><small>week streak</small></div></div>
   </div>
 
   <button class="workout" id="workout">
-    <div class="workout-main"><div class="dumb">▮—▮</div><div class="wl"><small>MAI EDZÉS</small><strong id="workoutText">Edzettem ma</strong><span>Érezd a fejlődést!</span></div></div>
+    <div class="workout-main"><div class="dumb">▮—▮</div><div class="wl"><small>TODAY'S WORKOUT</small><strong id="workoutText">WORKED OUT TODAY</strong><span>Keep pushing forward!</span></div></div>
     <div class="go">›</div>
   </button>
 
   <div class="card">
-    <div class="card-head"><div class="card-title">Heti cél</div><div class="count"><b id="done">0</b> / <span id="goal">5</span></div></div>
+    <div class="card-head"><div class="card-title">Weekly goal</div><div class="count"><b id="done">0</b> / <span id="goal">5</span></div></div>
     <div class="week" id="week"></div>
   </div>
 
-  <div class="card">
-    <div class="calhead"><div><div class="month" id="month"></div><div class="year" id="year"></div></div><div class="nav"><button id="prev">‹</button><button id="next">›</button></div></div>
-    <div class="dow" id="dow"></div><div class="grid" id="grid"></div>
-    <button class="year-btn" id="yearBtn"><span>Éves összesítő</span><span id="plus">＋</span></button>
-    <div class="year-panel" id="yearPanel"><div id="yearRows"></div></div>
-  </div>
 
-  <div class="card">
-    <div class="card-head"><div class="card-title">Összesítés</div></div>
-    <div class="stats"><div class="stat"><div class="sv" id="total">0</div><div class="sl">edzésnap</div></div><div class="stat"><div class="sv" id="monthTotal">0</div><div class="sl">ebben a hónapban</div></div></div>
-  </div>
 </section>
 
 <section id="calendar" class="page">
-  <div class="top"><div><h1>Naptár</h1><div class="date">Edzésnapok</div></div></div>
+  <div class="top"><div><h1>Calendar</h1><div class="date">Workout days</div></div></div>
   <div id="calendarCopy"></div>
 </section>
 
 <section id="awards" class="page">
-  <div class="top"><div><h1>Díjak</h1><div class="date">Amit már megszereztél</div></div></div>
+  <div class="top"><div><h1>Awards</h1><div class="date">Your achievements</div></div></div>
   <div class="card awards" id="awardsList"></div>
 </section>
 
+
+<section id="settings" class="page">
+  <div class="top"><div><h1>Settings</h1><div class="date">Customize your workout tracker</div></div></div>
+  <div class="card">
+    <div class="card-head"><div class="card-title">Weekly goal</div></div>
+    <div style="color:#777;font-size:12px;margin-bottom:12px">How many workouts do you want to complete each week?</div>
+    <div style="display:grid;grid-template-columns:repeat(7,1fr);gap:6px">
+      <button class="goal-setting" data-goal="1">1</button><button class="goal-setting" data-goal="2">2</button>
+      <button class="goal-setting" data-goal="3">3</button><button class="goal-setting" data-goal="4">4</button>
+      <button class="goal-setting" data-goal="5">5</button><button class="goal-setting" data-goal="6">6</button>
+      <button class="goal-setting" data-goal="7">7</button>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-head"><div class="card-title">Data</div></div>
+    <button id="exportData" class="year-btn" type="button"><span>Export backup</span><span>›</span></button>
+  </div>
+</section>
+
 <section id="stats" class="page">
-  <div class="top"><div><h1>Statisztika</h1><div class="date">A teljesítményed</div></div></div>
-  <div class="card"><div class="stats"><div class="stat"><div class="sv" id="stTotal">0</div><div class="sl">összes edzés</div></div><div class="stat"><div class="sv" id="stYear">0</div><div class="sl">idén</div></div><div class="stat"><div class="sv" id="stMonth">0</div><div class="sl">ebben a hónapban</div></div><div class="stat"><div class="sv" id="stStreak">0</div><div class="sl">hetes streak</div></div></div></div>
+  <div class="top"><div><h1>Statistics</h1><div class="date">Your performance</div></div></div>
+  <div class="card"><div class="stats"><div class="stat"><div class="sv" id="stTotal">0</div><div class="sl">total workouts</div></div><div class="stat"><div class="sv" id="stYear">0</div><div class="sl">this year</div></div><div class="stat"><div class="sv" id="stMonth">0</div><div class="sl">this month</div></div><div class="stat"><div class="sv" id="stStreak">0</div><div class="sl">week streak</div></div></div></div>
 </section>
 
 </div>
 
 <nav class="navbar">
-<button class="navitem active" data-page="home"><span class="ico">⌂</span>Főoldal</button>
-<button class="navitem" data-page="calendar"><span class="ico">□</span>Naptár</button>
-<button class="navitem" data-page="awards"><span class="ico">♜</span>Díjak</button>
-<button class="navitem" data-page="stats"><span class="ico">▥</span>Statisztika</button>
+<button class="navitem active" data-page="home"><span class="ico">⌂</span>Home</button>
+<button class="navitem" data-page="calendar"><span class="ico">□</span>Calendar</button>
+<button class="navitem" data-page="awards"><span class="ico">♜</span>Awards</button>
+<button class="navitem" data-page="stats"><span class="ico">▥</span>Stats</button>
+<button class="navitem" data-page="settings"><span class="ico">⚙</span>Settings</button>
 </nav>
 
 <script>
-const MONTHS=["Január","Február","Március","Április","Május","Június","Július","Augusztus","Szeptember","Október","November","December"];
-const DOW=["H","K","Sze","Cs","P","Szo","V"];
+const MONTHS=["January","February","March","April","May","June","July","August","September","October","November","December"];
+const DOW=["Mon","Tue","Wed","Thu","Fri","Sat","Sun"];
 let view=new Date(); view.setDate(1);
 const getDays=()=>{try{return JSON.parse(localStorage.getItem("trainedDays")||"[]")}catch(e){return[]}};
 const getGoal=()=>Number(localStorage.getItem("weeklyGoal")||5);
@@ -113,9 +126,9 @@ function streak(a){let d=new Date(),s=0;if(weekCount(a,d)>=getGoal())s=1;d.setDa
 
 function render(){
  const a=getDays(), now=new Date(), goal=getGoal(), done=weekCount(a,now);
- date.textContent=now.toLocaleDateString("hu-HU",{year:"numeric",month:"long",day:"numeric"});
+ date.textContent=now.toLocaleDateString("en-US",{year:"numeric",month:"long",day:"numeric"});
  document.getElementById("streak").textContent=streak(a); doneEl.textContent=done; goalEl.textContent=goal;
- document.getElementById("workoutText").textContent=a.includes(iso(now))?"Edzés teljesítve":"Edzettem ma";
+ document.getElementById("workoutText").textContent=a.includes(iso(now))?"Edzés teljesítve":"WORKED OUT TODAY";
  let s=weekStart(now); document.getElementById("week").innerHTML=Array.from({length:7},(_,i)=>{let d=new Date(s);d.setDate(d.getDate()+i);return `<div class="wd">${DOW[i]}<div class="wdot ${a.includes(iso(d))?"done":""}">${d.getDate()}</div></div>`}).join("");
  renderMonth();
  renderStats();
@@ -136,7 +149,7 @@ function renderStats(){
 }
 function renderAwards(){
  const a=getDays(), n=a.length, s=streak(a);
- const awards=[["10","10 edzés","Az első 10 edzésed",n>=10],["25","25 edzés","Negyed század",n>=25],["50","50 edzés","Komoly sorozat",n>=50],["100","100 edzés","100 edzésnap",n>=100],["2","2 hetes streak","Két teljes hét",s>=2],["4","4 hetes streak","Egy teljes hónap",s>=4],["8","8 hetes streak","Két hónap fegyelem",s>=8],["12","12 hetes streak","Három hónap következetesség",s>=12]];
+ const awards=[["10","10 workouts","Az első 10 workoutsed",n>=10],["25","25 workouts","Quarter century",n>=25],["50","50 workouts","Serious consistency",n>=50],["100","100 workouts","100 workout days",n>=100],["2","2 week streak","Two complete weeks",s>=2],["4","4 week streak","One complete month",s>=4],["8","8 week streak","Two months of discipline",s>=8],["12","12 week streak","Three months of consistency",s>=12]];
  document.getElementById("awardsList").innerHTML=awards.map(x=>`<div class="award ${x[3]?"":"lock"}"><div class="badge">${x[3]?"✓":"·"}</div><div><div class="an">${x[1]}</div><div class="ad">${x[2]}</div></div></div>`).join("");
 }
 function fireworks(){
@@ -165,6 +178,24 @@ document.getElementById("yearBtn").onclick=()=>{document.getElementById("yearPan
 document.querySelectorAll(".navitem").forEach(b=>b.onclick=()=>{document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));document.getElementById(b.dataset.page).classList.add("active");document.querySelectorAll(".navitem").forEach(x=>x.classList.remove("active"));b.classList.add("active");});
 const streakEl=document.getElementById("streak"),date=document.getElementById("date"),doneEl=document.getElementById("done"),goalEl=document.getElementById("goal");
 render();
+
+document.querySelectorAll(".goal-setting").forEach(btn=>{
+  btn.addEventListener("click",()=>{
+    localStorage.setItem("weeklyGoal",btn.dataset.goal);
+    document.querySelectorAll(".goal-setting").forEach(x=>x.classList.toggle("active",x.dataset.goal===btn.dataset.goal));
+    render();
+  });
+});
+function syncGoalButtons(){
+ const g=String(getGoal());
+ document.querySelectorAll(".goal-setting").forEach(x=>x.classList.toggle("active",x.dataset.goal===g));
+}
+syncGoalButtons();
+document.getElementById("exportData")?.addEventListener("click",()=>{
+ const backup={trainedDays:getDays(),weeklyGoal:getGoal(),createdAt:new Date().toISOString()};
+ const blob=new Blob([JSON.stringify(backup,null,2)],{type:"application/json"});
+ const a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download="workout-backup.json";a.click();URL.revokeObjectURL(a.href);
+});
 </script>
 </body>
 </html>
