@@ -114,7 +114,17 @@ backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)
 nav{position:fixed;z-index:10000;left:12px;right:12px;bottom:11px;height:72px;padding-bottom:env(safe-area-inset-bottom);background:rgba(14,15,21,.91);backdrop-filter:blur(24px) saturate(150%);-webkit-backdrop-filter:blur(24px) saturate(150%);border:1px solid rgba(255,255,255,.09);border-radius:24px;display:grid;grid-template-columns:repeat(4,1fr);box-shadow:0 18px 50px rgba(0,0,0,.52),inset 0 1px rgba(255,255,255,.045)}
 .navitem{appearance:none;border:0;background:transparent;color:#696e7b;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;cursor:pointer;touch-action:manipulation;position:relative}
 .navitem.active{color:#fff}
-.navitem.active:before{content:"";position:absolute;top:7px;width:34px;height:3px;border-radius:5px;background:#a855f7;box-shadow:0 0 13px rgba(168,85,247,.75)}
+.navitem.active:before{
+content:"";
+position:absolute;
+top:auto;
+bottom:5px;
+width:28px;
+height:3px;
+border-radius:5px;
+background:#a855f7;
+box-shadow:0 0 12px rgba(168,85,247,.65)
+}
 .navicon{font-size:18px;line-height:1}.navlabel{font-size:10px;font-weight:700;letter-spacing:.1px}
 .fireworks{position:fixed;inset:0;pointer-events:none;z-index:20000;overflow:hidden}
 .spark{position:absolute;width:5px;height:5px;border-radius:50%;background:#fff;animation:boom 1.15s ease-out forwards;box-shadow:0 0 8px currentColor}
