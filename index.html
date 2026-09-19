@@ -46,54 +46,54 @@ nav{position:fixed;left:50%;bottom:0;transform:translateX(-50%);width:min(430px,
 
 
 
-/* ===== 6.1 CLEAN CALENDAR + CELEBRATION ===== */
-.month-calendar-61{margin-top:10px}
-.month-head-61{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
-.month-title-61{font-size:25px;font-weight:800;letter-spacing:-.03em}
-.month-sub-61{font-size:12px;opacity:.5;margin-top:3px}
-.month-grid-61{display:grid;grid-template-columns:repeat(7,1fr);gap:7px}
-.month-dow-61{font-size:10px;opacity:.42;text-align:center;padding-bottom:3px}
-.day-61{height:35px;border-radius:8px;background:rgba(255,255,255,.045);display:flex;align-items:center;justify-content:center;font-size:12px;color:rgba(255,255,255,.55);position:relative}
-.day-61.empty{background:transparent}
-.day-61.today{outline:1px solid rgba(255,255,255,.55);outline-offset:1px}
-.day-61.worked{background:#2f80ff;color:transparent;box-shadow:0 5px 14px rgba(47,128,255,.18)}
-.day-61.worked::after{content:"";width:12px;height:12px;border-radius:4px;background:#2f80ff}
-.calendar-summary-61{display:flex;justify-content:space-between;align-items:center;margin-top:16px;padding:14px 16px;border-radius:17px;background:rgba(255,255,255,.045);border:1px solid rgba(255,255,255,.06)}
-.summary-big-61{font-size:24px;font-weight:800}
-.summary-label-61{font-size:11px;opacity:.48;text-transform:uppercase;letter-spacing:.08em}
-.year-button-61{width:100%;margin-top:10px;padding:13px 15px;border:0;border-radius:16px;background:rgba(255,255,255,.07);color:inherit;font:inherit;font-weight:700;display:flex;align-items:center;justify-content:space-between}
-.year-panel-61{display:none;margin-top:12px;padding:16px;border-radius:18px;background:rgba(255,255,255,.045);border:1px solid rgba(255,255,255,.06)}
-.year-panel-61.open{display:block;animation:fadeIn61 .25s ease-out}
-@keyframes fadeIn61{from{opacity:0;transform:translateY(-5px)}to{opacity:1;transform:none}}
-.year-row-61{display:flex;align-items:center;gap:10px;margin:10px 0}
-.year-row-61 .name{width:34px;font-size:11px;opacity:.5}
-.year-track-61{flex:1;height:7px;border-radius:99px;background:rgba(255,255,255,.08);overflow:hidden}
-.year-fill-61{height:100%;border-radius:99px;background:#2f80ff;transition:width .5s}
-.year-count-61{width:28px;text-align:right;font-size:11px;opacity:.55}
-.clean-home-61{padding:20px 0 4px}
-.clean-title-61{font-size:32px;font-weight:850;letter-spacing:-.045em;margin:0}
-.clean-sub-61{font-size:13px;opacity:.48;margin-top:4px}
-.today-card-61{margin-top:18px;padding:20px;border-radius:22px;background:linear-gradient(145deg,rgba(47,128,255,.16),rgba(255,255,255,.035));border:1px solid rgba(47,128,255,.18)}
-.today-row-61{display:flex;justify-content:space-between;align-items:center}
-.today-label-61{font-size:11px;letter-spacing:.12em;opacity:.52;font-weight:750}
-.today-state-61{font-size:21px;font-weight:800;margin-top:5px}
-.progress-track-61{height:8px;background:rgba(255,255,255,.08);border-radius:99px;overflow:hidden;margin-top:15px}
-.progress-fill-61{height:100%;background:#2f80ff;border-radius:99px;transition:width .65s cubic-bezier(.2,.8,.2,1)}
-.streak-card-61{margin-top:10px;padding:15px 17px;border-radius:18px;background:rgba(255,255,255,.045);display:flex;align-items:center;gap:13px}
-.streak-dot-61{width:40px;height:40px;border-radius:13px;background:#2f80ff;display:grid;place-items:center;font-weight:850}
-.streak-big-61{font-size:24px;font-weight:850}
-.streak-small-61{font-size:11px;opacity:.5}
-.celebration-61{position:fixed;inset:0;pointer-events:none;z-index:999999;overflow:hidden}
-.confetti-61{position:absolute;left:50%;top:52%;width:6px;height:12px;border-radius:2px;opacity:0;animation:burst61 1.65s cubic-bezier(.12,.75,.22,1) forwards}
-@keyframes burst61{0%{transform:translate(-50%,-50%) scale(.2) rotate(0);opacity:1}35%{opacity:1}100%{transform:translate(calc(-50% + var(--x)),calc(-50% + var(--y))) rotate(var(--r));opacity:0}}
+
+
+/* ===== 6.2 SCREENSHOT-STYLE UI ===== */
+.home62{padding:18px 0 6px}
+.home62-title{font-size:31px;font-weight:800;letter-spacing:-.045em;margin:0}
+.home62-date{font-size:12px;opacity:.42;margin-top:3px}
+.home62-card{margin-top:16px;padding:18px;border-radius:22px;background:rgba(255,255,255,.045);border:1px solid rgba(255,255,255,.065)}
+.home62-row{display:flex;align-items:center;justify-content:space-between}
+.home62-label{font-size:10px;letter-spacing:.13em;font-weight:750;opacity:.5}
+.home62-state{font-size:20px;font-weight:800;margin-top:4px}
+.home62-count{font-size:29px;font-weight:850}
+.home62-track{height:7px;margin-top:14px;border-radius:99px;background:rgba(255,255,255,.08);overflow:hidden}
+.home62-fill{height:100%;width:0;background:#2f80ff;border-radius:99px;transition:width .55s ease}
+.streak62{margin-top:10px;padding:14px 16px;border-radius:19px;background:rgba(47,128,255,.10);border:1px solid rgba(47,128,255,.20);display:flex;align-items:center;gap:12px}
+.streak62-fire{width:38px;height:38px;border-radius:12px;background:#2f80ff;display:grid;place-items:center;font-size:20px;box-shadow:0 0 18px rgba(47,128,255,.45);animation:fire62 1.1s ease-in-out infinite alternate}
+@keyframes fire62{from{transform:scale(1);box-shadow:0 0 12px rgba(47,128,255,.25)}to{transform:scale(1.07);box-shadow:0 0 24px rgba(47,128,255,.55)}}
+.streak62-num{font-size:22px;font-weight:850}.streak62-sub{font-size:11px;opacity:.5}
+.cal62{padding-top:12px}
+.cal62-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}
+.cal62-month{font-size:24px;font-weight:800;letter-spacing:-.035em}
+.cal62-year{font-size:12px;opacity:.4;margin-top:2px}
+.cal62-nav{display:flex;gap:7px}
+.cal62-nav button{width:35px;height:35px;border:0;border-radius:11px;background:rgba(255,255,255,.07);color:inherit;font-size:22px;line-height:1}
+.cal62-dow,.cal62-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:5px}
+.cal62-dow div{text-align:center;font-size:9px;opacity:.35;padding-bottom:4px}
+.cal62-day{height:25px;display:flex;align-items:center;justify-content:center;font-size:10px;color:rgba(255,255,255,.35);position:relative}
+.cal62-day.empty{visibility:hidden}
+.cal62-day .num{position:relative;z-index:2}
+.cal62-day.worked .num{width:9px;height:9px;border-radius:2px;background:#2f80ff;color:transparent;box-shadow:0 0 7px rgba(47,128,255,.15)}
+.cal62-day.today .num{outline:1px solid rgba(255,255,255,.5);outline-offset:4px;border-radius:2px}
+.cal62-summary{margin-top:17px;display:flex;justify-content:space-between;align-items:center;padding:14px 15px;border-radius:17px;background:rgba(255,255,255,.04)}
+.cal62-big{font-size:23px;font-weight:850}.cal62-small{font-size:10px;opacity:.43;text-transform:uppercase;letter-spacing:.08em}
+.year62-btn{margin-top:9px;width:100%;border:0;color:inherit;background:rgba(255,255,255,.06);border-radius:16px;padding:14px 15px;display:flex;justify-content:space-between;font:inherit;font-weight:700}
+.year62-panel{display:none;margin-top:9px;padding:14px;border-radius:17px;background:rgba(255,255,255,.04)}
+.year62-panel.open{display:block}
+.year62-row{display:flex;align-items:center;gap:8px;margin:9px 0}.year62-name{width:27px;font-size:9px;opacity:.4}.year62-track{flex:1;height:5px;background:rgba(255,255,255,.07);border-radius:99px;overflow:hidden}.year62-fill{height:100%;background:#2f80ff;border-radius:99px}.year62-count{width:22px;text-align:right;font-size:9px;opacity:.45}
+
+/* Celebration: unmistakable full-screen burst */
+.celebrate62{position:fixed;inset:0;z-index:2147483647;pointer-events:none;overflow:hidden}
+.celebrate62::before{content:"";position:absolute;left:50%;top:52%;width:12px;height:12px;border-radius:50%;background:#fff;box-shadow:0 0 24px 8px rgba(47,128,255,.9);animation:center62 .45s ease-out forwards}
+@keyframes center62{0%{transform:translate(-50%,-50%) scale(.2);opacity:1}100%{transform:translate(-50%,-50%) scale(7);opacity:0}}
+.conf62{position:absolute;left:50%;top:52%;width:5px;height:11px;border-radius:2px;animation:burst62 1.8s cubic-bezier(.1,.7,.2,1) forwards}
+@keyframes burst62{0%{transform:translate(-50%,-50%) scale(.2) rotate(0);opacity:1}15%{opacity:1}100%{transform:translate(calc(-50% + var(--x)),calc(-50% + var(--y))) rotate(var(--r));opacity:0}}
 
 </style>
 </head>
 <body>
-<div class="clean-home-61" id="cleanHome61">
-  <h1 class="clean-title-61">Edzésnapló</h1>
-  <div class="clean-sub-61" id="cleanDate61"></div>
-  <div class="today-card-61">
+<div class="today-card-61">
     <div class="today-row-61">
       <div><div class="today-label-61">MAI EDZÉS</div><div class="today-state-61" id="todayState61">Készen állsz?</div></div>
       <div class="summary-big-61"><span id="goalDone61">0</span>/<span id="goalTarget61">5</span></div>
@@ -121,11 +121,19 @@ nav{position:fixed;left:50%;bottom:0;transform:translateX(-50%);width:min(430px,
 </section>
 
 <section class="page" id="calendar">
-<div class="month-calendar-61" id="monthCalendar61">
-  <div class="month-head-61">
-    <div>
-      <div class="month-title-61" id="monthTitle61"></div>
-      <div class="month-sub-61" id="monthSub61"></div>
+<section class="cal62" id="cal62">
+  <div class="cal62-head">
+    <div><div class="cal62-month" id="cal62Month"></div><div class="cal62-year" id="cal62Year"></div></div>
+    <div class="cal62-nav"><button type="button" id="cal62Prev">‹</button><button type="button" id="cal62Next">›</button></div>
+  </div>
+  <div class="cal62-dow" id="cal62Dow"></div>
+  <div class="cal62-grid" id="cal62Grid"></div>
+  <div class="cal62-summary"><div><div class="cal62-big" id="cal62Count">0</div><div class="cal62-small">edzés ebben a hónapban</div></div><div class="cal62-small" id="cal62Percent">0%</div></div>
+  <button type="button" class="year62-btn" id="year62Toggle"><span>Éves összesítő</span><span id="year62Plus">＋</span></button>
+  <div class="year62-panel" id="year62Panel"><div class="cal62-small">EDZÉSEK HÓNAPONKÉNT</div><div id="year62Rows"></div></div>
+</section>
+
+<div class="month-sub-61" id="monthSub61"></div>
     </div>
     <div style="display:flex;gap:6px">
       <button id="prevMonth61" class="icon-btn" type="button">‹</button>
@@ -277,95 +285,60 @@ const originalTrainToday=trainToday;trainToday=function(){const before=trained.l
 </script>
 <div id="celebration"></div>
 
+
+
+
 <script>
-/* ===== 6.1 calendar/home ===== */
 (function(){
-  const monthNames=["Január","Február","Március","Április","Május","Június","Július","Augusztus","Szeptember","Október","November","December"];
-  const dow=["H","K","Sze","Cs","P","Szo","V"];
+  const months=["Január","Február","Március","Április","Május","Június","Július","Augusztus","Szeptember","Október","November","December"];
+  const dows=["H","K","Sze","Cs","P","Szo","V"];
   let view=new Date(); view.setDate(1);
 
-  function days(){
-    try{return JSON.parse(localStorage.getItem("trainedDays")||"[]")}catch(e){return[]}
-  }
+  function list(){try{return JSON.parse(localStorage.getItem("trainedDays")||"[]")}catch(e){return[]}}
   function goal(){return Number(localStorage.getItem("weeklyGoal")||5)}
   function iso(d){return d.toISOString().slice(0,10)}
-  function weekStart(d){let x=new Date(d),n=(x.getDay()+6)%7;x.setDate(x.getDate()-n);x.setHours(0,0,0,0);return x}
-  function weekCount(list,d){let s=weekStart(d),e=new Date(s);e.setDate(e.getDate()+7);return list.filter(v=>{let q=new Date(v);return q>=s&&q<e}).length}
-  function streak(list){
-    let d=new Date(), s=0;
-    if(weekCount(list,d)>=goal()){s=1; d.setDate(d.getDate()-7)} else {d.setDate(d.getDate()-7)}
-    while(weekCount(list,d)>=goal()){s++;d.setDate(d.getDate()-7)}
-    return s;
+  function ws(d){let x=new Date(d),n=(x.getDay()+6)%7;x.setDate(x.getDate()-n);x.setHours(0,0,0,0);return x}
+  function wc(a,d){let s=ws(d),e=new Date(s);e.setDate(e.getDate()+7);return a.filter(v=>{let q=new Date(v);return q>=s&&q<e}).length}
+  function streak(a){let d=new Date(),s=0;if(wc(a,d)>=goal())s=1;d.setDate(d.getDate()-7);while(wc(a,d)>=goal()){s++;d.setDate(d.getDate()-7)}return s}
+
+  function home(){
+    let a=list(),d=new Date(),c=wc(a,d),g=goal();
+    const e=document.getElementById("home62Date");if(e)e.textContent=d.toLocaleDateString("hu-HU",{year:"numeric",month:"long",day:"numeric"});
+    const done=document.getElementById("home62Done"),gg=document.getElementById("home62Goal"),fill=document.getElementById("home62Fill"),state=document.getElementById("home62State"),st=document.getElementById("home62Streak");
+    if(done)done.textContent=c;if(gg)gg.textContent=g;if(fill)fill.style.width=Math.min(100,c/g*100)+"%";if(st)st.textContent=streak(a);
+    if(state)state.textContent=a.includes(iso(d))?"Edzés teljesítve":"Készen állsz?";
   }
-  function renderCalendar(){
-    const list=days(), y=view.getFullYear(), m=view.getMonth();
-    const title=document.getElementById("monthTitle61"), sub=document.getElementById("monthSub61");
-    if(title)title.textContent=monthNames[m];
-    if(sub)sub.textContent=String(y);
-    const dw=document.getElementById("monthDow61"), grid=document.getElementById("monthDays61");
-    if(dw)dw.innerHTML=dow.map(x=>`<div class="month-dow-61">${x}</div>`).join("");
-    if(!grid)return;
-    const first=new Date(y,m,1), offset=(first.getDay()+6)%7, total=new Date(y,m+1,0).getDate();
-    let out="";
-    for(let i=0;i<offset;i++)out+='<div class="day-61 empty"></div>';
-    const today=iso(new Date());
-    let count=0;
-    for(let n=1;n<=total;n++){
-      const d=new Date(y,m,n), key=iso(d), worked=list.includes(key);
-      if(worked)count++;
-      out+=`<div class="day-61 ${worked?"worked ":""}${key===today?"today":""}" title="${n}.">${n}</div>`;
-    }
-    grid.innerHTML=out;
-    const mc=document.getElementById("monthCount61"), mp=document.getElementById("monthPercent61");
-    if(mc)mc.textContent=count;
-    if(mp)mp.textContent=Math.round(count/total*100)+"%";
-    renderYear(list,y);
+  function calendar(){
+    let a=list(),y=view.getFullYear(),m=view.getMonth(),first=new Date(y,m,1),off=(first.getDay()+6)%7,total=new Date(y,m+1,0).getDate(),g=document.getElementById("cal62Grid");
+    if(document.getElementById("cal62Month"))document.getElementById("cal62Month").textContent=months[m];
+    if(document.getElementById("cal62Year"))document.getElementById("cal62Year").textContent=y;
+    if(document.getElementById("cal62Dow"))document.getElementById("cal62Dow").innerHTML=dows.map(x=>"<div>"+x+"</div>").join("");
+    if(!g)return;
+    let out="";for(let i=0;i<off;i++)out+='<div class="cal62-day empty"><span class="num"></span></div>';
+    let count=0,today=iso(new Date());
+    for(let n=1;n<=total;n++){let d=new Date(y,m,n),k=iso(d),w=a.includes(k);if(w)count++;out+=`<div class="cal62-day ${w?"worked ":""}${k===today?"today":""}"><span class="num">${n}</span></div>`}
+    g.innerHTML=out;
+    const c=document.getElementById("cal62Count"),p=document.getElementById("cal62Percent");if(c)c.textContent=count;if(p)p.textContent=Math.round(count/total*100)+"%";
+    const yr=document.getElementById("year62Rows");if(yr)yr.innerHTML=months.map((name,i)=>{let totalm=new Date(y,i+1,0).getDate(),n=a.filter(k=>{let d=new Date(k);return d.getFullYear()===y&&d.getMonth()===i}).length,pct=Math.min(100,n/totalm*100);return `<div class="year62-row"><div class="year62-name">${name.slice(0,3)}</div><div class="year62-track"><div class="year62-fill" style="width:${pct}%"></div></div><div class="year62-count">${n}</div></div>`}).join("");
   }
-  function renderYear(list,y){
-    const root=document.getElementById("yearRows61"); if(!root)return;
-    root.innerHTML=monthNames.map((name,i)=>{
-      const total=new Date(y,i+1,0).getDate();
-      const c=list.filter(k=>{let d=new Date(k);return d.getFullYear()===y&&d.getMonth()===i}).length;
-      const pct=Math.round(c/total*100);
-      return `<div class="year-row-61"><div class="name">${name.slice(0,3)}</div><div class="year-track-61"><div class="year-fill-61" style="width:${pct}%"></div></div><div class="year-count-61">${c}</div></div>`;
-    }).join("");
+
+  function fireworks(){
+    const layer=document.createElement("div");layer.className="celebrate62";document.body.appendChild(layer);
+    const colors=["#2f80ff","#5c9cff","#9bc7ff","#ffffff"];
+    for(let i=0;i<90;i++){let p=document.createElement("span");p.className="conf62";let ang=Math.random()*Math.PI*2,dist=90+Math.random()*300;p.style.setProperty("--x",Math.cos(ang)*dist+"px");p.style.setProperty("--y",(Math.sin(ang)*dist+60)+"px");p.style.setProperty("--r",(Math.random()*900-450)+"deg");p.style.background=colors[i%colors.length];p.style.animationDelay=(Math.random()*.12)+"s";layer.appendChild(p)}
+    setTimeout(()=>layer.remove(),1900);
   }
-  function renderHome(){
-    const list=days(), d=new Date(), c=weekCount(list,d), g=goal(), pct=Math.min(100,Math.round(c/g*100));
-    const today=iso(d), trained=list.includes(today);
-    const cd=document.getElementById("cleanDate61"); if(cd)cd.textContent=d.toLocaleDateString("hu-HU",{year:"numeric",month:"long",day:"numeric"});
-    const st=document.getElementById("todayState61"); if(st)st.textContent=trained?"Edzés teljesítve":"Készen állsz?";
-    const gd=document.getElementById("goalDone61");if(gd)gd.textContent=c;
-    const gt=document.getElementById("goalTarget61");if(gt)gt.textContent=g;
-    const gf=document.getElementById("goalFill61");if(gf)gf.style.width=pct+"%";
-    const sr=document.getElementById("streak61");if(sr)sr.textContent=streak(list);
-  }
-  function celebrate(){
-    const layer=document.createElement("div");layer.className="celebration-61";document.body.appendChild(layer);
-    const cols=["#2f80ff","#67a4ff","#9bc7ff","#ffffff"];
-    for(let i=0;i<70;i++){
-      const p=document.createElement("span");p.className="confetti-61";
-      const a=Math.random()*Math.PI*2,dist=100+Math.random()*250;
-      p.style.setProperty("--x",`${Math.cos(a)*dist}px`);
-      p.style.setProperty("--y",`${Math.sin(a)*dist+70}px`);
-      p.style.setProperty("--r",`${Math.random()*1000-500}deg`);
-      p.style.background=cols[i%cols.length];
-      p.style.animationDelay=(Math.random()*.12)+"s";layer.appendChild(p);
-    }
-    setTimeout(()=>layer.remove(),1800);
-  }
-  document.addEventListener("click",e=>{
+
+  document.addEventListener("click",function(e){
     const b=e.target.closest("button");if(!b)return;
     const t=(b.textContent||"").toLowerCase();
-    if(t.includes("edzettem ma"))setTimeout(()=>{celebrate();renderHome();renderCalendar()},70);
+    if(t.includes("edzettem ma")) setTimeout(()=>{fireworks();home();calendar()},120);
   });
-  document.getElementById("prevMonth61")?.addEventListener("click",()=>{view.setMonth(view.getMonth()-1);renderCalendar()});
-  document.getElementById("nextMonth61")?.addEventListener("click",()=>{view.setMonth(view.getMonth()+1);renderCalendar()});
-  document.getElementById("yearToggle61")?.addEventListener("click",()=>{
-    const p=document.getElementById("yearPanel61"),a=document.getElementById("yearArrow61");
-    p.classList.toggle("open"); if(a)a.textContent=p.classList.contains("open")?"−":"＋";
-  });
-  renderHome();renderCalendar();
+
+  document.getElementById("cal62Prev")?.addEventListener("click",()=>{view.setMonth(view.getMonth()-1);calendar()});
+  document.getElementById("cal62Next")?.addEventListener("click",()=>{view.setMonth(view.getMonth()+1);calendar()});
+  document.getElementById("year62Toggle")?.addEventListener("click",()=>{let p=document.getElementById("year62Panel"),x=document.getElementById("year62Plus");p.classList.toggle("open");if(x)x.textContent=p.classList.contains("open")?"−":"＋"});
+  home();calendar();
 })();
 </script>
 
