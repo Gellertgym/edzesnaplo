@@ -49,6 +49,8 @@ h1{font-size:35px;line-height:1;margin:0;font-weight:800;letter-spacing:-.045em}
 /* 6.7 swipe navigation */
 .page{animation:pageIn .22s ease both}
 @keyframes pageIn{from{opacity:.35;transform:translateX(14px)}to{opacity:1;transform:none}}
+
+.swipe-hint{font-size:10px;color:#555;text-align:center;margin-top:12px;letter-spacing:.04em}
 </style>
 </head>
 <body>
@@ -80,6 +82,7 @@ h1{font-size:35px;line-height:1;margin:0;font-weight:800;letter-spacing:-.045em}
       <div class="stat"><div class="sv" id="homeAwards">0</div><div class="sl">awards earned</div></div>
     </div>
   </div>
+<div class="swipe-hint" id="swipeHint">Swipe left or right to change pages</div>
 </section>
 
 <section id="calendar" class="page">
@@ -179,35 +182,49 @@ document.getElementById("workout").addEventListener("click",()=>{
 document.getElementById("prev").onclick=()=>{view.setMonth(view.getMonth()-1);renderMonth()};
 document.getElementById("next").onclick=()=>{view.setMonth(view.getMonth()+1);renderMonth()};
 document.getElementById("yearBtn").onclick=()=>{document.getElementById("yearPanel").classList.toggle("open");document.getElementById("plus").textContent=document.getElementById("yearPanel").classList.contains("open")?"−":"＋"};
+
 let currentPage="home";
-function showPage(name, direction=1){
-  const pages=document.querySelectorAll(".page");
-  pages.forEach(p=>p.classList.remove("active"));
+const pageOrder=["home","calendar","awards","stats"];
+
+function showPage(name){
   const target=document.getElementById(name);
   if(!target)return;
-  target.style.animationName=direction>=0?"pageIn":"pageIn";
+  document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
   target.classList.add("active");
   document.querySelectorAll(".navitem").forEach(x=>x.classList.toggle("active",x.dataset.page===name));
   currentPage=name;
-  window.scrollTo({top:0,behavior:"smooth"});
+  window.scrollTo(0,0);
 }
-document.querySelectorAll(".navitem").forEach(b=>b.onclick=()=>showPage(b.dataset.page,1));
 
-const pageOrder=["home","calendar","awards","stats"];
-let touchX=0,touchY=0;
-document.addEventListener("touchstart",e=>{
-  if(e.touches.length===1){touchX=e.touches[0].clientX;touchY=e.touches[0].clientY;}
+document.querySelectorAll(".navitem").forEach(btn=>{
+  btn.addEventListener("click",()=>showPage(btn.dataset.page));
+});
+
+let touchStartX=0,touchStartY=0;
+let touchStartedInsideApp=false;
+
+document.addEventListener("touchstart",function(e){
+  if(e.touches.length!==1)return;
+  touchStartX=e.touches[0].clientX;
+  touchStartY=e.touches[0].clientY;
+  touchStartedInsideApp=true;
 },{passive:true});
-document.addEventListener("touchend",e=>{
-  if(e.changedTouches.length!==1)return;
-  const dx=e.changedTouches[0].clientX-touchX,dy=e.changedTouches[0].clientY-touchY;
-  if(Math.abs(dx)<70 || Math.abs(dx)<Math.abs(dy)*1.2)return;
+
+document.addEventListener("touchend",function(e){
+  if(!touchStartedInsideApp || e.changedTouches.length!==1)return;
+  const dx=e.changedTouches[0].clientX-touchStartX;
+  const dy=e.changedTouches[0].clientY-touchStartY;
+  touchStartedInsideApp=false;
+
+  // Only treat a clear horizontal gesture as a page swipe.
+  if(Math.abs(dx)<55 || Math.abs(dx)<Math.abs(dy)*1.25)return;
+
   const i=pageOrder.indexOf(currentPage);
-  if(i<0)return;
-  if(dx<0 && i<pageOrder.length-1) showPage(pageOrder[i+1],1);
-  if(dx>0 && i>0) showPage(pageOrder[i-1],-1);
+  if(i===-1)return;
+  if(dx<0 && i<pageOrder.length-1) showPage(pageOrder[i+1]);
+  if(dx>0 && i>0) showPage(pageOrder[i-1]);
 },{passive:true});
-const streakEl=document.getElementById("streak"),date=document.getElementById("date"),doneEl=document.getElementById("done"),goalEl=document.getElementById("goal");
+
 render();
 
 const a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download="workout-backup.json";a.click();URL.revokeObjectURL(a.href);
