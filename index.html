@@ -1,217 +1,313 @@
 <!doctype html>
-<html lang="hu">
+<html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#000000">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="theme-color" content="#050507">
 <link rel="manifest" href="manifest.json">
-<link rel="apple-touch-icon" href="apple-touch-icon.png">
-<title>Edzésnapló</title>
+<title>Workout Log</title>
 <style>
-*{box-sizing:border-box}
-html,body{margin:0;background:#000;color:#f5f5f7;font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","SF Pro Text",Arial,sans-serif}
-body{min-height:100vh}
-button{font:inherit;color:inherit}
-.app{max-width:430px;margin:auto;min-height:100vh;padding:calc(env(safe-area-inset-top) + 14px) 18px calc(env(safe-area-inset-bottom) + 94px)}
-.page{display:none}.page.active{display:block}
-.top{display:flex;justify-content:space-between;align-items:flex-start;margin:12px 0 20px}
-h1{font-size:35px;line-height:1;margin:0;font-weight:800;letter-spacing:-.045em}
-.date{font-size:12px;color:#7f8086;margin-top:7px}
-.streak{display:flex;align-items:center;gap:9px;padding:11px 13px;border:1px solid #174d9b;border-radius:20px;background:rgba(20,92,200,.11);box-shadow:0 0 25px rgba(20,92,200,.12)}
-.flame{font-size:25px;filter:drop-shadow(0 0 8px #1680ff);animation:pulse 1s ease-in-out infinite alternate}
-@keyframes pulse{to{transform:scale(1.1)}}
-.streak strong{font-size:21px;display:block;line-height:1}.streak small{font-size:9px;color:#777;display:block;margin-top:2px}
-.workout{width:100%;height:126px;border:0;border-radius:25px;background:linear-gradient(135deg,#0878ff,#1456d7);display:flex;align-items:center;justify-content:space-between;padding:0 19px;box-shadow:0 14px 38px rgba(0,90,255,.27);position:relative;overflow:hidden}
-.workout:after{content:"";position:absolute;width:190px;height:190px;right:-75px;top:-85px;border-radius:50%;background:rgba(255,255,255,.08)}
-.workout-main{display:flex;align-items:center;gap:14px;z-index:1}.dumb{width:60px;height:60px;border-radius:20px;background:rgba(0,35,105,.4);display:grid;place-items:center;font-size:22px;font-weight:700}.wl small{font-size:10px;font-weight:800;letter-spacing:.13em}.wl strong{font-size:21px;display:block;margin-top:5px}.wl span{font-size:11px;opacity:.72;display:block;margin-top:3px}.go{width:43px;height:43px;border:1px solid rgba(255,255,255,.4);border-radius:50%;display:grid;place-items:center;font-size:28px;z-index:1}
-.card{margin-top:13px;border:1px solid #17181c;background:#070707;border-radius:23px;padding:17px}
-.card-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:13px}.card-title{font-size:17px;font-weight:750}.count{font-size:16px;font-weight:800}.count b{color:#1680ff}
-.week{display:grid;grid-template-columns:repeat(7,1fr);gap:6px}.wd{text-align:center;color:#777;font-size:9px}.wdot{height:31px;margin-top:7px;border-radius:10px;background:#15171b;display:grid;place-items:center;font-size:9px;color:#777}.wdot.done{background:#167cff;color:#fff;box-shadow:0 4px 13px rgba(22,124,255,.22)}
-.calhead{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px}.month{font-size:23px;font-weight:800}.year{font-size:11px;color:#777;margin-top:2px}.nav{display:flex;gap:7px}.nav button{width:35px;height:35px;border:0;border-radius:12px;background:#151619;font-size:23px}
-.dow,.grid{display:grid;grid-template-columns:repeat(7,1fr);gap:5px}.dow div{text-align:center;color:#686970;font-size:9px;padding-bottom:4px}.day{height:32px;display:flex;align-items:center;justify-content:center;color:#8b8c91;font-size:11px;position:relative}.day.empty{visibility:hidden}.day.worked:after{content:"";position:absolute;width:9px;height:9px;border-radius:2px;background:#1680ff;bottom:2px}.day.today .num{width:29px;height:29px;border:1px solid #1680ff;border-radius:9px;display:grid;place-items:center;color:#fff}
-.year-btn{width:100%;border:0;background:#121316;border-radius:17px;padding:14px;margin-top:13px;display:flex;justify-content:space-between;font-weight:700}.year-panel{display:none;margin-top:10px;background:#101113;border-radius:16px;padding:12px}.year-panel.open{display:block}.yr{display:flex;align-items:center;gap:8px;margin:9px 0}.yn{width:30px;font-size:9px;color:#777}.yt{flex:1;height:5px;background:#202126;border-radius:9px;overflow:hidden}.yf{height:100%;background:#1680ff}.yc{width:22px;text-align:right;font-size:9px;color:#777}
-.stats{display:grid;grid-template-columns:1fr 1fr;gap:9px}.stat{background:#0b0c0e;border:1px solid #17181c;border-radius:18px;padding:17px}.sv{font-size:27px;font-weight:850}.sl{font-size:9px;color:#777;text-transform:uppercase;letter-spacing:.08em;margin-top:3px}
-.awards .award{display:flex;align-items:center;gap:12px;padding:13px;border-radius:16px;background:#0b0c0e;border:1px solid #17181c;margin-top:8px}.award.lock{opacity:.32}.badge{width:40px;height:40px;border-radius:13px;background:#151a23;display:grid;place-items:center;color:#1680ff;font-weight:900}.an{font-weight:750}.ad{font-size:11px;color:#777;margin-top:2px}
-.navbar{position:fixed;left:50%;bottom:calc(env(safe-area-inset-bottom) + 10px);transform:translateX(-50%);width:min(394px,calc(100% - 28px));height:66px;border-radius:34px;background:rgba(23,24,27,.96);border:1px solid #24262a;display:grid;grid-template-columns:repeat(4,1fr);padding:5px;z-index:999999;backdrop-filter:blur(18px);pointer-events:auto}
-.navitem{position:relative;z-index:2;pointer-events:auto;touch-action:manipulation;border:0;background:transparent;border-radius:28px;color:#777;font-size:10px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px}.navitem .ico{font-size:20px;line-height:1}.navitem.active{background:#062a63;color:#1680ff}
-.burst{position:fixed;inset:0;z-index:99999;pointer-events:none;overflow:hidden}
-.piece{position:absolute;bottom:-15px;width:7px;height:14px;border-radius:2px;opacity:0;animation:shoot 1.9s cubic-bezier(.08,.72,.15,1) forwards}
-@keyframes shoot{0%{opacity:0;transform:translate(0,0) rotate(0) scale(.4)}8%{opacity:1}48%{opacity:1}100%{opacity:0;transform:translate(var(--x),var(--y)) rotate(var(--r)) scale(1)}}
-.flash{position:fixed;left:50%;top:58%;width:20px;height:20px;border-radius:50%;background:#fff;box-shadow:0 0 35px 12px #1680ff;z-index:100000;pointer-events:none;animation:flash .5s ease-out forwards}
-@keyframes flash{to{transform:translate(-50%,-50%) scale(7);opacity:0}}
-@media(max-width:360px){h1{font-size:30px}.workout{height:116px}.card{padding:14px}}
-
-.goal-setting{border:0;border-radius:12px;background:#15171b;color:#777;padding:11px 0;font-weight:800}
-.goal-setting.active{background:#167cff;color:#fff;box-shadow:0 5px 14px rgba(22,124,255,.22)}
-
-/* 6.7 swipe navigation */
-.page{animation:pageIn .22s ease both}
-@keyframes pageIn{from{opacity:.35;transform:translateX(14px)}to{opacity:1;transform:none}}
-
-.swipe-hint{font-size:10px;color:#555;text-align:center;margin-top:12px;letter-spacing:.04em}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;background:#050507;color:#fff;font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","Segoe UI",sans-serif}
+body{min-height:100vh;overflow-x:hidden}
+button{font:inherit}
+.app{min-height:100vh;padding:22px 18px 105px;max-width:560px;margin:auto}
+.page{display:none;animation:fade .18s ease}
+.page.active{display:block}
+@keyframes fade{from{opacity:.2;transform:translateY(5px)}to{opacity:1;transform:none}}
+h1{font-size:32px;letter-spacing:-1px;margin:8px 0 24px}
+h2{font-size:22px;margin:0 0 16px;letter-spacing:-.4px}
+.card{background:#111116;border:1px solid #202027;border-radius:22px;padding:20px;margin-bottom:14px}
+.workout-card{background:#1479ff;border:0;min-height:190px;display:flex;flex-direction:column;justify-content:space-between;cursor:pointer;box-shadow:0 14px 35px rgba(20,121,255,.18)}
+.workout-card:active{transform:scale(.985)}
+.workout-title{font-size:18px;font-weight:700}
+.workout-main{font-size:30px;font-weight:800;letter-spacing:-1px}
+.sub{color:#9898a3;font-size:14px}
+.goal-row{display:flex;justify-content:space-between;align-items:end;margin-bottom:10px}
+.goal-number{font-size:34px;font-weight:800}
+.progress{height:8px;background:#25252d;border-radius:20px;overflow:hidden}
+.progress>div{height:100%;background:#fff;border-radius:20px;transition:width .35s ease}
+.overview-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.stat{background:#111116;border:1px solid #202027;border-radius:18px;padding:16px}
+.stat .n{font-size:27px;font-weight:800}
+.stat .l{font-size:12px;color:#8e8e99;margin-top:3px}
+.streak{display:flex;align-items:center;gap:12px}
+.flame{font-size:31px;filter:saturate(1.15)}
+.calendar-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:15px}
+.month-title{font-size:21px;font-weight:750}
+.month-buttons{display:flex;gap:7px}
+.month-buttons button{width:38px;height:34px;border:1px solid #292931;background:#111116;color:#fff;border-radius:10px}
+.weekdays,.days{display:grid;grid-template-columns:repeat(7,1fr);gap:5px}
+.weekdays div{text-align:center;color:#777783;font-size:11px;padding-bottom:4px}
+.day{height:48px;border-radius:12px;background:#0d0d11;border:1px solid #19191f;display:flex;align-items:center;justify-content:center;position:relative;color:#ddd}
+.day.muted{color:#4e4e57;background:transparent;border-color:transparent}
+.day.today{border-color:#555562}
+.day.worked::after{content:"";position:absolute;bottom:5px;width:6px;height:6px;border-radius:2px;background:#1479ff}
+.year-btn{width:100%;margin-top:15px;background:#111116;border:1px solid #25252d;color:#fff;padding:14px;border-radius:14px}
+.award{display:flex;align-items:center;gap:14px;padding:15px 0;border-bottom:1px solid #202027}
+.award:last-child{border-bottom:0}
+.badge{width:48px;height:48px;border-radius:15px;background:#191920;display:grid;place-items:center;font-size:21px}
+.award.locked{opacity:.38}
+.award-title{font-weight:700}.award-sub{font-size:12px;color:#898994;margin-top:3px}
+.chart{height:130px;display:flex;align-items:end;gap:7px;padding-top:15px}
+.bar{flex:1;background:#1479ff;border-radius:7px 7px 2px 2px;min-height:4px}
+.chart-labels{display:flex;justify-content:space-between;color:#777783;font-size:10px;margin-top:7px}
+.empty{color:#777783;font-size:14px}
+nav{position:fixed;z-index:10000;left:10px;right:10px;bottom:10px;height:72px;padding-bottom:env(safe-area-inset-bottom);background:rgba(18,18,23,.96);border:1px solid #292930;border-radius:22px;display:grid;grid-template-columns:repeat(4,1fr);box-shadow:0 12px 40px rgba(0,0,0,.45)}
+.navitem{appearance:none;border:0;background:transparent;color:#777783;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;cursor:pointer;touch-action:manipulation}
+.navitem.active{color:#fff}
+.navicon{font-size:18px;line-height:1}.navlabel{font-size:10px;font-weight:650}
+.fireworks{position:fixed;inset:0;pointer-events:none;z-index:20000;overflow:hidden}
+.spark{position:absolute;width:5px;height:5px;border-radius:50%;background:#fff;animation:boom 1.15s ease-out forwards}
+@keyframes boom{0%{transform:translate(0,0) scale(1);opacity:1}100%{transform:translate(var(--x),var(--y)) scale(.15);opacity:0}}
+.toast{position:fixed;left:50%;top:18px;transform:translateX(-50%) translateY(-20px);opacity:0;background:#fff;color:#000;padding:10px 15px;border-radius:999px;font-size:13px;font-weight:700;z-index:30000;transition:.25s}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+@media(min-width:700px){nav{left:50%;right:auto;transform:translateX(-50%);width:520px}.app{padding-top:35px}}
 </style>
 </head>
 <body>
-<div class="app">
+<div id="toast" class="toast"></div>
+<main class="app">
 
 <section id="home" class="page active">
-  <div class="top">
-    <div><h1>Today's workout</h1><div class="date" id="date"></div></div>
-    <div class="streak"><div class="flame">🔥</div><div><strong id="streak">0</strong><small>week streak</small></div></div>
-  </div>
-
-  <button class="workout" id="workout">
-    <div class="workout-main"><div class="dumb">▮—▮</div><div class="wl"><small>TODAY'S WORKOUT</small><strong id="workoutText">WORKED OUT TODAY</strong><span>Keep pushing forward!</span></div></div>
-    <div class="go">›</div>
-  </button>
-
-  <div class="card">
-    <div class="card-head"><div class="card-title">Weekly goal</div><div class="count"><b id="done">0</b> / <span id="goal">5</span></div></div>
-    <div class="week" id="week"></div>
-  </div>
-
-
-
-  <div class="card">
-    <div class="card-head"><div class="card-title">Overview</div></div>
-    <div class="stats">
-      <div class="stat"><div class="sv" id="homeYearPct">0%</div><div class="sl">year completed</div></div>
-      <div class="stat"><div class="sv" id="homeTotal">0</div><div class="sl">workout days</div></div>
-      <div class="stat"><div class="sv" id="homeAwards">0</div><div class="sl">awards earned</div></div>
+  <h1>Workout</h1>
+  <div id="workoutButton" class="card workout-card" role="button" tabindex="0">
+    <div class="workout-title">Today's workout</div>
+    <div>
+      <div id="todayText" class="workout-main">Tap to log</div>
+      <div class="sub" style="color:#dbeaff">Mark today as a training day</div>
     </div>
+  </div>
+  <div class="card">
+    <div class="goal-row"><div><div class="sub">Weekly goal</div><div class="goal-number"><span id="weekCount">0</span>/5</div></div><div class="sub" id="goalStatus">Keep going</div></div>
+    <div class="progress"><div id="goalProgress" style="width:0%"></div></div>
+  </div>
+  <div class="card streak">
+    <div class="flame">🔥</div><div><div class="sub">Current streak</div><div class="goal-number" style="font-size:25px"><span id="streak">0</span> weeks</div></div>
+  </div>
+  <h2>Overview</h2>
+  <div class="overview-grid">
+    <div class="stat"><div class="n" id="total">0</div><div class="l">Total workouts</div></div>
+    <div class="stat"><div class="n" id="monthTotal">0</div><div class="l">This month</div></div>
+    <div class="stat"><div class="n" id="yearTotal">0</div><div class="l">This year</div></div>
+    <div class="stat"><div class="n" id="bestStreak">0</div><div class="l">Best weeks</div></div>
   </div>
 </section>
 
 <section id="calendar" class="page">
-  <div class="top"><div><h1>Calendar</h1><div class="date">Workout days</div></div></div>
-  <div id="calendarCopy"></div>
+  <h1>Calendar</h1>
+  <div class="card">
+    <div class="calendar-head">
+      <div class="month-title" id="monthTitle"></div>
+      <div class="month-buttons"><button type="button" id="prevMonth">‹</button><button type="button" id="nextMonth">›</button></div>
+    </div>
+    <div class="weekdays"><div>MON</div><div>TUE</div><div>WED</div><div>THU</div><div>FRI</div><div>SAT</div><div>SUN</div></div>
+    <div id="days" class="days"></div>
+    <button type="button" class="year-btn" id="yearSummary">Annual summary</button>
+  </div>
 </section>
 
 <section id="awards" class="page">
-  <div class="top"><div><h1>Awards</h1><div class="date">Your achievements</div></div></div>
-  <div class="card awards" id="awardsList"></div>
+  <h1>Awards</h1>
+  <div class="card" id="awardsList"></div>
 </section>
-
 
 <section id="stats" class="page">
-  <div class="top"><div><h1>Statistics</h1><div class="date">Your performance</div></div></div>
-  <div class="card"><div class="stats"><div class="stat"><div class="sv" id="stTotal">0</div><div class="sl">total workouts</div></div><div class="stat"><div class="sv" id="stYear">0</div><div class="sl">this year</div></div><div class="stat"><div class="sv" id="stMonth">0</div><div class="sl">this month</div></div><div class="stat"><div class="sv" id="stStreak">0</div><div class="sl">week streak</div></div></div></div>
+  <h1>Statistics</h1>
+  <div class="card">
+    <h2>Last 8 weeks</h2>
+    <div id="chart" class="chart"></div>
+    <div id="chartLabels" class="chart-labels"></div>
+  </div>
+  <div class="card">
+    <div class="sub">Consistency</div>
+    <div style="font-size:28px;font-weight:800;margin-top:5px" id="consistency">0%</div>
+    <div class="sub" style="margin-top:5px">Workout days in the last 8 weeks</div>
+  </div>
 </section>
+</main>
 
-</div>
-
-<nav class="navbar">
-<button class="navitem active" data-page="home"><span class="ico">⌂</span>Home</button>
-<button class="navitem" data-page="calendar"><span class="ico">□</span>Calendar</button>
-<button class="navitem" data-page="awards"><span class="ico">♜</span>Awards</button>
-<button class="navitem" data-page="stats"><span class="ico">▥</span>Stats</button>
+<nav aria-label="Main navigation">
+  <button type="button" class="navitem active" data-page="home"><span class="navicon">⌂</span><span class="navlabel">Home</span></button>
+  <button type="button" class="navitem" data-page="calendar"><span class="navicon">□</span><span class="navlabel">Calendar</span></button>
+  <button type="button" class="navitem" data-page="awards"><span class="navicon">◇</span><span class="navlabel">Awards</span></button>
+  <button type="button" class="navitem" data-page="stats"><span class="navicon">▥</span><span class="navlabel">Stats</span></button>
 </nav>
+<div id="fireworks" class="fireworks"></div>
 
 <script>
-const MONTHS=["January","February","March","April","May","June","July","August","September","October","November","December"];
-const DOW=["Mon","Tue","Wed","Thu","Fri","Sat","Sun"];
-let view=new Date(); view.setDate(1);
-const getDays=()=>{try{return JSON.parse(localStorage.getItem("trainedDays")||"[]")}catch(e){return[]}};
-const getGoal=()=>Number(localStorage.getItem("weeklyGoal")||5);
-const iso=d=>d.toISOString().slice(0,10);
-function weekStart(d){let x=new Date(d),n=(x.getDay()+6)%7;x.setDate(x.getDate()-n);x.setHours(0,0,0,0);return x}
-function weekCount(a,d){let s=weekStart(d),e=new Date(s);e.setDate(e.getDate()+7);return a.filter(v=>{let q=new Date(v);return q>=s&&q<e}).length}
-function streak(a){let d=new Date(),s=0;if(weekCount(a,d)>=getGoal())s=1;d.setDate(d.getDate()-7);while(weekCount(a,d)>=getGoal()){s++;d.setDate(d.getDate()-7)}return s}
+(function(){
+  "use strict";
 
-function render(){
- const a=getDays(), now=new Date(), goal=getGoal(), done=weekCount(a,now);
- date.textContent=now.toLocaleDateString("en-US",{year:"numeric",month:"long",day:"numeric"});
- document.getElementById("streak").textContent=streak(a); doneEl.textContent=done; goalEl.textContent=goal;
- document.getElementById("workoutText").textContent=a.includes(iso(now))?"Edzés teljesítve":"WORKED OUT TODAY";
- let s=weekStart(now); document.getElementById("week").innerHTML=Array.from({length:7},(_,i)=>{let d=new Date(s);d.setDate(d.getDate()+i);return `<div class="wd">${DOW[i]}<div class="wdot ${a.includes(iso(d))?"done":""}">${d.getDate()}</div></div>`}).join("");
- renderMonth();
- renderStats();
- renderAwards();
- renderHomeOverview();
-}
-function renderMonth(){
- const a=getDays(),y=view.getFullYear(),m=view.getMonth(),first=new Date(y,m,1),off=(first.getDay()+6)%7,totalDays=new Date(y,m+1,0).getDate(),today=iso(new Date());
- document.getElementById("month").textContent=MONTHS[m];document.getElementById("year").textContent=y;document.getElementById("dow").innerHTML=DOW.map(x=>`<div>${x}</div>`).join("");
- let out="";for(let i=0;i<off;i++)out+='<div class="day empty"><span class="num"></span></div>';
- let c=0;for(let n=1;n<=totalDays;n++){let d=new Date(y,m,n),k=iso(d),w=a.includes(k);if(w)c++;out+=`<div class="day ${w?"worked ":""}${k===today?"today":""}"><span class="num">${n}</span></div>`}
- document.getElementById("grid").innerHTML=out;document.getElementById("monthTotal").textContent=c;
- document.getElementById("yearRows").innerHTML=MONTHS.map((name,i)=>{let td=new Date(y,i+1,0).getDate(),n=a.filter(k=>{let d=new Date(k);return d.getFullYear()===y&&d.getMonth()===i}).length;return `<div class="yr"><div class="yn">${name.slice(0,3)}</div><div class="yt"><div class="yf" style="width:${Math.min(100,n/td*100)}%"></div></div><div class="yc">${n}</div></div>`}).join("");
- document.getElementById("calendarCopy").innerHTML='<div class="card">'+document.getElementById("home").querySelectorAll(".card")[1].innerHTML+'</div>';
-}
-function renderHomeOverview(){
- const a=getDays(), now=new Date(), y=now.getFullYear();
- const yd=a.filter(k=>new Date(k).getFullYear()===y).length;
- const totalDays=((new Date(y+1,0,0)-new Date(y,0,0))/86400000);
- const awards=document.querySelectorAll("#awardsList .award:not(.lock)").length;
- document.getElementById("homeYearPct").textContent=Math.round(yd/totalDays*100)+"%";
- document.getElementById("homeTotal").textContent=a.length;
- document.getElementById("homeAwards").textContent=awards;
-}
-function renderStats(){
- const a=getDays(), y=new Date().getFullYear(),m=new Date().getMonth();
- document.getElementById("total").textContent=a.length;document.getElementById("stTotal").textContent=a.length;document.getElementById("stYear").textContent=a.filter(k=>new Date(k).getFullYear()===y).length;document.getElementById("stMonth").textContent=a.filter(k=>{let d=new Date(k);return d.getFullYear()===y&&d.getMonth()===m}).length;document.getElementById("stStreak").textContent=streak(a);
-}
-function renderAwards(){
- const a=getDays(), n=a.length, s=streak(a);
- const awards=[["10","10 workouts","Az első 10 workoutsed",n>=10],["25","25 workouts","Quarter century",n>=25],["50","50 workouts","Serious consistency",n>=50],["100","100 workouts","100 workout days",n>=100],["2","2 week streak","Two complete weeks",s>=2],["4","4 week streak","One complete month",s>=4],["8","8 week streak","Two months of discipline",s>=8],["12","12 week streak","Three months of consistency",s>=12]];
- document.getElementById("awardsList").innerHTML=awards.map(x=>`<div class="award ${x[3]?"":"lock"}"><div class="badge">${x[3]?"✓":"·"}</div><div><div class="an">${x[1]}</div><div class="ad">${x[2]}</div></div></div>`).join("");
-}
-function fireworks(){
- const layer=document.createElement("div");layer.className="burst";document.body.appendChild(layer);
- const flash=document.createElement("div");flash.className="flash";document.body.appendChild(flash);
- const colors=["#ff3b30","#ffcc00","#34c759","#00d4ff","#5856d6","#ff2d92","#fff","#ff7a00"];
- for(const side of [0,1])for(let i=0;i<65;i++){
-   const p=document.createElement("span");p.className="piece";
-   const origin=side===0?6:94, ang=(Math.random()-.5)*1.7, dist=120+Math.random()*280;
-   p.style.left=origin+"%";p.style.background=colors[Math.floor(Math.random()*colors.length)];
-   p.style.setProperty("--x",(side===0?1:-1)*(40+Math.random()*150)+Math.sin(ang)*dist+"px");
-   p.style.setProperty("--y",-(190+Math.random()*430)+"px");
-   p.style.setProperty("--r",(Math.random()*1000-500)+"deg");
-   p.style.animationDelay=Math.random()*.2+"s";layer.appendChild(p);
- }
- setTimeout(()=>{layer.remove();flash.remove()},2200);
-}
-document.getElementById("workout").addEventListener("click",()=>{
- const a=getDays(),t=iso(new Date());
- if(!a.includes(t)){a.push(t);localStorage.setItem("trainedDays",JSON.stringify(a));}
- fireworks();render();
-});
-document.getElementById("prev").onclick=()=>{view.setMonth(view.getMonth()-1);renderMonth()};
-document.getElementById("next").onclick=()=>{view.setMonth(view.getMonth()+1);renderMonth()};
-document.getElementById("yearBtn").onclick=()=>{document.getElementById("yearPanel").classList.toggle("open");document.getElementById("plus").textContent=document.getElementById("yearPanel").classList.contains("open")?"−":"＋"};
+  var trained = JSON.parse(localStorage.getItem("trainedDays") || "[]");
+  var trainedSet = new Set(trained);
+  var currentMonth = new Date();
+  currentMonth.setDate(1);
 
-let currentPage="home";
-const pageOrder=["home","calendar","awards","stats"];
+  function key(d){
+    return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0");
+  }
+  function save(){ localStorage.setItem("trainedDays", JSON.stringify(Array.from(trainedSet).sort())); }
+  function mondayIndex(d){ return (d.getDay()+6)%7; }
 
+  function showPage(id){
+    document.querySelectorAll(".page").forEach(function(p){ p.classList.toggle("active", p.id===id); });
+    document.querySelectorAll(".navitem").forEach(function(b){ b.classList.toggle("active", b.dataset.page===id); });
+    window.scrollTo(0,0);
+    if(id==="calendar") renderCalendar();
+    if(id==="awards") renderAwards();
+    if(id==="stats") renderStats();
+  }
 
-let currentPage="home";
-
-function showPage(name){
-  const target=document.getElementById(name);
-  if(!target)return;
-  document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
-  target.classList.add("active");
-  document.querySelectorAll(".navitem").forEach(x=>{
-    x.classList.toggle("active", x.getAttribute("data-page")===name);
+  document.querySelectorAll(".navitem").forEach(function(button){
+    button.addEventListener("click", function(){ showPage(button.dataset.page); }, {passive:true});
   });
-  currentPage=name;
-  window.scrollTo(0,0);
-}
 
-document.querySelectorAll(".navitem").forEach(btn=>{
-  btn.addEventListener("click",function(e){
-    e.preventDefault();
-    e.stopPropagation();
-    showPage(this.getAttribute("data-page"));
+  function workoutsInRange(start,end){
+    var n=0;
+    for(var d=new Date(start); d<=end; d.setDate(d.getDate()+1)) if(trainedSet.has(key(d))) n++;
+    return n;
+  }
+
+  function currentWeekCount(){
+    var now=new Date(), monday=new Date(now);
+    monday.setHours(0,0,0,0);
+    monday.setDate(now.getDate()-mondayIndex(now));
+    var sunday=new Date(monday); sunday.setDate(monday.getDate()+6);
+    return workoutsInRange(monday,sunday);
+  }
+
+  function weekStreak(){
+    var now=new Date(), monday=new Date(now);
+    monday.setHours(0,0,0,0); monday.setDate(now.getDate()-mondayIndex(now));
+    var streak=0;
+    for(var i=0;i<100;i++){
+      var s=new Date(monday); s.setDate(monday.getDate()-i*7);
+      var e=new Date(s); e.setDate(s.getDate()+6);
+      if(workoutsInRange(s,e)>0) streak++; else break;
+    }
+    return streak;
+  }
+
+  function bestWeekStreak(){
+    var weeks=[];
+    var all=Array.from(trainedSet).sort();
+    if(!all.length) return 0;
+    var first=new Date(all[0]+"T00:00:00"), now=new Date();
+    var s=new Date(first); s.setDate(s.getDate()-mondayIndex(s));
+    while(s<=now){
+      var e=new Date(s); e.setDate(s.getDate()+6);
+      weeks.push(workoutsInRange(s,e)>0);
+      s.setDate(s.getDate()+7);
+    }
+    var best=0,run=0;
+    weeks.forEach(function(v){ if(v){run++;best=Math.max(best,run)}else run=0; });
+    return best;
+  }
+
+  function updateHome(){
+    var now=new Date(), today=key(now);
+    var week=currentWeekCount();
+    document.getElementById("weekCount").textContent=week;
+    document.getElementById("goalProgress").style.width=Math.min(100,week/5*100)+"%";
+    document.getElementById("goalStatus").textContent=week>=5?"Goal complete":"Keep going";
+    document.getElementById("todayText").textContent=trainedSet.has(today)?"Workout logged":"Tap to log";
+    document.getElementById("total").textContent=trainedSet.size;
+    document.getElementById("monthTotal").textContent=workoutsInRange(new Date(now.getFullYear(),now.getMonth(),1),new Date(now.getFullYear(),now.getMonth()+1,0));
+    document.getElementById("yearTotal").textContent=workoutsInRange(new Date(now.getFullYear(),0,1),new Date(now.getFullYear(),11,31));
+    document.getElementById("streak").textContent=weekStreak();
+    document.getElementById("bestStreak").textContent=bestWeekStreak();
+  }
+
+  function fireworks(){
+    var box=document.getElementById("fireworks");
+    box.innerHTML="";
+    [0.12,0.88].forEach(function(origin){
+      for(var i=0;i<55;i++){
+        var s=document.createElement("i"); s.className="spark";
+        s.style.left=(origin*100)+"vw"; s.style.top=(82+Math.random()*8)+"vh";
+        var angle=Math.random()*Math.PI*2, dist=80+Math.random()*190;
+        s.style.setProperty("--x",(Math.cos(angle)*dist)+"px");
+        s.style.setProperty("--y",(Math.sin(angle)*dist-150)+"px");
+        s.style.animationDelay=(Math.random()*.12)+"s";
+        box.appendChild(s);
+      }
+    });
+    setTimeout(function(){box.innerHTML=""},1400);
+  }
+
+  function logToday(){
+    var today=key(new Date());
+    if(!trainedSet.has(today)){
+      trainedSet.add(today); save(); updateHome(); renderCalendar(); renderAwards(); renderStats(); fireworks();
+    }else{
+      showToast("Today's workout is already logged");
+    }
+  }
+  document.getElementById("workoutButton").addEventListener("click",logToday);
+  document.getElementById("workoutButton").addEventListener("keydown",function(e){if(e.key==="Enter"||e.key===" "){e.preventDefault();logToday();}});
+
+  function renderCalendar(){
+    var y=currentMonth.getFullYear(), m=currentMonth.getMonth();
+    document.getElementById("monthTitle").textContent=currentMonth.toLocaleString("en-US",{month:"long",year:"numeric"});
+    var first=new Date(y,m,1), days=new Date(y,m+1,0).getDate(), prev=new Date(y,m,0).getDate();
+    var grid=document.getElementById("days"); grid.innerHTML="";
+    for(var i=0;i<42;i++){
+      var num=i-mondayIndex(first)+1, d, muted=false;
+      if(num<1){d=new Date(y,m-1,prev+num);muted=true}
+      else if(num>days){d=new Date(y,m+1,num-days);muted=true}
+      else d=new Date(y,m,num);
+      var el=document.createElement("div"); el.className="day"+(muted?" muted":"");
+      if(key(d)===key(new Date())) el.classList.add("today");
+      if(trainedSet.has(key(d))) el.classList.add("worked");
+      el.textContent=d.getDate(); grid.appendChild(el);
+    }
+  }
+  document.getElementById("prevMonth").addEventListener("click",function(){currentMonth.setMonth(currentMonth.getMonth()-1);renderCalendar();});
+  document.getElementById("nextMonth").addEventListener("click",function(){currentMonth.setMonth(currentMonth.getMonth()+1);renderCalendar();});
+  document.getElementById("yearSummary").addEventListener("click",function(){
+    var y=new Date().getFullYear(), n=workoutsInRange(new Date(y,0,1),new Date(y,11,31));
+    showToast(y+" workouts: "+n);
   });
-});
 
-render();
+  function renderAwards(){
+    var total=trainedSet.size, ws=bestWeekStreak();
+    var awards=[
+      ["10","10 workouts",total>=10,"Complete 10 training days"],
+      ["25","25 workouts",total>=25,"Complete 25 training days"],
+      ["50","50 workouts",total>=50,"Complete 50 training days"],
+      ["100","100 workouts",total>=100,"Complete 100 training days"],
+      ["2W","2-week streak",ws>=2,"Train in 2 consecutive weeks"],
+      ["4W","4-week streak",ws>=4,"Train in 4 consecutive weeks"],
+      ["8W","8-week streak",ws>=8,"Train in 8 consecutive weeks"],
+      ["12W","12-week streak",ws>=12,"Train in 12 consecutive weeks"]
+    ];
+    document.getElementById("awardsList").innerHTML=awards.map(function(a){
+      return '<div class="award '+(a[2]?'':'locked')+'"><div class="badge">'+a[0]+'</div><div><div class="award-title">'+a[1]+'</div><div class="award-sub">'+a[3]+'</div></div></div>';
+    }).join("");
+  }
 
-const a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download="workout-backup.json";a.click();URL.revokeObjectURL(a.href);
-});
+  function renderStats(){
+    var now=new Date(), vals=[];
+    for(var i=7;i>=0;i--){
+      var end=new Date(now); end.setDate(now.getDate()-i*7);
+      var start=new Date(end); start.setDate(end.getDate()-6);
+      vals.push(workoutsInRange(start,end));
+    }
+    var max=Math.max(1,Math.max.apply(null,vals));
+    document.getElementById("chart").innerHTML=vals.map(function(v){return '<div class="bar" style="height:'+Math.max(4,v/max*100)+'%"></div>';}).join("");
+    document.getElementById("chartLabels").innerHTML=vals.map(function(_,i){return i===7?"Now":(i+1)+"w";}).join("");
+    var total=vals.reduce(function(a,b){return a+b},0);
+    document.getElementById("consistency").textContent=Math.round(total/56*100)+"%";
+  }
+
+  function showToast(msg){
+    var t=document.getElementById("toast"); t.textContent=msg; t.classList.add("show");
+    setTimeout(function(){t.classList.remove("show")},1600);
+  }
+
+  updateHome(); renderCalendar(); renderAwards(); renderStats();
+})();
 </script>
 </body>
 </html>
