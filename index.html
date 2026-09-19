@@ -23,16 +23,16 @@ h1{font-size:38px;line-height:1;letter-spacing:-1.8px;margin:8px 0 26px;font-wei
 h2{font-size:21px;margin:0 0 15px;letter-spacing:-.5px}
 .card{position:relative;background:linear-gradient(145deg,rgba(20,21,29,.92),rgba(10,11,16,.94));border:1px solid rgba(255,255,255,.075);border-radius:26px;padding:20px;margin-bottom:14px;box-shadow:0 18px 45px rgba(0,0,0,.24);overflow:hidden}
 .card:after{content:"";position:absolute;inset:0;pointer-events:none;border-radius:inherit;background:linear-gradient(135deg,rgba(255,255,255,.035),transparent 35%);opacity:.8}
-.workout-card{background:linear-gradient(135deg,#0b6cff 0%,#176fff 45%,#6c3cff 125%);border:0;min-height:205px;padding:23px;justify-content:space-between;cursor:pointer;box-shadow:0 20px 55px rgba(28,91,255,.27),inset 0 1px rgba(255,255,255,.2);transition:transform .18s ease,box-shadow .18s ease}
+.workout-card{background:linear-gradient(135deg,#8b5cf6 0%,#a855f7 45%,#c026ff 125%);border:0;min-height:205px;padding:23px;justify-content:space-between;cursor:pointer;box-shadow:0 20px 55px rgba(139,92,246,.27),inset 0 1px rgba(255,255,255,.2);transition:transform .18s ease,box-shadow .18s ease}
 .workout-card:before{content:"";position:absolute;width:230px;height:230px;border-radius:50%;right:-90px;top:-110px;background:rgba(255,255,255,.13);filter:blur(2px)}
-.workout-card:active{transform:scale(.975);box-shadow:0 10px 28px rgba(28,91,255,.25)}
-.workout-title{font-size:15px;font-weight:750;letter-spacing:.2px;color:#dce9ff}
+.workout-card:active{transform:scale(.975);box-shadow:0 10px 28px rgba(139,92,246,.25)}
+.workout-title{font-size:15px;font-weight:750;letter-spacing:.2px;color:#f0e4ff}
 .workout-main{font-size:35px;line-height:1.05;font-weight:850;letter-spacing:-1.5px}
 .sub{color:#858997;font-size:13px}
 .goal-row{display:flex;justify-content:space-between;align-items:end;margin-bottom:12px}
 .goal-number{font-size:35px;font-weight:850;letter-spacing:-1.2px}
 .progress{height:9px;background:#242731;border-radius:20px;overflow:hidden}
-.progress>div{height:100%;background:linear-gradient(90deg,#fff,#b9d7ff);border-radius:20px;box-shadow:0 0 14px rgba(155,205,255,.5);transition:width .4s cubic-bezier(.2,.8,.2,1)}
+.progress>div{height:100%;background:linear-gradient(90deg,#fff,#e1c8ff);border-radius:20px;box-shadow:0 0 14px rgba(214,180,255,.5);transition:width .4s cubic-bezier(.2,.8,.2,1)}
 .streak{display:flex;align-items:center;gap:14px;padding:17px 18px}
 .flame{font-size:32px;filter:drop-shadow(0 0 12px rgba(255,104,36,.35))}
 .overview-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
@@ -48,22 +48,22 @@ h2{font-size:21px;margin:0 0 15px;letter-spacing:-.5px}
 .day{height:48px;border-radius:13px;background:rgba(255,255,255,.025);border:1px solid rgba(255,255,255,.045);display:flex;align-items:center;justify-content:center;position:relative;color:#d9dbe3;font-size:14px}
 .day.muted{color:#3e424c;background:transparent;border-color:transparent}
 .day.today{border-color:#697180;box-shadow:inset 0 0 0 1px rgba(255,255,255,.05)}
-.day.worked:after{content:"";position:absolute;bottom:5px;width:6px;height:6px;border-radius:2px;background:#2580ff;box-shadow:0 0 9px rgba(37,128,255,.8)}
+.day.worked:after{content:"";position:absolute;bottom:5px;width:6px;height:6px;border-radius:2px;background:#a855f7;box-shadow:0 0 9px rgba(168,85,247,.8)}
 .year-btn{width:100%;margin-top:16px;background:#151720;border:1px solid rgba(255,255,255,.07);color:#fff;padding:14px;border-radius:15px;font-weight:700}
 .award{display:flex;align-items:center;gap:14px;padding:15px 0;border-bottom:1px solid rgba(255,255,255,.065)}
 .award:last-child{border-bottom:0}
 .badge{width:49px;height:49px;border-radius:16px;background:linear-gradient(145deg,#20222d,#111219);border:1px solid rgba(255,255,255,.07);display:grid;place-items:center;font-size:17px;font-weight:800;color:#dbe7ff;box-shadow:inset 0 1px rgba(255,255,255,.06)}
-.award:not(.locked) .badge{background:linear-gradient(145deg,#126fff,#633cff);box-shadow:0 7px 22px rgba(57,91,255,.22)}
+.award:not(.locked) .badge{background:linear-gradient(145deg,#8b5cf6,#c026ff);box-shadow:0 7px 22px rgba(139,92,246,.22)}
 .award.locked{opacity:.34}
 .award-title{font-weight:750}.award-sub{font-size:12px;color:#858996;margin-top:4px}
 .chart{height:140px;display:flex;align-items:end;gap:8px;padding-top:18px}
-.bar{flex:1;background:linear-gradient(180deg,#5c91ff,#176dff);border-radius:8px 8px 3px 3px;min-height:4px;box-shadow:0 0 15px rgba(23,109,255,.14)}
+.bar{flex:1;background:linear-gradient(180deg,#b66cff,#8b5cf6);border-radius:8px 8px 3px 3px;min-height:4px;box-shadow:0 0 15px rgba(139,92,246,.14)}
 .chart-labels{display:flex;justify-content:space-between;color:#666b78;font-size:10px;margin-top:8px}
 .empty{color:#777783;font-size:14px}
 nav{position:fixed;z-index:10000;left:12px;right:12px;bottom:11px;height:72px;padding-bottom:env(safe-area-inset-bottom);background:rgba(14,15,21,.91);backdrop-filter:blur(24px) saturate(150%);-webkit-backdrop-filter:blur(24px) saturate(150%);border:1px solid rgba(255,255,255,.09);border-radius:24px;display:grid;grid-template-columns:repeat(4,1fr);box-shadow:0 18px 50px rgba(0,0,0,.52),inset 0 1px rgba(255,255,255,.045)}
 .navitem{appearance:none;border:0;background:transparent;color:#696e7b;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;cursor:pointer;touch-action:manipulation;position:relative}
 .navitem.active{color:#fff}
-.navitem.active:before{content:"";position:absolute;top:7px;width:34px;height:3px;border-radius:5px;background:#3182ff;box-shadow:0 0 13px rgba(49,130,255,.75)}
+.navitem.active:before{content:"";position:absolute;top:7px;width:34px;height:3px;border-radius:5px;background:#a855f7;box-shadow:0 0 13px rgba(168,85,247,.75)}
 .navicon{font-size:18px;line-height:1}.navlabel{font-size:10px;font-weight:700;letter-spacing:.1px}
 .fireworks{position:fixed;inset:0;pointer-events:none;z-index:20000;overflow:hidden}
 .spark{position:absolute;width:5px;height:5px;border-radius:50%;background:#fff;animation:boom 1.15s ease-out forwards;box-shadow:0 0 8px currentColor}
@@ -83,7 +83,7 @@ nav{position:fixed;z-index:10000;left:12px;right:12px;bottom:11px;height:72px;pa
     <div class="workout-title">TODAY <span style="opacity:.55">•</span> WORKOUT</div>
     <div>
       <div id="todayText" class="workout-main">Tap to log</div>
-      <div class="sub" style="color:#dbeaff">Mark today as a training day</div>
+      <div class="sub" style="color:#f0e4ff">Mark today as a training day</div>
     </div>
   </div>
   <div class="card">
