@@ -340,8 +340,11 @@ nav{position:fixed;z-index:10000;left:12px;right:12px;bottom:11px;height:72px;pa
       if(d>nowDate && !muted) el.classList.add("future");
       el.textContent=d.getDate();
       el.setAttribute("aria-label", d.toLocaleDateString("en-US",{weekday:"long",month:"long",day:"numeric",year:"numeric"}) + (trainedSet.has(key(d)) ? " — workout logged" : " — no workout logged"));
-      if(!muted) el.addEventListener("click",function(){toggleCalendarDay(d);});
-      else el.disabled=true;
+      if(!muted){
+        (function(selectedDate){
+          el.addEventListener("click",function(){toggleCalendarDay(selectedDate);});
+        })(new Date(d));
+      }else el.disabled=true;
       grid.appendChild(el);
     }
   }
