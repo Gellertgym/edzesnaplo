@@ -34,8 +34,8 @@ h1{font-size:35px;line-height:1;margin:0;font-weight:800;letter-spacing:-.045em}
 .year-btn{width:100%;border:0;background:#121316;border-radius:17px;padding:14px;margin-top:13px;display:flex;justify-content:space-between;font-weight:700}.year-panel{display:none;margin-top:10px;background:#101113;border-radius:16px;padding:12px}.year-panel.open{display:block}.yr{display:flex;align-items:center;gap:8px;margin:9px 0}.yn{width:30px;font-size:9px;color:#777}.yt{flex:1;height:5px;background:#202126;border-radius:9px;overflow:hidden}.yf{height:100%;background:#1680ff}.yc{width:22px;text-align:right;font-size:9px;color:#777}
 .stats{display:grid;grid-template-columns:1fr 1fr;gap:9px}.stat{background:#0b0c0e;border:1px solid #17181c;border-radius:18px;padding:17px}.sv{font-size:27px;font-weight:850}.sl{font-size:9px;color:#777;text-transform:uppercase;letter-spacing:.08em;margin-top:3px}
 .awards .award{display:flex;align-items:center;gap:12px;padding:13px;border-radius:16px;background:#0b0c0e;border:1px solid #17181c;margin-top:8px}.award.lock{opacity:.32}.badge{width:40px;height:40px;border-radius:13px;background:#151a23;display:grid;place-items:center;color:#1680ff;font-weight:900}.an{font-weight:750}.ad{font-size:11px;color:#777;margin-top:2px}
-.navbar{position:fixed;left:50%;bottom:calc(env(safe-area-inset-bottom) + 10px);transform:translateX(-50%);width:min(394px,calc(100% - 28px));height:66px;border-radius:34px;background:rgba(23,24,27,.96);border:1px solid #24262a;display:grid;grid-template-columns:repeat(4,1fr);padding:5px;z-index:50;backdrop-filter:blur(18px)}
-.navitem{border:0;background:transparent;border-radius:28px;color:#777;font-size:10px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px}.navitem .ico{font-size:20px;line-height:1}.navitem.active{background:#062a63;color:#1680ff}
+.navbar{position:fixed;left:50%;bottom:calc(env(safe-area-inset-bottom) + 10px);transform:translateX(-50%);width:min(394px,calc(100% - 28px));height:66px;border-radius:34px;background:rgba(23,24,27,.96);border:1px solid #24262a;display:grid;grid-template-columns:repeat(4,1fr);padding:5px;z-index:999999;backdrop-filter:blur(18px);pointer-events:auto}
+.navitem{position:relative;z-index:2;pointer-events:auto;touch-action:manipulation;border:0;background:transparent;border-radius:28px;color:#777;font-size:10px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px}.navitem .ico{font-size:20px;line-height:1}.navitem.active{background:#062a63;color:#1680ff}
 .burst{position:fixed;inset:0;z-index:99999;pointer-events:none;overflow:hidden}
 .piece{position:absolute;bottom:-15px;width:7px;height:14px;border-radius:2px;opacity:0;animation:shoot 1.9s cubic-bezier(.08,.72,.15,1) forwards}
 @keyframes shoot{0%{opacity:0;transform:translate(0,0) rotate(0) scale(.4)}8%{opacity:1}48%{opacity:1}100%{opacity:0;transform:translate(var(--x),var(--y)) rotate(var(--r)) scale(1)}}
@@ -82,7 +82,6 @@ h1{font-size:35px;line-height:1;margin:0;font-weight:800;letter-spacing:-.045em}
       <div class="stat"><div class="sv" id="homeAwards">0</div><div class="sl">awards earned</div></div>
     </div>
   </div>
-<div class="swipe-hint" id="swipeHint">Swipe left or right to change pages</div>
 </section>
 
 <section id="calendar" class="page">
@@ -186,44 +185,28 @@ document.getElementById("yearBtn").onclick=()=>{document.getElementById("yearPan
 let currentPage="home";
 const pageOrder=["home","calendar","awards","stats"];
 
+
+let currentPage="home";
+
 function showPage(name){
   const target=document.getElementById(name);
   if(!target)return;
   document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
   target.classList.add("active");
-  document.querySelectorAll(".navitem").forEach(x=>x.classList.toggle("active",x.dataset.page===name));
+  document.querySelectorAll(".navitem").forEach(x=>{
+    x.classList.toggle("active", x.getAttribute("data-page")===name);
+  });
   currentPage=name;
   window.scrollTo(0,0);
 }
 
 document.querySelectorAll(".navitem").forEach(btn=>{
-  btn.addEventListener("click",()=>showPage(btn.dataset.page));
+  btn.addEventListener("click",function(e){
+    e.preventDefault();
+    e.stopPropagation();
+    showPage(this.getAttribute("data-page"));
+  });
 });
-
-let touchStartX=0,touchStartY=0;
-let touchStartedInsideApp=false;
-
-document.addEventListener("touchstart",function(e){
-  if(e.touches.length!==1)return;
-  touchStartX=e.touches[0].clientX;
-  touchStartY=e.touches[0].clientY;
-  touchStartedInsideApp=true;
-},{passive:true});
-
-document.addEventListener("touchend",function(e){
-  if(!touchStartedInsideApp || e.changedTouches.length!==1)return;
-  const dx=e.changedTouches[0].clientX-touchStartX;
-  const dy=e.changedTouches[0].clientY-touchStartY;
-  touchStartedInsideApp=false;
-
-  // Only treat a clear horizontal gesture as a page swipe.
-  if(Math.abs(dx)<55 || Math.abs(dx)<Math.abs(dy)*1.25)return;
-
-  const i=pageOrder.indexOf(currentPage);
-  if(i===-1)return;
-  if(dx<0 && i<pageOrder.length-1) showPage(pageOrder[i+1]);
-  if(dx>0 && i>0) showPage(pageOrder[i-1]);
-},{passive:true});
 
 render();
 
