@@ -16,7 +16,7 @@ radial-gradient(circle at 100% 35%,rgba(119,48,255,.12),transparent 30%),
 #030408}
 body:before{content:"";position:fixed;inset:0;pointer-events:none;background:linear-gradient(120deg,transparent 0%,rgba(255,255,255,.018) 45%,transparent 70%);z-index:-1}
 button{font:inherit}
-.app{min-height:100vh;padding:25px 18px 112px;max-width:580px;margin:auto}
+.app{min-height:100vh;padding:25px 18px 154px;max-width:580px;margin:auto}
 .page{display:none;animation:pageIn .24s cubic-bezier(.2,.8,.2,1)}
 .page.active{display:block}
 @keyframes pageIn{from{opacity:0;transform:translateY(8px) scale(.99)}to{opacity:1;transform:none}}
@@ -112,7 +112,7 @@ backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)
 .bar{flex:1;background:linear-gradient(180deg,#b66cff,#8b5cf6);border-radius:8px 8px 3px 3px;min-height:4px;box-shadow:0 0 15px rgba(139,92,246,.14)}
 .chart-labels{display:flex;justify-content:space-between;color:#666b78;font-size:10px;margin-top:8px}
 .empty{color:#777783;font-size:14px}
-nav{position:fixed;z-index:10000;left:12px;right:12px;bottom:11px;height:72px;padding-bottom:env(safe-area-inset-bottom);background:rgba(14,15,21,.91);backdrop-filter:blur(24px) saturate(150%);-webkit-backdrop-filter:blur(24px) saturate(150%);border:1px solid rgba(255,255,255,.09);border-radius:24px;display:grid;grid-template-columns:repeat(6,1fr);box-shadow:0 18px 50px rgba(0,0,0,.52),inset 0 1px rgba(255,255,255,.045)}
+nav{position:fixed;z-index:10000;left:12px;right:12px;bottom:11px;height:118px;padding-bottom:env(safe-area-inset-bottom);background:rgba(14,15,21,.91);backdrop-filter:blur(24px) saturate(150%);-webkit-backdrop-filter:blur(24px) saturate(150%);border:1px solid rgba(255,255,255,.09);border-radius:24px;display:grid;grid-template-columns:repeat(3,1fr);box-shadow:0 18px 50px rgba(0,0,0,.52),inset 0 1px rgba(255,255,255,.045)}
 .navitem{appearance:none;border:0;background:transparent;color:#696e7b;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;cursor:pointer;touch-action:manipulation;position:relative}
 .navitem.active{color:#fff;background:linear-gradient(180deg,rgba(168,85,247,.18),rgba(168,85,247,.07));border-radius:17px;margin:5px;box-shadow:inset 0 0 0 1px rgba(168,85,247,.12)}
 
@@ -122,7 +122,7 @@ nav{position:fixed;z-index:10000;left:12px;right:12px;bottom:11px;height:72px;pa
 @keyframes boom{0%{transform:translate(0,0) scale(1);opacity:1}100%{transform:translate(var(--x),var(--y)) scale(.15);opacity:0}}
 .toast{position:fixed;left:50%;top:18px;transform:translateX(-50%) translateY(-20px);opacity:0;background:#f8f9ff;color:#090a0e;padding:11px 16px;border-radius:999px;font-size:13px;font-weight:750;z-index:30000;box-shadow:0 10px 30px rgba(0,0,0,.3);transition:.25s}
 .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
-@media(min-width:700px){nav{left:50%;right:auto;transform:translateX(-50%);width:520px}.app{padding-top:38px}}
+@media(min-width:700px){nav{left:50%;right:auto;transform:translateX(-50%);width:520px;height:82px;grid-template-columns:repeat(6,1fr)}.app{padding-top:38px;padding-bottom:118px}}
 
 .profile-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}.profile-field{background:rgba(255,255,255,.045);border:1px solid rgba(255,255,255,.07);border-radius:16px;padding:12px}.profile-field label{display:block;font-size:10px;color:#858996;text-transform:uppercase;letter-spacing:.8px;margin-bottom:6px}.profile-field input,.workout-form select,.workout-form textarea,.duration-input{width:100%;border:1px solid rgba(255,255,255,.08);background:#11121a;color:#fff;border-radius:12px;padding:10px 11px;font:inherit;outline:none}.profile-field input:focus,.workout-form select:focus,.workout-form textarea:focus{border-color:rgba(168,85,247,.6)}.profile-save,.primary-btn{width:100%;border:0;border-radius:14px;padding:12px 14px;margin-top:10px;background:linear-gradient(135deg,#8b5cf6,#c044ef);color:#fff;font-weight:800;cursor:pointer}.profile-value{font-size:20px;font-weight:800}.profile-hint{font-size:11px;color:#777b88;margin-top:8px}.week-summary{padding:14px 0;border-bottom:1px solid rgba(255,255,255,.07)}.week-summary:last-child{border-bottom:0}.week-summary-head{display:flex;justify-content:space-between;gap:12px;align-items:center}.week-summary-title{font-weight:800}.week-summary-total{font-size:12px;color:#a98afc}.week-entry{display:flex;justify-content:space-between;gap:12px;padding:8px 0;font-size:12px;color:#aeb1bb}.week-entry strong{color:#f5f5fa;font-weight:700}.week-empty{color:#777b88;font-size:13px}.modal-backdrop{position:fixed;inset:0;background:rgba(0,0,0,.64);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);z-index:40000;display:none;align-items:flex-end;justify-content:center;padding:14px}.modal-backdrop.show{display:flex}.modal{width:min(580px,100%);max-height:88vh;overflow:auto;background:linear-gradient(160deg,#181922,#0d0e14);border:1px solid rgba(255,255,255,.1);border-radius:28px;padding:20px;box-shadow:0 30px 80px rgba(0,0,0,.55)}.modal-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px}.modal-title{font-size:21px;font-weight:850;letter-spacing:-.5px}.close-btn{width:36px;height:36px;border:0;border-radius:12px;background:rgba(255,255,255,.06);color:#fff;font-size:22px;cursor:pointer}.workout-form{display:grid;gap:11px}.form-label{font-size:11px;color:#858996;text-transform:uppercase;letter-spacing:.8px;font-weight:750}.workout-form textarea{min-height:84px;resize:vertical}.timer-box{display:flex;align-items:center;justify-content:space-between;gap:12px;background:rgba(168,85,247,.09);border:1px solid rgba(168,85,247,.18);border-radius:16px;padding:13px}.timer-number{font-size:25px;font-weight:850;font-variant-numeric:tabular-nums}.timer-status{font-size:11px;color:#a98afc;margin-top:2px}.timer-btn{border:0;border-radius:12px;padding:10px 13px;background:#8b5cf6;color:#fff;font-weight:800;cursor:pointer}.timer-btn.stop{background:#d946ef}.secondary-btn{width:100%;border:1px solid rgba(255,255,255,.09);border-radius:14px;padding:11px;background:rgba(255,255,255,.045);color:#fff;font-weight:750;cursor:pointer}.two-btn{display:grid;grid-template-columns:1fr 1fr;gap:9px}.day-type{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.type-option{border:1px solid rgba(255,255,255,.08);background:rgba(255,255,255,.04);color:#b8bac4;border-radius:12px;padding:10px 6px;font-size:12px;font-weight:750;cursor:pointer}.type-option.selected{background:rgba(168,85,247,.2);border-color:rgba(168,85,247,.55);color:#fff}.small-note{font-size:11px;color:#777b88;line-height:1.45}.week-log{margin-top:12px}
 @media(max-width:390px){.day-type{grid-template-columns:repeat(2,1fr)}}
@@ -637,11 +637,21 @@ nav{position:fixed;z-index:10000;left:12px;right:12px;bottom:11px;height:72px;pa
     document.getElementById("setHeight").value=profile.height||""; document.getElementById("setWeight").value=profile.weight||""; document.getElementById("setAge").value=profile.age||""; document.getElementById("setSex").value=profile.sex||"male"; document.getElementById("setActivity").value=profile.activity||"1.55"; document.getElementById("setGoal").value=profile.goal||"maintain"; renderSettingsTarget();
   }
   function renderSettingsTarget(){var t=calorieTarget();document.getElementById("settingsTarget").textContent=t?t:"—";document.getElementById("settingsTargetNote").textContent=t?(goalLabel()+" target based on your saved profile."):"Enter your profile to calculate a starting estimate.";}
-  document.getElementById("saveSettings").addEventListener("click",function(){profile={height:Number(document.getElementById("setHeight").value)||null,weight:Number(document.getElementById("setWeight").value)||null,age:Number(document.getElementById("setAge").value)||null,sex:document.getElementById("setSex").value,activity:document.getElementById("setActivity").value,goal:document.getElementById("setGoal").value};saveProfile();renderSettingsTarget();renderNutrition();updateHome();showToast("Profile saved");});
+  document.getElementById("saveSettings").addEventListener("click",function(){
+    var h=Number(document.getElementById("setHeight").value), w=Number(document.getElementById("setWeight").value), a=Number(document.getElementById("setAge").value);
+    if(!(h>=100&&h<=250&&w>=20&&w<=300&&a>=13&&a<=100)){showToast("Enter height, weight and age");return;}
+    profile={height:h,weight:w,age:a,sex:document.getElementById("setSex").value,activity:document.getElementById("setActivity").value,goal:document.getElementById("setGoal").value};
+    saveProfile(); renderSettingsTarget(); renderNutrition(); updateHome(); showToast("Profile saved · target calculated");
+  });
   document.getElementById("addFood").addEventListener("click",function(){
     var name=document.getElementById("foodName").value.trim(), cal=Number(document.getElementById("foodCalories").value)||0, protein=Number(document.getElementById("foodProtein").value)||0, carbs=Number(document.getElementById("foodCarbs").value)||0, fat=Number(document.getElementById("foodFat").value)||0, fiber=Number(document.getElementById("foodFiber").value)||0, meal=document.getElementById("foodMeal").value;
-    if(!name||cal<=0){showToast("Enter food name and calories");return;}
-    foods[todayKey()]=foods[todayKey()]||[]; foods[todayKey()].push({name:name,cal:cal,protein:protein,carbs:carbs,fat:fat,fiber:fiber,meal:meal}); saveFoods(); ["foodName","foodCalories","foodProtein","foodCarbs","foodFat","foodFiber"].forEach(function(id){document.getElementById(id).value="";}); renderNutrition(); showToast("Food added");
+    if(!name){showToast("Enter a food name");document.getElementById("foodName").focus();return;}
+    if(cal<=0){showToast("Enter calories");document.getElementById("foodCalories").focus();return;}
+    foods[todayKey()]=foods[todayKey()]||[];
+    foods[todayKey()].push({name:name,cal:cal,protein:protein,carbs:carbs,fat:fat,fiber:fiber,meal:meal});
+    saveFoods();
+    ["foodName","foodCalories","foodProtein","foodCarbs","foodFat","foodFiber"].forEach(function(id){document.getElementById(id).value="";});
+    renderNutrition(); showToast("Food added");
   });
   cleanupAndCreateSummaries();
   loadProfile();
