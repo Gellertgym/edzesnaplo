@@ -112,7 +112,7 @@ backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)
 .bar{flex:1;background:linear-gradient(180deg,#b66cff,#8b5cf6);border-radius:8px 8px 3px 3px;min-height:4px;box-shadow:0 0 15px rgba(139,92,246,.14)}
 .chart-labels{display:flex;justify-content:space-between;color:#666b78;font-size:10px;margin-top:8px}
 .empty{color:#777783;font-size:14px}
-nav{position:fixed;z-index:10000;left:12px;right:12px;bottom:11px;height:72px;padding-bottom:env(safe-area-inset-bottom);background:rgba(14,15,21,.91);backdrop-filter:blur(24px) saturate(150%);-webkit-backdrop-filter:blur(24px) saturate(150%);border:1px solid rgba(255,255,255,.09);border-radius:24px;display:grid;grid-template-columns:repeat(4,1fr);box-shadow:0 18px 50px rgba(0,0,0,.52),inset 0 1px rgba(255,255,255,.045)}
+nav{position:fixed;z-index:10000;left:12px;right:12px;bottom:11px;height:72px;padding-bottom:env(safe-area-inset-bottom);background:rgba(14,15,21,.91);backdrop-filter:blur(24px) saturate(150%);-webkit-backdrop-filter:blur(24px) saturate(150%);border:1px solid rgba(255,255,255,.09);border-radius:24px;display:grid;grid-template-columns:repeat(6,1fr);box-shadow:0 18px 50px rgba(0,0,0,.52),inset 0 1px rgba(255,255,255,.045)}
 .navitem{appearance:none;border:0;background:transparent;color:#696e7b;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;cursor:pointer;touch-action:manipulation;position:relative}
 .navitem.active{color:#fff;background:linear-gradient(180deg,rgba(168,85,247,.18),rgba(168,85,247,.07));border-radius:17px;margin:5px;box-shadow:inset 0 0 0 1px rgba(168,85,247,.12)}
 
@@ -158,13 +158,13 @@ nav{position:fixed;z-index:10000;left:12px;right:12px;bottom:11px;height:72px;pa
     <div class="flame">🔥</div><div><div class="sub">Current streak</div><div class="goal-number" style="font-size:25px"><span id="streak">0</span> weeks</div></div>
   </div>
   <div class="card">
-    <h2>My profile</h2>
-    <div class="profile-grid">
-      <div class="profile-field"><label>Height</label><input id="heightInput" type="number" min="100" max="250" inputmode="decimal" placeholder="cm"></div>
-      <div class="profile-field"><label>Weight</label><input id="weightInput" type="number" min="20" max="300" step="0.1" inputmode="decimal" placeholder="kg"></div>
+    <h2>Nutrition today</h2>
+    <div class="goal-row"><div><div class="sub">Calories</div><div class="goal-number"><span id="homeCalories">0</span> <span style="font-size:13px;color:#777b88">/ <span id="homeCalorieTarget">—</span> kcal</span></div></div><div class="sub" id="homeGoalType">Set profile</div></div>
+    <div class="progress"><div id="homeCalorieProgress" style="width:0%"></div></div>
+    <div class="overview-grid" style="margin-top:10px">
+      <div class="stat"><div class="n" id="homeProtein">0g</div><div class="l">Protein</div></div>
+      <div class="stat"><div class="n" id="homeFiber">0g</div><div class="l">Fiber</div></div>
     </div>
-    <button class="profile-save" id="saveProfile" type="button">Save profile</button>
-    <div class="profile-hint">Your weight can be updated whenever you want.</div>
   </div>
   <h2>Overview</h2>
   <div class="overview-grid">
@@ -185,6 +185,40 @@ nav{position:fixed;z-index:10000;left:12px;right:12px;bottom:11px;height:72px;pa
     <div class="weekdays"><div>MON</div><div>TUE</div><div>WED</div><div>THU</div><div>FRI</div><div>SAT</div><div>SUN</div></div>
     <div id="days" class="days"></div>
     <div class="sub" style="text-align:center;margin-top:12px">Tap any past day to add or remove a workout</div><button type="button" class="year-btn" id="yearSummary">Annual summary</button>
+  </div>
+</section>
+
+<section id="nutrition" class="page">
+  <h1>Nutrition</h1>
+  <div class="card">
+    <div class="sub">Today</div>
+    <div class="goal-number" style="font-size:34px;margin-top:4px"><span id="caloriesToday">0</span> <span style="font-size:13px;color:#777b88">/ <span id="calorieTarget">—</span> kcal</span></div>
+    <div class="progress" style="margin-top:12px"><div id="calorieProgress" style="width:0%"></div></div>
+    <div class="overview-grid" style="margin-top:12px">
+      <div class="stat"><div class="n" id="proteinToday">0g</div><div class="l">Protein</div></div>
+      <div class="stat"><div class="n" id="carbsToday">0g</div><div class="l">Carbs</div></div>
+      <div class="stat"><div class="n" id="fatToday">0g</div><div class="l">Fat</div></div>
+      <div class="stat"><div class="n" id="fiberToday">0g</div><div class="l">Fiber</div></div>
+    </div>
+  </div>
+  <div class="card">
+    <h2>Add food</h2>
+    <label class="form-label">Food name</label>
+    <input class="duration-input" id="foodName" placeholder="e.g. Chicken and rice" style="margin-top:7px">
+    <div class="profile-grid" style="margin-top:10px">
+      <div class="profile-field"><label>Calories</label><input id="foodCalories" type="number" min="0" max="5000" inputmode="numeric"></div>
+      <div class="profile-field"><label>Protein (g)</label><input id="foodProtein" type="number" min="0" max="500" step="0.1" inputmode="decimal"></div>
+      <div class="profile-field"><label>Carbs (g)</label><input id="foodCarbs" type="number" min="0" max="800" step="0.1" inputmode="decimal"></div>
+      <div class="profile-field"><label>Fat (g)</label><input id="foodFat" type="number" min="0" max="300" step="0.1" inputmode="decimal"></div>
+      <div class="profile-field"><label>Fiber (g)</label><input id="foodFiber" type="number" min="0" max="200" step="0.1" inputmode="decimal"></div>
+      <div class="profile-field"><label>Meal</label><select id="foodMeal" style="width:100%;border:1px solid rgba(255,255,255,.08);background:#11121a;color:#fff;border-radius:12px;padding:10px 11px;font:inherit"><option>Breakfast</option><option>Lunch</option><option>Dinner</option><option>Snack</option></select></div>
+    </div>
+    <button class="profile-save" id="addFood" type="button">Add food</button>
+    <div class="small-note" style="margin-top:9px">Photo-based food recognition can be connected later to an AI vision service. Nutrition values should be treated as estimates.</div>
+  </div>
+  <div class="card">
+    <h2>Today's food</h2>
+    <div id="foodList"></div>
   </div>
 </section>
 
@@ -211,13 +245,37 @@ nav{position:fixed;z-index:10000;left:12px;right:12px;bottom:11px;height:72px;pa
     <div id="weeklySummaries" class="week-log"></div>
   </div>
 </section>
+<section id="settings" class="page">
+  <h1>Settings</h1>
+  <div class="card">
+    <h2>Profile</h2>
+    <div class="profile-grid">
+      <div class="profile-field"><label>Height (cm)</label><input id="setHeight" type="number" min="100" max="250" inputmode="decimal"></div>
+      <div class="profile-field"><label>Weight (kg)</label><input id="setWeight" type="number" min="20" max="300" step="0.1" inputmode="decimal"></div>
+      <div class="profile-field"><label>Age</label><input id="setAge" type="number" min="13" max="100" inputmode="numeric"></div>
+      <div class="profile-field"><label>Sex</label><select id="setSex" style="width:100%;border:1px solid rgba(255,255,255,.08);background:#11121a;color:#fff;border-radius:12px;padding:10px 11px;font:inherit"><option value="male">Male</option><option value="female">Female</option></select></div>
+      <div class="profile-field" style="grid-column:1/-1"><label>Activity</label><select id="setActivity" style="width:100%;border:1px solid rgba(255,255,255,.08);background:#11121a;color:#fff;border-radius:12px;padding:10px 11px;font:inherit"><option value="1.2">Sedentary</option><option value="1.375">Lightly active</option><option value="1.55">Moderately active</option><option value="1.725">Very active</option><option value="1.9">Extremely active</option></select></div>
+      <div class="profile-field" style="grid-column:1/-1"><label>Goal</label><select id="setGoal" style="width:100%;border:1px solid rgba(255,255,255,.08);background:#11121a;color:#fff;border-radius:12px;padding:10px 11px;font:inherit"><option value="maintain">Maintain</option><option value="bulk">Bulk</option><option value="cut">Cut</option></select></div>
+    </div>
+    <button class="profile-save" id="saveSettings" type="button">Save profile & calculate target</button>
+    <div class="profile-hint">Your profile stays saved on this device. You can change it here anytime.</div>
+  </div>
+  <div class="card">
+    <div class="sub">Daily calorie target</div>
+    <div class="goal-number" style="margin-top:4px"><span id="settingsTarget">—</span> kcal</div>
+    <div class="small-note" id="settingsTargetNote" style="margin-top:5px">Enter your profile to calculate a starting estimate.</div>
+  </div>
+</section>
+
 </main>
 
 <nav aria-label="Main navigation">
   <button type="button" class="navitem active" data-page="home"><span class="navicon">⌂</span><span class="navlabel">Home</span></button>
   <button type="button" class="navitem" data-page="calendar"><span class="navicon">□</span><span class="navlabel">Calendar</span></button>
-  <button type="button" class="navitem" data-page="awards"><span class="navicon">◇</span><span class="navlabel">Awards</span></button>
+  <button type="button" class="navitem" data-page="nutrition"><span class="navicon">◉</span><span class="navlabel">Nutrition</span></button>
   <button type="button" class="navitem" data-page="stats"><span class="navicon">▥</span><span class="navlabel">Stats</span></button>
+  <button type="button" class="navitem" data-page="awards"><span class="navicon">◇</span><span class="navlabel">Awards</span></button>
+  <button type="button" class="navitem" data-page="settings"><span class="navicon">⚙</span><span class="navlabel">Settings</span></button>
 </nav>
 <div id="fireworks" class="fireworks"></div>
 
@@ -544,9 +602,51 @@ nav{position:fixed;z-index:10000;left:12px;right:12px;bottom:11px;height:72px;pa
     profile={height:h?Number(h):null,weight:w?Number(w):null}; saveProfile(); showToast("Profile saved");
   });
 
+
+  var foods = JSON.parse(localStorage.getItem("nutritionFoods") || "{}");
+  function saveFoods(){ localStorage.setItem("nutritionFoods", JSON.stringify(foods)); }
+  function todayKey(){ return key(new Date()); }
+  function nutritionTotals(k){
+    var list=foods[k]||[];
+    return list.reduce(function(t,f){ t.cal+=Number(f.cal)||0; t.protein+=Number(f.protein)||0; t.carbs+=Number(f.carbs)||0; t.fat+=Number(f.fat)||0; t.fiber+=Number(f.fiber)||0; return t; },{cal:0,protein:0,carbs:0,fat:0,fiber:0});
+  }
+  function calorieTarget(){
+    var h=Number(profile.height), w=Number(profile.weight), a=Number(profile.age), sex=profile.sex||"male", act=Number(profile.activity)||1.55, goal=profile.goal||"maintain";
+    if(!(h>0&&w>0&&a>0)) return 0;
+    var bmr=10*w+6.25*h-5*a+(sex==="male"?5:-161);
+    var t=bmr*act;
+    if(goal==="bulk") t+=250; else if(goal==="cut") t-=300;
+    return Math.max(1200,Math.round(t/50)*50);
+  }
+  function goalLabel(){ return profile.goal==="bulk"?"Bulk":profile.goal==="cut"?"Cut":"Maintain"; }
+  function renderNutrition(){
+    var t=nutritionTotals(todayKey()), target=calorieTarget(), pct=target?Math.min(100,t.cal/target*100):0;
+    ["caloriesToday","homeCalories"].forEach(function(id){var e=document.getElementById(id);if(e)e.textContent=Math.round(t.cal);});
+    ["proteinToday","homeProtein"].forEach(function(id){var e=document.getElementById(id);if(e)e.textContent=Math.round(t.protein)+"g";});
+    ["fiberToday","homeFiber"].forEach(function(id){var e=document.getElementById(id);if(e)e.textContent=Math.round(t.fiber)+"g";});
+    ["carbsToday"].forEach(function(id){var e=document.getElementById(id);if(e)e.textContent=Math.round(t.carbs)+"g";});
+    ["fatToday"].forEach(function(id){var e=document.getElementById(id);if(e)e.textContent=Math.round(t.fat)+"g";});
+    ["calorieTarget","homeCalorieTarget"].forEach(function(id){var e=document.getElementById(id);if(e)e.textContent=target?target:"—";});
+    ["calorieProgress","homeCalorieProgress"].forEach(function(id){var e=document.getElementById(id);if(e)e.style.width=pct+"%";});
+    var g=document.getElementById("homeGoalType");if(g)g.textContent=target?goalLabel():"Set profile";
+    var list=document.getElementById("foodList");
+    if(list){ var arr=foods[todayKey()]||[]; list.innerHTML=arr.length?arr.map(function(f,i){return '<div class="week-summary"><div class="week-summary-head"><div class="week-summary-title">'+escapeHtml(f.name||"Food")+'</div><button type="button" class="close-btn delete-food" data-index="'+i+'">×</button></div><div class="week-entry"><span>'+escapeHtml(f.meal||"Meal")+' · '+Math.round(f.cal||0)+' kcal</span><span>P '+Math.round(f.protein||0)+'g · C '+Math.round(f.carbs||0)+'g · F '+Math.round(f.fat||0)+'g</span></div></div>';}).join(""):'<div class="week-empty">No food logged today.</div>'; list.querySelectorAll('.delete-food').forEach(function(b){b.addEventListener('click',function(){arr.splice(Number(b.dataset.index),1);foods[todayKey()]=arr;saveFoods();renderNutrition();});});}
+  }
+  function escapeHtml(v){return String(v).replace(/[&<>'"]/g,function(c){return ({"&":"&amp;","<":"&lt;",">":"&gt;","'":"&#39;","\"":"&quot;"}[c]);});}
+  function loadSettings(){
+    document.getElementById("setHeight").value=profile.height||""; document.getElementById("setWeight").value=profile.weight||""; document.getElementById("setAge").value=profile.age||""; document.getElementById("setSex").value=profile.sex||"male"; document.getElementById("setActivity").value=profile.activity||"1.55"; document.getElementById("setGoal").value=profile.goal||"maintain"; renderSettingsTarget();
+  }
+  function renderSettingsTarget(){var t=calorieTarget();document.getElementById("settingsTarget").textContent=t?t:"—";document.getElementById("settingsTargetNote").textContent=t?(goalLabel()+" target based on your saved profile."):"Enter your profile to calculate a starting estimate.";}
+  document.getElementById("saveSettings").addEventListener("click",function(){profile={height:Number(document.getElementById("setHeight").value)||null,weight:Number(document.getElementById("setWeight").value)||null,age:Number(document.getElementById("setAge").value)||null,sex:document.getElementById("setSex").value,activity:document.getElementById("setActivity").value,goal:document.getElementById("setGoal").value};saveProfile();renderSettingsTarget();renderNutrition();updateHome();showToast("Profile saved");});
+  document.getElementById("addFood").addEventListener("click",function(){
+    var name=document.getElementById("foodName").value.trim(), cal=Number(document.getElementById("foodCalories").value)||0, protein=Number(document.getElementById("foodProtein").value)||0, carbs=Number(document.getElementById("foodCarbs").value)||0, fat=Number(document.getElementById("foodFat").value)||0, fiber=Number(document.getElementById("foodFiber").value)||0, meal=document.getElementById("foodMeal").value;
+    if(!name||cal<=0){showToast("Enter food name and calories");return;}
+    foods[todayKey()]=foods[todayKey()]||[]; foods[todayKey()].push({name:name,cal:cal,protein:protein,carbs:carbs,fat:fat,fiber:fiber,meal:meal}); saveFoods(); ["foodName","foodCalories","foodProtein","foodCarbs","foodFat","foodFiber"].forEach(function(id){document.getElementById(id).value="";}); renderNutrition(); showToast("Food added");
+  });
   cleanupAndCreateSummaries();
   loadProfile();
-  updateHome(); renderCalendar(); renderAwards(); renderStats(); renderWeeklySummaries();
+  loadSettings();
+  updateHome(); renderNutrition(); renderCalendar(); renderAwards(); renderStats(); renderWeeklySummaries();
 })();
 </script>
 </body>
